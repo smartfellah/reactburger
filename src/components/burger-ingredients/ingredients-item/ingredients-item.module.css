@@ -1,0 +1,17 @@
+.IngredientContainer {
+  position: relative;
+  max-height: 208px;
+  max-width: 272px;
+  display: flex;
+  flex-flow: column;
+  gap: var(--s-1);
+}
+.IngredientImage {
+  max-height: var(--l-5);
+  margin-inline: var(--s-4);
+}
+.IngredientPrice {
+  display: flex;
+  justify-content: center;
+  gap: var(--s-2);
+}
