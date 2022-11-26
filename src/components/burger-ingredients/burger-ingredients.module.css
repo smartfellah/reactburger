@@ -1,0 +1,13 @@
+.IngredientsColumn {
+  display: flex;
+  flex-flow: column;
+  max-width: 600px;
+  margin-left: 380px;
+}
+.IngredientsColumn-Header {
+  margin-top: var(--l-1);
+  text-align: left;
+}
+.IngredientsColumn-Tab {
+  display: flex;
+}
