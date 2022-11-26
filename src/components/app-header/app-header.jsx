@@ -1,4 +1,4 @@
-import headerStyles from "./header.module.css";
+import headerStyles from "./app-header.module.css";
 import {
   BurgerIcon,
   ListIcon,
@@ -6,7 +6,7 @@ import {
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const Header = () => {
+export const AppHeader = () => {
   return (
     <div className={` text text_type_main-default ${headerStyles["Header"]}`}>
       <div className={`${headerStyles["NavBar"]}`}>
