@@ -8,15 +8,15 @@ import {
 
 export const Header = () => {
   return (
-    <div className={`${headerStyles["Header"]}`}>
+    <div className={` text text_type_main-default ${headerStyles["Header"]}`}>
       <div className={`${headerStyles["NavBar"]}`}>
         <div className={`${headerStyles["MenuBox"]}`}>
-          <a className={`${headerStyles["MenuBox-Item"]}`} href="#">
-            <BurgerIcon />
+          <a className={`${headerStyles["MenuBox-Item-Active"]}`} href="#">
+            <BurgerIcon type="primary" />
             <p>Конструктор</p>
           </a>
           <a className={`${headerStyles["MenuBox-Item"]}`} href="#">
-            <ListIcon />
+            <ListIcon type="secondary" />
             <p>Лента заказов</p>
           </a>
         </div>
@@ -25,7 +25,7 @@ export const Header = () => {
         </div>
         <div className={`${headerStyles["ProfileBox"]}`}>
           <a className={`${headerStyles["ProfileBox-Item"]}`} href="#">
-            <ProfileIcon />
+            <ProfileIcon type="secondary" />
             <p>Личный кабинет</p>
           </a>
         </div>
