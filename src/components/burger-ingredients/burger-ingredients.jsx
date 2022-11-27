@@ -18,15 +18,12 @@ export const BurgerIngredients = ({ hardcodeData }) => {
       });
     } else if (e === "sauce") {
       scrollRef.current.scroll({
-        top: bunsRef.current.offsetHeight + 40,
+        top: bunsRef.current.offsetHeight,
         behavior: "smooth",
       });
     } else {
       scrollRef.current.scroll({
-        top:
-          bunsRef.current.offsetHeight +
-          saucesRef.current.offsetHeight +
-          40 * 2,
+        top: bunsRef.current.offsetHeight + saucesRef.current.offsetHeight,
         behavior: "smooth",
       });
     }
@@ -35,8 +32,8 @@ export const BurgerIngredients = ({ hardcodeData }) => {
     const scrollPos = scrollRef.current.scrollTop;
     const bunHeight = bunsRef.current.offsetHeight;
     const sauceHeight = saucesRef.current.offsetHeight;
-    if (scrollPos < bunHeight + 40) setCurrent("bun");
-    else if (scrollPos < sauceHeight + bunHeight + 40 * 2) setCurrent("sauce");
+    if (scrollPos < bunHeight) setCurrent("bun");
+    else if (scrollPos < sauceHeight + bunHeight) setCurrent("sauce");
     else setCurrent("topping");
   };
   useEffect(() => {
