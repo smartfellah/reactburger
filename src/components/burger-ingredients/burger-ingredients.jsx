@@ -12,16 +12,22 @@ export const BurgerIngredients = ({ hardcodeData }) => {
   const handleTabClick = (e) => {
     setCurrent(e);
     if (e === "bun") {
-      bunsRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    } else if (e === "sauce") {
-      saucesRef.current.scrollIntoView({
+      scrollRef.current.scroll({
+        top: 0,
         behavior: "smooth",
-        block: "nearest",
+      });
+    } else if (e === "sauce") {
+      scrollRef.current.scroll({
+        top: bunsRef.current.offsetHeight + 40,
+        behavior: "smooth",
       });
     } else {
-      toppingsRef.current.scrollIntoView({
+      scrollRef.current.scroll({
+        top:
+          bunsRef.current.offsetHeight +
+          saucesRef.current.offsetHeight +
+          40 * 2,
         behavior: "smooth",
-        block: "nearest",
       });
     }
   };
