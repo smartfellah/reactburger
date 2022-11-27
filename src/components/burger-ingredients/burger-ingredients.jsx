@@ -1,5 +1,5 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { IngredientsItem } from "./ingredients-item/ingredients-item";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { ingredientsDataType } from "../../utils/types";
@@ -8,9 +8,9 @@ export const BurgerIngredients = ({ hardcodeData }) => {
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
   const toppingsRef = useRef(null);
+  const scrollRef = useRef(null);
   const handleTabClick = (e) => {
     setCurrent(e);
-    console.log(saucesRef.current);
     if (e === "bun") {
       bunsRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
     } else if (e === "sauce") {
@@ -25,6 +25,21 @@ export const BurgerIngredients = ({ hardcodeData }) => {
       });
     }
   };
+  const ingredientScrollHandler = (e) => {
+    const scrollPos = scrollRef.current.scrollTop;
+    const bunHeight = bunsRef.current.offsetHeight;
+    const sauceHeight = saucesRef.current.offsetHeight;
+    if (scrollPos < bunHeight + 40) setCurrent("bun");
+    else if (scrollPos < sauceHeight + bunHeight + 40 * 2) setCurrent("sauce");
+    else setCurrent("topping");
+  };
+  useEffect(() => {
+    const scrolledNode = scrollRef.current;
+    scrollRef.current.addEventListener("scroll", ingredientScrollHandler);
+    return () => {
+      scrolledNode.removeEventListener("scroll", ingredientScrollHandler);
+    };
+  }, []);
   return (
     <article
       className={`text text_type_main-default ${ingredientsStyles["IngredientsColumn"]}`}
@@ -53,7 +68,10 @@ export const BurgerIngredients = ({ hardcodeData }) => {
           Начинки
         </Tab>
       </section>
-      <div className={`${ingredientsStyles["IngredientsColumn-Body"]}`}>
+      <div
+        ref={scrollRef}
+        className={`${ingredientsStyles["IngredientsColumn-Body"]}`}
+      >
         <section
           ref={bunsRef}
           className={`${ingredientsStyles["IngredientsArea"]}`}
