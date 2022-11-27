@@ -1,12 +1,18 @@
-.NavBar {
+.Header {
   height: 88px;
   margin-inline: 2%;
   margin-top: var(--l-1);
-  padding-inline: 20rem;
   display: flex;
   align-items: center;
   justify-content: stretch;
   background-color: var(--bg-secondary);
+}
+.NavBar {
+  width: 1280px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
 }
 .MenuBox {
   display: flex;

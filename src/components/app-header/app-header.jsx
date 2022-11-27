@@ -8,16 +8,16 @@ import {
 
 export const AppHeader = () => {
   return (
-    <div className={` text text_type_main-default ${headerStyles["Header"]}`}>
-      <div className={`${headerStyles["NavBar"]}`}>
+    <div className={`${headerStyles["Header"]}`}>
+      <div className={`${headerStyles["NavBar"]} `}>
         <div className={`${headerStyles["MenuBox"]}`}>
           <a className={`${headerStyles["MenuBox-Item-Active"]}`} href="#">
             <BurgerIcon type="primary" />
-            <p>Конструктор</p>
+            <p className="text text_type_main-default">Конструктор</p>
           </a>
           <a className={`${headerStyles["MenuBox-Item"]}`} href="#">
             <ListIcon type="secondary" />
-            <p>Лента заказов</p>
+            <p className="text text_type_main-default">Лента заказов</p>
           </a>
         </div>
         <div className={`${headerStyles["LogoBox"]}`}>
@@ -26,7 +26,7 @@ export const AppHeader = () => {
         <div className={`${headerStyles["ProfileBox"]}`}>
           <a className={`${headerStyles["ProfileBox-Item"]}`} href="#">
             <ProfileIcon type="secondary" />
-            <p>Личный кабинет</p>
+            <p className="text text_type_main-default">Личный кабинет</p>
           </a>
         </div>
       </div>
