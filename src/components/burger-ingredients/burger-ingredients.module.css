@@ -3,7 +3,6 @@
   flex-flow: column;
   max-width: 600px;
   max-height: 912px;
-  margin-left: 380px;
   margin-block: var(--l-1);
 }
 .IngredientsColumn-Header {
