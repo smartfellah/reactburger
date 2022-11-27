@@ -1,31 +1,29 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { IngredientsItem } from "./ingredients-item/ingredients-item";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { ingredientsDataType } from "../../utils/types";
 export const BurgerIngredients = ({ hardcodeData }) => {
   const [current, setCurrent] = useState("bun");
+  const bunsRef = useRef(null);
+  const saucesRef = useRef(null);
+  const toppingsRef = useRef(null);
   const handleTabClick = (e) => {
     setCurrent(e);
+    console.log(saucesRef.current);
     if (e === "bun") {
-      document.getElementById("buns").scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "start",
-      });
+      bunsRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
     } else if (e === "sauce") {
-      const target = document.getElementById("sauces");
-      target.scrollIntoView({
+      saucesRef.current.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
-        inline: "start",
       });
-    } else
-      document.getElementById("toppings").scrollIntoView({
+    } else {
+      toppingsRef.current.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
-        inline: "start",
       });
+    }
   };
   return (
     <article
@@ -57,7 +55,7 @@ export const BurgerIngredients = ({ hardcodeData }) => {
       </section>
       <div className={`${ingredientsStyles["IngredientsColumn-Body"]}`}>
         <section
-          id="buns"
+          ref={bunsRef}
           className={`${ingredientsStyles["IngredientsArea"]}`}
         >
           <h2
@@ -81,7 +79,7 @@ export const BurgerIngredients = ({ hardcodeData }) => {
           </div>
         </section>
         <section
-          id="sauces"
+          ref={saucesRef}
           className={`${ingredientsStyles["IngredientsArea"]}`}
         >
           <h2
@@ -105,7 +103,7 @@ export const BurgerIngredients = ({ hardcodeData }) => {
           </div>
         </section>
         <section
-          id="toppings"
+          ref={toppingsRef}
           className={`${ingredientsStyles["IngredientsArea"]}`}
         >
           <h2
