@@ -1,13 +1,38 @@
-.ConstructorList {
-  min-width: 600px;
-  margin-top: var(--l-4);
+.ConstructorColumn {
+  padding-top: var(--l-4);
+  min-width: 240px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-items: flex-end;
+}
+.Bun {
+  min-width: 536px;
   padding-inline: var(--s-4);
+}
+.ConstructorList {
+  padding-inline: var(--s-4);
+  max-height: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) var(--bg-secondary);
 }
 .ListElement {
   display: flex;
-  max-height: var(--l-3);
+  align-items: center;
+  justify-content: end;
+}
+.OrderSection {
+  display: flex;
+  padding-top: var(--l-1);
+  padding-inline: var(--s-4);
+  gap: var(--l-1);
+}
+.TotalPrice {
+  display: flex;
+  gap: 10px;
   align-items: center;
 }
