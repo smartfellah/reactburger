@@ -9,10 +9,10 @@ function App() {
   return (
     <div className="App">
       <AppHeader></AppHeader>
-      <div className="ColumnsWrapper">
+      <main className="ColumnsWrapper">
         <BurgerIngredients></BurgerIngredients>
         <BurgerConstructor></BurgerConstructor>
-      </div>
+      </main>
     </div>
   );
 }

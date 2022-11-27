@@ -28,14 +28,14 @@ export const BurgerIngredients = () => {
       });
   };
   return (
-    <div
+    <article
       className={`text text_type_main-default ${ingredientsStyles["IngredientsColumn"]}`}
     >
-      <div
+      <header
         className={`text text_type_main-large ${ingredientsStyles["IngredientsColumn-Header"]}`}
       >
         <h1>Соберите бургер</h1>
-      </div>
+      </header>
       <div className={`${ingredientsStyles["IngredientsColumn-Tab"]}`}>
         <Tab value="bun" active={current === "bun"} onClick={handleTabClick}>
           Булки
@@ -56,7 +56,10 @@ export const BurgerIngredients = () => {
         </Tab>
       </div>
       <div className={`${ingredientsStyles["IngredientsColumn-Body"]}`}>
-        <div id="buns" className={`${ingredientsStyles["IngredientsArea"]}`}>
+        <section
+          id="buns"
+          className={`${ingredientsStyles["IngredientsArea"]}`}
+        >
           <h2
             className={`text text_type_main-medium ${ingredientsStyles["IngredientsArea-Header"]}`}
           >
@@ -76,8 +79,11 @@ export const BurgerIngredients = () => {
                 );
               })}
           </div>
-        </div>
-        <div id="sauces" className={`${ingredientsStyles["IngredientsArea"]}`}>
+        </section>
+        <section
+          id="sauces"
+          className={`${ingredientsStyles["IngredientsArea"]}`}
+        >
           <h2
             className={`text text_type_main-medium ${ingredientsStyles["IngredientsArea-Header"]}`}
           >
@@ -97,8 +103,8 @@ export const BurgerIngredients = () => {
                 );
               })}
           </div>
-        </div>
-        <div
+        </section>
+        <section
           id="toppings"
           className={`${ingredientsStyles["IngredientsArea"]}`}
         >
@@ -121,8 +127,8 @@ export const BurgerIngredients = () => {
                 );
               })}
           </div>
-        </div>
+        </section>
       </div>
-    </div>
+    </article>
   );
 };

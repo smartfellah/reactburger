@@ -8,8 +8,8 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 import { hardcodeData } from "../../utils/hardcodeData";
 export const BurgerConstructor = () => {
   return (
-    <div className={`${burgerConstructorStyles["ConstructorColumn"]}`}>
-      <div className={`${burgerConstructorStyles["Bun"]}`}>
+    <article className={`${burgerConstructorStyles["ConstructorColumn"]}`}>
+      <section className={`${burgerConstructorStyles["Bun"]}`}>
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -21,8 +21,8 @@ export const BurgerConstructor = () => {
             }).image
           }
         />
-      </div>
-      <div className={`${burgerConstructorStyles["ConstructorList"]}`}>
+      </section>
+      <section className={`${burgerConstructorStyles["ConstructorList"]}`}>
         {hardcodeData
           .filter((elem) => {
             return elem.type !== "bun";
@@ -43,8 +43,8 @@ export const BurgerConstructor = () => {
               </div>
             );
           })}
-      </div>
-      <div className={`${burgerConstructorStyles["Bun"]}`}>
+      </section>
+      <section className={`${burgerConstructorStyles["Bun"]}`}>
         <ConstructorElement
           type="bottom"
           isLocked={true}
@@ -56,8 +56,8 @@ export const BurgerConstructor = () => {
             }).image
           }
         />
-      </div>
-      <div className={`${burgerConstructorStyles["OrderSection"]}`}>
+      </section>
+      <section className={`${burgerConstructorStyles["OrderSection"]}`}>
         <div className={`${burgerConstructorStyles["TotalPrice"]}`}>
           <p className="text text_type_digits-medium">610</p>
           <CurrencyIcon></CurrencyIcon>
@@ -65,7 +65,7 @@ export const BurgerConstructor = () => {
         <Button htmlType="button" type="primary" size="large">
           Оформить заказ
         </Button>
-      </div>
-    </div>
+      </section>
+    </article>
   );
 };
