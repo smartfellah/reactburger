@@ -6,7 +6,7 @@
   flex-flow: column;
   gap: var(--s-1);
 }
-.IngredientImage {
+.IngredientImg {
   max-height: var(--l-5);
   margin-inline: var(--s-4);
 }
@@ -14,4 +14,7 @@
   display: flex;
   justify-content: center;
   gap: var(--s-2);
+}
+.IngredientName {
+  flex: 1 1 auto;
 }

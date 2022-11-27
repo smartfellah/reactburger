@@ -30,6 +30,7 @@
   text-align: left;
 }
 .IngredientsArea-List {
+  padding-inline: var(--s-4);
   display: flex;
   gap: var(--s-6);
   flex-wrap: wrap;
