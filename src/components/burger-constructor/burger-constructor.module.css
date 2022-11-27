@@ -1,0 +1,13 @@
+.ConstructorList {
+  min-width: 600px;
+  margin-top: var(--l-4);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-inline: var(--s-4);
+}
+.ListElement {
+  display: flex;
+  max-height: var(--l-3);
+  align-items: center;
+}
