@@ -36,7 +36,7 @@ export const BurgerIngredients = () => {
       >
         <h1>Соберите бургер</h1>
       </header>
-      <div className={`${ingredientsStyles["IngredientsColumn-Tab"]}`}>
+      <section className={`${ingredientsStyles["IngredientsColumn-Tab"]}`}>
         <Tab value="bun" active={current === "bun"} onClick={handleTabClick}>
           Булки
         </Tab>
@@ -54,7 +54,7 @@ export const BurgerIngredients = () => {
         >
           Начинки
         </Tab>
-      </div>
+      </section>
       <div className={`${ingredientsStyles["IngredientsColumn-Body"]}`}>
         <section
           id="buns"
