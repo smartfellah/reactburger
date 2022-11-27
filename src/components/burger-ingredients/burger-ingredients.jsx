@@ -2,7 +2,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { IngredientsItem } from "./ingredients-item/ingredients-item";
 import ingredientsStyles from "./burger-ingredients.module.css";
-import PropTypes from "prop-types";
+import { ingredientsDataType } from "../../utils/types";
 export const BurgerIngredients = ({ hardcodeData }) => {
   const [current, setCurrent] = useState("bun");
   const handleTabClick = (e) => {
@@ -74,7 +74,7 @@ export const BurgerIngredients = ({ hardcodeData }) => {
                 return (
                   <IngredientsItem
                     key={ingredient["_id"]}
-                    data={ingredient}
+                    ingredientData={ingredient}
                   ></IngredientsItem>
                 );
               })}
@@ -98,7 +98,7 @@ export const BurgerIngredients = ({ hardcodeData }) => {
                 return (
                   <IngredientsItem
                     key={ingredient["_id"]}
-                    data={ingredient}
+                    ingredientData={ingredient}
                   ></IngredientsItem>
                 );
               })}
@@ -122,7 +122,7 @@ export const BurgerIngredients = ({ hardcodeData }) => {
                 return (
                   <IngredientsItem
                     key={ingredient["_id"]}
-                    data={ingredient}
+                    ingredientData={ingredient}
                   ></IngredientsItem>
                 );
               })}
@@ -132,21 +132,4 @@ export const BurgerIngredients = ({ hardcodeData }) => {
     </article>
   );
 };
-BurgerIngredients.propTypes = {
-  hardcodeData: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    })
-  ),
-};
+BurgerIngredients.propTypes = ingredientsDataType;
