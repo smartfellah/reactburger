@@ -1,9 +1,9 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { hardcodeData } from "../../utils/hardcodeData";
 import { useState } from "react";
 import { IngredientsItem } from "./ingredients-item/ingredients-item";
 import ingredientsStyles from "./burger-ingredients.module.css";
-export const BurgerIngredients = () => {
+import PropTypes from "prop-types";
+export const BurgerIngredients = ({ hardcodeData }) => {
   const [current, setCurrent] = useState("bun");
   const handleTabClick = (e) => {
     setCurrent(e);
@@ -131,4 +131,22 @@ export const BurgerIngredients = () => {
       </div>
     </article>
   );
+};
+BurgerIngredients.propTypes = {
+  hardcodeData: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+      type: PropTypes.string,
+      proteins: PropTypes.number,
+      fat: PropTypes.number,
+      carbohydrates: PropTypes.number,
+      calories: PropTypes.number,
+      price: PropTypes.number,
+      image: PropTypes.string,
+      image_mobile: PropTypes.string,
+      image_large: PropTypes.string,
+      __v: PropTypes.number,
+    })
+  ),
 };
