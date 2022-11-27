@@ -3,7 +3,7 @@
   flex-flow: column;
   max-width: 600px;
   max-height: 912px;
-  margin-block: var(--l-1);
+  padding-block: var(--l-1);
 }
 .IngredientsColumn-Header {
   text-align: left;
@@ -17,7 +17,7 @@
   flex-flow: column;
   gap: var(--l-1);
   margin-top: var(--l-1);
-  overflow: scroll;
+  overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: var(--text-secondary) var(--bg-secondary);
 }

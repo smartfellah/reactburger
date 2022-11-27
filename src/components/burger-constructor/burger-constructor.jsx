@@ -33,7 +33,11 @@ export const BurgerConstructor = ({ hardcodeData }) => {
                 key={ingredient["_id"]}
                 className={`${burgerConstructorStyles["ListElement"]}`}
               >
-                <DragIcon></DragIcon>
+                <div
+                  className={`${burgerConstructorStyles["DragIconWrapper"]}`}
+                >
+                  <DragIcon />
+                </div>
                 <ConstructorElement
                   isLocked={false}
                   text={ingredient.name}

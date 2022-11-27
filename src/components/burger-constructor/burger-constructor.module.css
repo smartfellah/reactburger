@@ -1,29 +1,42 @@
 .ConstructorColumn {
   padding-top: var(--l-4);
+  padding-left: var(--s-4);
   min-width: 240px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: flex-end;
 }
 .Bun {
   min-width: 536px;
-  padding-inline: var(--s-4);
+  padding-left: var(--s-8);
+  padding-right: var(--s-4);
 }
 .ConstructorList {
-  padding-inline: var(--s-4);
   max-height: 440px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  overflow: scroll;
+  overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: var(--text-secondary) var(--bg-secondary);
+}
+.ConstructorList::-webkit-scrollbar {
+  width: var(--s-2);
+  height: var(--s-1);
+  background-color: var(--bg-secondary);
+}
+.ConstructorList::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+}
+.ConstructorList::-webkit-scrollbar-corner {
+  background-color: var(--bg-secondary);
 }
 .ListElement {
   display: flex;
   align-items: center;
-  justify-content: end;
+}
+.DragIconWrapper {
+  width: 32px;
 }
 .OrderSection {
   display: flex;
