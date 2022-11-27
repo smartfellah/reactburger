@@ -1,10 +1,6 @@
-import {
-  CurrencyIcon,
-  Counter,
-  Tab,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { hardcodeData } from "../../utils/hardcodeData";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { IngredientsItem } from "./ingredients-item/ingredients-item";
 import ingredientsStyles from "./burger-ingredients.module.css";
 export const BurgerIngredients = () => {
