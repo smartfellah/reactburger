@@ -5,7 +5,8 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyles from "./burger-constructor.module.css";
-import { ingredientsDataType } from "../../utils/types";
+import { ingredientType } from "../../utils/types";
+import PropTypes from "prop-types";
 export const BurgerConstructor = ({ hardcodeData }) => {
   return (
     <article className={`${burgerConstructorStyles["ConstructorColumn"]}`}>
@@ -73,4 +74,6 @@ export const BurgerConstructor = ({ hardcodeData }) => {
     </article>
   );
 };
-BurgerConstructor.propTypes = ingredientsDataType;
+BurgerConstructor.propTypes = {
+  hardcodeData: PropTypes.arrayOf(ingredientType),
+};
