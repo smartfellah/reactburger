@@ -13,6 +13,3 @@ export const ingredientType = PropTypes.shape({
   image_large: PropTypes.string,
   __v: PropTypes.number,
 }).isRequired;
-export const ingredientsDataType = {
-  hardcodeData: PropTypes.arrayOf(ingredientType),
-};
