@@ -1,0 +1,51 @@
+.ConstructorColumn {
+  padding-top: var(--l-4);
+  padding-left: var(--s-4);
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.Bun {
+  min-width: 536px;
+  padding-left: var(--s-8);
+  padding-right: var(--s-4);
+}
+.ConstructorList {
+  max-height: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) var(--bg-secondary);
+}
+.ConstructorList::-webkit-scrollbar {
+  width: var(--s-2);
+  height: var(--s-1);
+  background-color: var(--bg-secondary);
+}
+.ConstructorList::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+}
+.ConstructorList::-webkit-scrollbar-corner {
+  background-color: var(--bg-secondary);
+}
+.ListElement {
+  display: flex;
+  align-items: center;
+}
+.DragIconWrapper {
+  width: 32px;
+}
+.OrderSection {
+  display: flex;
+  padding-top: var(--l-1);
+  padding-inline: var(--s-4);
+  gap: var(--l-1);
+}
+.TotalPrice {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

@@ -1,0 +1,51 @@
+.IngredientsColumn {
+  display: flex;
+  flex-flow: column;
+  max-width: 600px;
+  max-height: 912px;
+  padding-block: var(--l-1);
+}
+.IngredientsColumn-Header {
+  text-align: left;
+}
+.IngredientsColumn-Tab {
+  display: flex;
+  margin-top: var(--s-5);
+}
+.IngredientsColumn-Body {
+  display: flex;
+  flex-flow: column;
+  margin-top: var(--l-1);
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) var(--bg-secondary);
+}
+.IngredientsColumn-Body::-webkit-scrollbar {
+  width: var(--s-2);
+  height: var(--s-1);
+  background-color: var(--bg-secondary);
+}
+.IngredientsColumn-Body::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+}
+.IngredientsColumn-Body::-webkit-scrollbar-corner {
+  background-color: var(--bg-secondary);
+}
+.IngredientsArea {
+  display: flex;
+  flex-flow: column;
+  gap: var(--s-6);
+  padding-bottom: var(--l-1);
+}
+.IngredientsArea:last-child {
+  padding-bottom: 0;
+}
+.IngredientsArea-Header {
+  text-align: left;
+}
+.IngredientsArea-List {
+  padding-left: var(--s-4);
+  display: flex;
+  gap: var(--s-6);
+  flex-wrap: wrap;
+}
