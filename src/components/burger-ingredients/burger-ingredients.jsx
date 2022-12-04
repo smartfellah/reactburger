@@ -1,6 +1,7 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useRef, useEffect } from "react";
 import { IngredientsItem } from "./ingredients-item/ingredients-item";
+import { IngredientsArea } from "./ingredients-area/ingredients-area";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { ingredientType } from "../../utils/types";
 import PropTypes from "prop-types";
@@ -76,78 +77,21 @@ export const BurgerIngredients = ({ ingredientsData }) => {
         ref={scrollRef}
         className={`${ingredientsStyles["IngredientsColumn-Body"]}`}
       >
-        <section
-          ref={bunsRef}
-          className={`${ingredientsStyles["IngredientsArea"]}`}
-        >
-          <h2
-            className={`text text_type_main-medium ${ingredientsStyles["IngredientsArea-Header"]}`}
-          >
-            Булки
-          </h2>
-          <div className={`${ingredientsStyles["IngredientsArea-List"]}`}>
-            {ingredientsData
-              .filter((elem) => {
-                return elem.type === "bun";
-              })
-              .map((ingredient) => {
-                return (
-                  <IngredientsItem
-                    key={ingredient["_id"]}
-                    ingredientData={ingredient}
-                  ></IngredientsItem>
-                );
-              })}
-          </div>
-        </section>
-        <section
-          ref={saucesRef}
-          className={`${ingredientsStyles["IngredientsArea"]}`}
-        >
-          <h2
-            className={`text text_type_main-medium ${ingredientsStyles["IngredientsArea-Header"]}`}
-          >
-            Соусы
-          </h2>
-          <div className={`${ingredientsStyles["IngredientsArea-List"]}`}>
-            {ingredientsData
-              .filter((elem) => {
-                return elem.type === "sauce";
-              })
-              .map((ingredient) => {
-                return (
-                  <IngredientsItem
-                    key={ingredient["_id"]}
-                    ingredientData={ingredient}
-                  ></IngredientsItem>
-                );
-              })}
-          </div>
-        </section>
-        <section
-          ref={toppingsRef}
-          className={`${ingredientsStyles["IngredientsArea"]}`}
-        >
-          <h2
-            className={`text text_type_main-medium ${ingredientsStyles["IngredientsArea-Header"]}`}
-          >
-            Начинка
-          </h2>
-          <div className={`${ingredientsStyles["IngredientsArea-List"]}`}>
-            {ingredientsData
-              .filter((elem) => {
-                return elem.type === "main";
-              })
-              .map((ingredient) => {
-                return (
-                  <IngredientsItem
-                    key={ingredient["_id"]}
-                    ingredientData={ingredient}
-                  ></IngredientsItem>
-                );
-              })}
-          </div>
-        </section>
+        <IngredientsArea
+          areaRef={bunsRef}
+          type="bun"
+          ingredientsData={ingredientsData}
+        />
+        <IngredientsArea
+          areaRef={saucesRef}
+          type="sauce"
+          ingredientsData={ingredientsData}
+        />
+        <IngredientsArea
+          areaRef={toppingsRef}
+          type="main"
+          ingredientsData={ingredientsData}
+        />
       </div>
     </article>
   );

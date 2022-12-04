@@ -1,0 +1,18 @@
+.IngredientsArea {
+  display: flex;
+  flex-flow: column;
+  gap: var(--s-6);
+  padding-bottom: var(--l-1);
+}
+.IngredientsArea:last-child {
+  padding-bottom: 0;
+}
+.IngredientsArea-Header {
+  text-align: left;
+}
+.IngredientsArea-List {
+  padding-left: var(--s-4);
+  display: flex;
+  gap: var(--s-6);
+  flex-wrap: wrap;
+}
