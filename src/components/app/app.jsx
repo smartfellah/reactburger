@@ -4,6 +4,7 @@ import { AppHeader } from "../app-header/app-header";
 import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor";
 import { ModalOverlay } from "../modal-overlay/modal-overlay";
+import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import { Modal } from "../modal/modal";
 
 function App() {
@@ -11,9 +12,11 @@ function App() {
   const [ingredientsData, setIngredientsData] = useState([]);
   const [dataIsLoading, setDataIsLoading] = useState(true);
   const [dataHasError, setDataHasError] = useState(false);
+  const [details, setDetails] = useState({});
   const [showDetails, setShowDetails] = useState(false);
-  const toggleShowDetails = () => {
+  const toggleShowDetails = (passedDetails) => {
     setShowDetails(!showDetails);
+    setDetails(passedDetails);
   };
   const getData = async () => {
     try {
@@ -45,7 +48,12 @@ function App() {
       {showDetails ? (
         <>
           <ModalOverlay />
-          <Modal toggleShowDetails={toggleShowDetails}></Modal>
+          <Modal
+            modalTitle={"Детали ингредиента"}
+            toggleShowDetails={toggleShowDetails}
+          >
+            <IngredientDetails details={details}></IngredientDetails>
+          </Modal>
         </>
       ) : null}
     </div>

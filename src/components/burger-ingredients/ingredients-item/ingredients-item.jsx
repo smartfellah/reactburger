@@ -8,10 +8,20 @@ export const IngredientsItem = ({
   singleIngredientData,
   toggleShowDetails,
 }) => {
+  const handleClick = (e) => {
+    toggleShowDetails({
+      image: singleIngredientData.image_large,
+      name: singleIngredientData.name,
+      calories: singleIngredientData.calories,
+      proteins: singleIngredientData.proteins,
+      fat: singleIngredientData.fat,
+      carbohydrates: singleIngredientData.carbohydrates,
+    });
+  };
   return (
     <div
       className={`${ingredientItemStyles["IngredientContainer"]}`}
-      onClick={toggleShowDetails}
+      onClick={handleClick}
     >
       <Counter count={1} size="default" extraClass="m-1" />
       <div className={`${ingredientItemStyles["IngredientImg"]}`}>
