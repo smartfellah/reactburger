@@ -4,7 +4,7 @@ import { IngredientsItem } from "./ingredients-item/ingredients-item";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { ingredientType } from "../../utils/types";
 import PropTypes from "prop-types";
-export const BurgerIngredients = ({ hardcodeData }) => {
+export const BurgerIngredients = ({ ingredientsData }) => {
   const [current, setCurrent] = useState("bun");
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
@@ -86,7 +86,7 @@ export const BurgerIngredients = ({ hardcodeData }) => {
             Булки
           </h2>
           <div className={`${ingredientsStyles["IngredientsArea-List"]}`}>
-            {hardcodeData
+            {ingredientsData
               .filter((elem) => {
                 return elem.type === "bun";
               })
@@ -110,7 +110,7 @@ export const BurgerIngredients = ({ hardcodeData }) => {
             Соусы
           </h2>
           <div className={`${ingredientsStyles["IngredientsArea-List"]}`}>
-            {hardcodeData
+            {ingredientsData
               .filter((elem) => {
                 return elem.type === "sauce";
               })
@@ -134,7 +134,7 @@ export const BurgerIngredients = ({ hardcodeData }) => {
             Начинка
           </h2>
           <div className={`${ingredientsStyles["IngredientsArea-List"]}`}>
-            {hardcodeData
+            {ingredientsData
               .filter((elem) => {
                 return elem.type === "main";
               })
@@ -153,5 +153,5 @@ export const BurgerIngredients = ({ hardcodeData }) => {
   );
 };
 BurgerIngredients.propTypes = {
-  hardcodeData: PropTypes.arrayOf(ingredientType),
+  ingredientsData: PropTypes.arrayOf(ingredientType),
 };

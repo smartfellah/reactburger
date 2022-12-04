@@ -7,7 +7,7 @@ import {
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import { ingredientType } from "../../utils/types";
 import PropTypes from "prop-types";
-export const BurgerConstructor = ({ hardcodeData }) => {
+export const BurgerConstructor = ({ ingredientsData }) => {
   return (
     <article className={`${burgerConstructorStyles["ConstructorColumn"]}`}>
       <section className={`${burgerConstructorStyles["Bun"]}`}>
@@ -17,14 +17,14 @@ export const BurgerConstructor = ({ hardcodeData }) => {
           text="Краторная булка N-200i (верх)"
           price={200}
           thumbnail={
-            hardcodeData.find((elem) => {
+            ingredientsData.find((elem) => {
               return elem.name === "Краторная булка N-200i";
             }).image
           }
         />
       </section>
       <section className={`${burgerConstructorStyles["ConstructorList"]}`}>
-        {hardcodeData
+        {ingredientsData
           .filter((elem) => {
             return elem.type !== "bun";
           })
@@ -56,7 +56,7 @@ export const BurgerConstructor = ({ hardcodeData }) => {
           text="Краторная булка N-200i (низ)"
           price={200}
           thumbnail={
-            hardcodeData.find((elem) => {
+            ingredientsData.find((elem) => {
               return elem.name === "Краторная булка N-200i";
             }).image
           }
@@ -75,5 +75,5 @@ export const BurgerConstructor = ({ hardcodeData }) => {
   );
 };
 BurgerConstructor.propTypes = {
-  hardcodeData: PropTypes.arrayOf(ingredientType),
+  ingredientsData: PropTypes.arrayOf(ingredientType),
 };
