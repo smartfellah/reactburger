@@ -11,6 +11,10 @@ function App() {
   const [ingredientsData, setIngredientsData] = useState([]);
   const [dataIsLoading, setDataIsLoading] = useState(true);
   const [dataHasError, setDataHasError] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const toggleShowDetails = () => {
+    setShowDetails(!showDetails);
+  };
   const getData = async () => {
     try {
       const response = await fetch(`${dataURL}/ingredients`);
@@ -31,12 +35,19 @@ function App() {
       <AppHeader />
       {!dataHasError && !dataIsLoading ? (
         <main className={`${appStyles.ColumnsWrapper}`}>
-          <BurgerIngredients ingredientsData={ingredientsData} />
+          <BurgerIngredients
+            ingredientsData={ingredientsData}
+            toggleShowDetails={toggleShowDetails}
+          />
           <BurgerConstructor ingredientsData={ingredientsData} />
         </main>
       ) : null}
-      <ModalOverlay />
-      <Modal></Modal>
+      {showDetails ? (
+        <>
+          <ModalOverlay />
+          <Modal toggleShowDetails={toggleShowDetails}></Modal>
+        </>
+      ) : null}
     </div>
   );
 }

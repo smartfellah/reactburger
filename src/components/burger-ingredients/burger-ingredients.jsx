@@ -4,7 +4,7 @@ import { IngredientsArea } from "./ingredients-area/ingredients-area";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { ingredientType } from "../../utils/types";
 import PropTypes from "prop-types";
-export const BurgerIngredients = ({ ingredientsData }) => {
+export const BurgerIngredients = ({ ingredientsData, toggleShowDetails }) => {
   const [current, setCurrent] = useState("bun");
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
@@ -80,16 +80,19 @@ export const BurgerIngredients = ({ ingredientsData }) => {
           areaRef={bunsRef}
           type="bun"
           ingredientsData={ingredientsData}
+          toggleShowDetails={toggleShowDetails}
         />
         <IngredientsArea
           areaRef={saucesRef}
           type="sauce"
           ingredientsData={ingredientsData}
+          toggleShowDetails={toggleShowDetails}
         />
         <IngredientsArea
           areaRef={toppingsRef}
           type="main"
           ingredientsData={ingredientsData}
+          toggleShowDetails={toggleShowDetails}
         />
       </div>
     </article>
