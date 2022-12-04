@@ -4,7 +4,7 @@ import modalStyles from "./modal.module.css";
 const modalRoot = document.getElementById("modal");
 export const Modal = ({ children, toggleShowDetails, modalTitle }) => {
   const onClose = () => {
-    toggleShowDetails({});
+    toggleShowDetails();
   };
   return ReactDOM.createPortal(
     <div className={`${modalStyles["Modal"]}`}>
