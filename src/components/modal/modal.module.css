@@ -1,0 +1,27 @@
+.Modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Modal-Content {
+  min-width: 720px;
+  min-height: 539px;
+  border-radius: var(--l-1);
+  background-color: var(--bg-primary);
+  padding: var(--l-1);
+  padding-bottom: var(--l-2);
+  display: flex;
+  flex-flow: column;
+}
+.Modal-Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.Modal-Body {
+}

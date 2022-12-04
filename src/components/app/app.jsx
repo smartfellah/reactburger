@@ -3,6 +3,8 @@ import appStyles from "./app.module.css";
 import { AppHeader } from "../app-header/app-header";
 import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor";
+import { ModalOverlay } from "../modal-overlay/modal-overlay";
+import { Modal } from "../modal/modal";
 
 function App() {
   const dataURL = "https://norma.nomoreparties.space/api";
@@ -33,6 +35,8 @@ function App() {
           <BurgerConstructor ingredientsData={ingredientsData} />
         </main>
       ) : null}
+      <ModalOverlay />
+      <Modal></Modal>
     </div>
   );
 }
