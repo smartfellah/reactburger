@@ -1,6 +1,5 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useRef, useEffect } from "react";
-import { IngredientsItem } from "./ingredients-item/ingredients-item";
 import { IngredientsArea } from "./ingredients-area/ingredients-area";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { ingredientType } from "../../utils/types";
