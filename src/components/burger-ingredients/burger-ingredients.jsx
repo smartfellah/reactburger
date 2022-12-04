@@ -3,8 +3,17 @@ import { useState, useRef, useEffect } from "react";
 import { IngredientsArea } from "./ingredients-area/ingredients-area";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { ingredientType } from "../../utils/types";
+import { Modal } from "../modal/modal";
+import { ModalOverlay } from "../modal-overlay/modal-overlay";
+import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import PropTypes from "prop-types";
-export const BurgerIngredients = ({ ingredientsData, toggleShowDetails }) => {
+export const BurgerIngredients = ({ ingredientsData }) => {
+  const [details, setDetails] = useState({});
+  const [showDetails, setShowDetails] = useState(false);
+  const toggleShowDetails = (passedDetails) => {
+    setShowDetails(!showDetails);
+    setDetails(passedDetails);
+  };
   const [current, setCurrent] = useState("bun");
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
@@ -45,57 +54,70 @@ export const BurgerIngredients = ({ ingredientsData, toggleShowDetails }) => {
     };
   }, []);
   return (
-    <article
-      className={`text text_type_main-default ${ingredientsStyles["IngredientsColumn"]}`}
-    >
-      <header
-        className={`text text_type_main-large ${ingredientsStyles["IngredientsColumn-Header"]}`}
+    <>
+      <article
+        className={`text text_type_main-default ${ingredientsStyles["IngredientsColumn"]}`}
       >
-        <h1>Соберите бургер</h1>
-      </header>
-      <section className={`${ingredientsStyles["IngredientsColumn-Tab"]}`}>
-        <Tab value="bun" active={current === "bun"} onClick={handleTabClick}>
-          Булки
-        </Tab>
-        <Tab
-          value="sauce"
-          active={current === "sauce"}
-          onClick={handleTabClick}
+        <header
+          className={`text text_type_main-large ${ingredientsStyles["IngredientsColumn-Header"]}`}
         >
-          Соусы
-        </Tab>
-        <Tab
-          value="topping"
-          active={current === "topping"}
-          onClick={handleTabClick}
+          <h1>Соберите бургер</h1>
+        </header>
+        <section className={`${ingredientsStyles["IngredientsColumn-Tab"]}`}>
+          <Tab value="bun" active={current === "bun"} onClick={handleTabClick}>
+            Булки
+          </Tab>
+          <Tab
+            value="sauce"
+            active={current === "sauce"}
+            onClick={handleTabClick}
+          >
+            Соусы
+          </Tab>
+          <Tab
+            value="topping"
+            active={current === "topping"}
+            onClick={handleTabClick}
+          >
+            Начинки
+          </Tab>
+        </section>
+        <div
+          ref={scrollRef}
+          className={`${ingredientsStyles["IngredientsColumn-Body"]}`}
         >
-          Начинки
-        </Tab>
-      </section>
-      <div
-        ref={scrollRef}
-        className={`${ingredientsStyles["IngredientsColumn-Body"]}`}
-      >
-        <IngredientsArea
-          areaRef={bunsRef}
-          type="bun"
-          ingredientsData={ingredientsData}
-          toggleShowDetails={toggleShowDetails}
-        />
-        <IngredientsArea
-          areaRef={saucesRef}
-          type="sauce"
-          ingredientsData={ingredientsData}
-          toggleShowDetails={toggleShowDetails}
-        />
-        <IngredientsArea
-          areaRef={toppingsRef}
-          type="main"
-          ingredientsData={ingredientsData}
-          toggleShowDetails={toggleShowDetails}
-        />
-      </div>
-    </article>
+          <IngredientsArea
+            areaRef={bunsRef}
+            type="bun"
+            ingredientsData={ingredientsData}
+            toggleShowDetails={toggleShowDetails}
+          />
+          <IngredientsArea
+            areaRef={saucesRef}
+            type="sauce"
+            ingredientsData={ingredientsData}
+            toggleShowDetails={toggleShowDetails}
+          />
+          <IngredientsArea
+            areaRef={toppingsRef}
+            type="main"
+            ingredientsData={ingredientsData}
+            toggleShowDetails={toggleShowDetails}
+          />
+        </div>
+      </article>
+      {showDetails ? (
+        <>
+          <ModalOverlay />
+          <Modal
+            modalTitle={"Детали ингредиента"}
+            toggleShowDetails={toggleShowDetails}
+          >
+            <IngredientDetails details={details}></IngredientDetails>
+          </Modal>
+        </>
+      ) : null}
+    </>
   );
 };
 BurgerIngredients.propTypes = {
