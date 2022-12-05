@@ -4,7 +4,6 @@ import { IngredientsArea } from "./ingredients-area/ingredients-area";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { ingredientType } from "../../utils/types";
 import { Modal } from "../modal/modal";
-import { ModalOverlay } from "../modal-overlay/modal-overlay";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import PropTypes from "prop-types";
 export const BurgerIngredients = ({ ingredientsData }) => {
