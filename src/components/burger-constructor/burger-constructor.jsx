@@ -8,7 +8,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { OrderDetails } from "../order-details/order-details";
 import { Modal } from "../modal/modal";
-import { ModalOverlay } from "../modal-overlay/modal-overlay";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 import { ingredientType } from "../../utils/types";
 export const BurgerConstructor = ({ ingredientsData }) => {
