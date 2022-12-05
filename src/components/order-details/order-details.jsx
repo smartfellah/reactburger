@@ -14,7 +14,7 @@ export const OrderDetails = () => {
         идентификатор заказа
       </p>
       <div className={`${orderDetailsStyles["OrderDetails-Picture"]}`}>
-        <img src={doneIconPath} alt="Z" />
+        <img src={doneIconPath} alt="done" />
       </div>
       <section className={`${orderDetailsStyles["OrderDetails-WaitInfo"]}`}>
         <p className="text text_type_main-default">Ваш заказ начали готовить</p>
