@@ -1,5 +1,7 @@
 import ingredientsAreaStyles from "./ingredients-area.module.css";
 import { IngredientsItem } from "../ingredients-item/ingredients-item";
+import PropTypes from "prop-types";
+import { ingredientType } from "../../../utils/types";
 export const IngredientsArea = ({
   areaRef,
   type,
@@ -35,4 +37,12 @@ export const IngredientsArea = ({
       </div>
     </section>
   );
+};
+
+IngredientsArea.propTypes = {
+  ingredientsData: PropTypes.arrayOf(ingredientType).isRequired,
+  toggleShowDetails: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+  areaRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
 };

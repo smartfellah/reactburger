@@ -4,6 +4,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientItemStyles from "./ingredients-item.module.css";
 import { ingredientType } from "../../../utils/types";
+import { func } from "prop-types";
 export const IngredientsItem = ({
   singleIngredientData,
   toggleShowDetails,
@@ -39,4 +40,7 @@ export const IngredientsItem = ({
     </div>
   );
 };
-IngredientsItem.propTypes = ingredientType;
+IngredientsItem.propTypes = {
+  singleIngredientData: ingredientType.isRequired,
+  toggleShowDetails: func.isRequired,
+};

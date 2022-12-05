@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalOverlay } from "../modal-overlay/modal-overlay";
+import PropTypes from "prop-types";
 import modalStyles from "./modal.module.css";
 import { useEffect } from "react";
 const modalRoot = document.getElementById("modal");
@@ -33,4 +34,10 @@ export const Modal = ({ children, toggleShowDetails, modalTitle }) => {
     </>,
     modalRoot
   );
+};
+Modal.propTypes = {
+  children: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
+  toggleShowDetails: PropTypes.func.isRequired,
+  modalTitle: PropTypes.string,
 };
