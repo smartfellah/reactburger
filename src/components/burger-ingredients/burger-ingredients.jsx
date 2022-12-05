@@ -108,7 +108,6 @@ export const BurgerIngredients = ({ ingredientsData }) => {
       </article>
       {showDetails ? (
         <>
-          <ModalOverlay />
           <Modal
             modalTitle={"Детали ингредиента"}
             toggleShowDetails={toggleShowDetails}

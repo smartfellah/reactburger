@@ -88,7 +88,6 @@ export const BurgerConstructor = ({ ingredientsData }) => {
       </article>
       {showOrder ? (
         <>
-          <ModalOverlay />
           <Modal toggleShowDetails={toggleShowOrder}>
             <OrderDetails></OrderDetails>
           </Modal>
