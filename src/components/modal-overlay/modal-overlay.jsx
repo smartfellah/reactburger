@@ -1,9 +1,12 @@
 import modalOverlayStyles from "./modal-overlay.module.css";
 import ReactDOM from "react-dom";
 const modalRoot = document.getElementById("modal");
-export const ModalOverlay = ({ prop }) => {
+export const ModalOverlay = ({ onClick }) => {
   return ReactDOM.createPortal(
-    <div className={`${modalOverlayStyles["ModalOverlay"]}`}></div>,
+    <div
+      onClick={onClick}
+      className={`${modalOverlayStyles["ModalOverlay"]}`}
+    ></div>,
     modalRoot
   );
 };

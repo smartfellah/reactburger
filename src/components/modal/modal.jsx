@@ -20,17 +20,15 @@ export const Modal = ({ children, toggleShowDetails, modalTitle }) => {
   };
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay></ModalOverlay>
+      <ModalOverlay onClick={onClose}></ModalOverlay>
       <div className={`${modalStyles["Modal"]}`}>
-        <div className={`${modalStyles["Modal-Content"]}`}>
-          <div
-            className={`${modalStyles["Modal-Header"]} text text_type_main-large`}
-          >
-            <h2>{modalTitle}</h2>
-            <CloseIcon onClick={onClose}></CloseIcon>
-          </div>
-          <div className={`${modalStyles["Modal-Body"]}`}>{children}</div>
+        <div
+          className={`${modalStyles["Modal-Header"]} text text_type_main-large`}
+        >
+          <h2>{modalTitle}</h2>
+          <CloseIcon onClick={onClose}></CloseIcon>
         </div>
+        <div className={`${modalStyles["Modal-Body"]}`}>{children}</div>
       </div>
     </>,
     modalRoot
