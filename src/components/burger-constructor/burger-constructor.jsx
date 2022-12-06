@@ -86,7 +86,7 @@ export const BurgerConstructor = ({ ingredientsData }) => {
         </section>
       </article>
       {showOrder ? (
-        <Modal toggleShowDetails={toggleShowOrder}>
+        <Modal closePopup={toggleShowOrder}>
           <OrderDetails></OrderDetails>
         </Modal>
       ) : null}

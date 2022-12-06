@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 import modalStyles from "./modal.module.css";
 import { useEffect } from "react";
 const modalRoot = document.getElementById("modal");
-export const Modal = ({ children, toggleShowDetails, modalTitle }) => {
+export const Modal = ({ children, closePopup, modalTitle }) => {
   useEffect(() => {
     const onEsc = (e) => {
-      e.key === "Escape" && onClose();
+      e.key === "Escape" && closePopup();
     };
 
     document.addEventListener("keydown", onEsc);
@@ -16,18 +16,15 @@ export const Modal = ({ children, toggleShowDetails, modalTitle }) => {
       document.removeEventListener("keydown", onEsc);
     };
   });
-  const onClose = () => {
-    toggleShowDetails();
-  };
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClick={onClose}></ModalOverlay>
+      <ModalOverlay onClick={closePopup}></ModalOverlay>
       <div className={`${modalStyles["Modal"]}`}>
         <div
           className={`${modalStyles["Modal-Header"]} text text_type_main-large`}
         >
           <h2>{modalTitle}</h2>
-          <CloseIcon onClick={onClose}></CloseIcon>
+          <CloseIcon onClick={closePopup}></CloseIcon>
         </div>
         <div className={`${modalStyles["Modal-Body"]}`}>{children}</div>
       </div>
@@ -38,6 +35,6 @@ export const Modal = ({ children, toggleShowDetails, modalTitle }) => {
 Modal.propTypes = {
   children: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     .isRequired,
-  toggleShowDetails: PropTypes.func.isRequired,
+  closePopup: PropTypes.func.isRequired,
   modalTitle: PropTypes.string,
 };

@@ -109,7 +109,7 @@ export const BurgerIngredients = ({ ingredientsData }) => {
         <>
           <Modal
             modalTitle={"Детали ингредиента"}
-            toggleShowDetails={toggleShowDetails}
+            closePopup={toggleShowDetails}
           >
             <IngredientDetails details={details}></IngredientDetails>
           </Modal>
