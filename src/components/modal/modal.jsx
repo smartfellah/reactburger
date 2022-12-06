@@ -18,13 +18,13 @@ export const Modal = ({ children, closePopup, modalTitle }) => {
   });
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClick={closePopup}></ModalOverlay>
+      <ModalOverlay onClick={closePopup} />
       <div className={`${modalStyles["Modal"]}`}>
         <div
           className={`${modalStyles["Modal-Header"]} text text_type_main-large`}
         >
           <h2>{modalTitle}</h2>
-          <CloseIcon onClick={closePopup}></CloseIcon>
+          <CloseIcon onClick={closePopup} />
         </div>
         <div className={`${modalStyles["Modal-Body"]}`}>{children}</div>
       </div>
