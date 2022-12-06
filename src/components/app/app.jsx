@@ -12,11 +12,12 @@ function App() {
   const getData = async () => {
     try {
       const response = await fetch(`${dataURL}/ingredients`);
+      if (!response.ok) throw new Error(response.status);
       const dataResponse = await response.json();
       setIngredientsData(dataResponse.data);
-    } catch {
+    } catch (error) {
       setDataHasError(true);
-      alert("Ошибка при загрузке данных");
+      alert("Ошибка при загрузке данных: " + error);
     } finally {
       setDataIsLoading(false);
     }
