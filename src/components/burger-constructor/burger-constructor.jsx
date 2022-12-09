@@ -42,7 +42,10 @@ export const BurgerConstructor = () => {
             return elem["_id"];
           }
         );
-        ingredientsToSend.push(constructorState.bun);
+        console.log(constructorState.bun.name);
+        constructorState.bun.name &&
+          ingredientsToSend.push(constructorState.bun["_id"]);
+        console.log(ingredientsToSend);
         if (!ingredientsToSend.length) {
           throw new Error("пустой заказ");
         }
@@ -91,7 +94,7 @@ export const BurgerConstructor = () => {
           {constructorState.usedIngredients.map((ingredient) => {
             return (
               <div
-                key={ingredient["_id"]}
+                key={ingredient.Uid}
                 className={`${burgerConstructorStyles["ListElement"]}`}
               >
                 <div
