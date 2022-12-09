@@ -1,20 +1,36 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
+
+//Context
+import { ConstructorContext } from "../../context/constructor-context";
+
+//UI elements
 import {
   CurrencyIcon,
   DragIcon,
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
+//Components
 import { OrderDetails } from "../order-details/order-details";
 import { Modal } from "../modal/modal";
+
+//Styles
 import burgerConstructorStyles from "./burger-constructor.module.css";
+
+//Data
 import { ingredientType } from "../../utils/types";
-export const BurgerConstructor = ({ ingredientsData }) => {
+
+export const BurgerConstructor = () => {
+  const [constructorState, constructorDispatcher] =
+    useContext(ConstructorContext);
+
   const [showOrder, setShowOrder] = useState();
   const toggleShowOrder = () => {
     setShowOrder(!showOrder);
   };
+
   return (
     <>
       <article className={`${burgerConstructorStyles["ConstructorColumn"]}`}>
@@ -25,14 +41,14 @@ export const BurgerConstructor = ({ ingredientsData }) => {
             text="Краторная булка N-200i (верх)"
             price={200}
             thumbnail={
-              ingredientsData.find((elem) => {
+              constructorState.allIngredients.find((elem) => {
                 return elem.name === "Краторная булка N-200i";
               }).image
             }
           />
         </section>
         <section className={`${burgerConstructorStyles["ConstructorList"]}`}>
-          {ingredientsData
+          {constructorState.usedIngredients
             .filter((elem) => {
               return elem.type !== "bun";
             })
@@ -64,7 +80,7 @@ export const BurgerConstructor = ({ ingredientsData }) => {
             text="Краторная булка N-200i (низ)"
             price={200}
             thumbnail={
-              ingredientsData.find((elem) => {
+              constructorState.allIngredients.find((elem) => {
                 return elem.name === "Краторная булка N-200i";
               }).image
             }
