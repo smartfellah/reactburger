@@ -49,6 +49,7 @@ export const BurgerConstructor = () => {
             ],
           }),
         });
+        if (!response.ok) throw new Error(response.status);
         const responseData = await response.json();
         constructorDispatcher({
           type: "makeOrder",
