@@ -3,6 +3,9 @@ import React, { useEffect, useState, useReducer } from "react";
 //Context
 import { ConstructorContext } from "../../context/constructor-context";
 
+//API
+import { dataURL } from "../../services/endpoint";
+
 //Components
 import { AppHeader } from "../app-header/app-header";
 import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
@@ -12,13 +15,12 @@ import { BurgerConstructor } from "../burger-constructor/burger-constructor";
 import appStyles from "./app.module.css";
 
 function App() {
-  const dataURL = "https://norma.nomoreparties.space/api";
-
   const constructorInitialState = {
     bun: {},
     usedIngredients: [],
     totalCost: 0,
     allIngredients: [],
+    lastOrderNumber: 0,
   };
   const constructorReducer = (state, action) => {
     switch (action.type) {
@@ -29,6 +31,11 @@ function App() {
           ...state,
           usedIngredients: [...state.usedIngredients, action.newIngredient],
           totalCost: state.totalCost + action.newIngredient.price,
+        };
+      case "makeOrder":
+        return {
+          ...state,
+          lastOrderNumber: action.lastOrderNumber,
         };
       default:
         throw new Error("Wrong type of atcion/action is empty");

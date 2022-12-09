@@ -1,13 +1,25 @@
 import orderDetailsStyles from "./order-details.module.css";
 import doneIconPath from "../../images/done.svg";
+import { useContext } from "react";
+import { ConstructorContext } from "../../context/constructor-context";
 export const OrderDetails = () => {
+  const [constructorState] = useContext(ConstructorContext);
+  const orderNumber = constructorState.lastOrderNumber;
   return (
     <article className={`${orderDetailsStyles["OrderDetails"]}`}>
-      <p
-        className={`${orderDetailsStyles["OrderDetails-OrderId"]} text text_type_digits-large`}
-      >
-        0345366
-      </p>
+      {orderNumber ? (
+        <p
+          className={`${orderDetailsStyles["OrderDetails-OrderId"]} text text_type_digits-large`}
+        >
+          {orderNumber}
+        </p>
+      ) : (
+        <p
+          className={`${orderDetailsStyles["OrderDetails-OrderId"]} text text_type_main-large`}
+        >
+          Обработка...
+        </p>
+      )}
       <p
         className={`${orderDetailsStyles["OrderDetails-IDLabel"]} text text_type_main-medium`}
       >

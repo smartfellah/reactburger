@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 //Context
 import { ConstructorContext } from "../../context/constructor-context";
 
+//API
+import { dataURL } from "../../services/endpoint";
+
 //UI elements
 import {
   CurrencyIcon,
@@ -23,11 +26,40 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 import { ingredientType } from "../../utils/types";
 
 export const BurgerConstructor = () => {
-  const [constructorState] = useContext(ConstructorContext);
+  const [constructorState, constructorDispatcher] =
+    useContext(ConstructorContext);
 
   const [showOrder, setShowOrder] = useState();
   const toggleShowOrder = () => {
     setShowOrder(!showOrder);
+  };
+
+  const onOrderClick = () => {
+    const postOrder = async () => {
+      try {
+        const response = await fetch(`${dataURL}/orders`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ingredients: [
+              "60d3b41abdacab0026a733c6",
+              "60d3b41abdacab0026a733c8",
+            ],
+          }),
+        });
+        const responseData = await response.json();
+        constructorDispatcher({
+          type: "makeOrder",
+          lastOrderNumber: responseData.order.number,
+        });
+      } catch (error) {
+        alert("Ошибка при загрузке данных: " + error);
+      }
+    };
+    postOrder();
+    toggleShowOrder();
   };
 
   return (
@@ -83,7 +115,7 @@ export const BurgerConstructor = () => {
             <CurrencyIcon />
           </div>
           <Button
-            onClick={toggleShowOrder}
+            onClick={onOrderClick}
             htmlType="button"
             type="primary"
             size="large"
