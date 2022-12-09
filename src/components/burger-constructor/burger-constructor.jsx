@@ -42,10 +42,8 @@ export const BurgerConstructor = () => {
             return elem["_id"];
           }
         );
-        console.log(constructorState.bun.name);
         constructorState.bun.name &&
           ingredientsToSend.push(constructorState.bun["_id"]);
-        console.log(ingredientsToSend);
         if (!ingredientsToSend.length) {
           throw new Error("пустой заказ");
         }
