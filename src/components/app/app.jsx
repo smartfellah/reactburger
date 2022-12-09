@@ -32,6 +32,12 @@ function App() {
           usedIngredients: [...state.usedIngredients, action.newIngredient],
           totalCost: state.totalCost + action.newIngredient.price,
         };
+      case "addBun":
+        return {
+          ...state,
+          bun: action.bunData,
+          totalCost: state.totalCost + action.bunData.price * 2,
+        };
       case "makeOrder":
         return {
           ...state,
@@ -83,10 +89,10 @@ function App() {
       <AppHeader />
       {!dataHasError && !dataIsLoading ? (
         <main className={`${appStyles.ColumnsWrapper}`}>
-          <BurgerIngredients ingredientsData={ingredientsData} />
           <ConstructorContext.Provider
             value={[constructorState, constructorDispatcher]}
           >
+            <BurgerIngredients ingredientsData={ingredientsData} />
             <BurgerConstructor />
           </ConstructorContext.Provider>
         </main>

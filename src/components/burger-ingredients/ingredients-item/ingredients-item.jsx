@@ -4,11 +4,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientItemStyles from "./ingredients-item.module.css";
 import { ingredientType } from "../../../utils/types";
+import { useContext } from "react";
+import { ConstructorContext } from "../../../context/constructor-context";
 import { func } from "prop-types";
 export const IngredientsItem = ({
   singleIngredientData,
   toggleShowDetails,
 }) => {
+  const [constructorState, constructorDispatcher] =
+    useContext(ConstructorContext);
+
   const handleClick = (e) => {
     toggleShowDetails({
       image: singleIngredientData.image_large,
@@ -18,6 +23,20 @@ export const IngredientsItem = ({
       fat: singleIngredientData.fat,
       carbohydrates: singleIngredientData.carbohydrates,
     });
+    singleIngredientData.type !== "bun"
+      ? constructorDispatcher({
+          type: "addIngredient",
+          newIngredient: {
+            ...singleIngredientData,
+            Uid: crypto.randomUUID(),
+          },
+        })
+      : constructorDispatcher({
+          type: "addBun",
+          bunData: {
+            ...singleIngredientData,
+          },
+        });
   };
   return (
     <div

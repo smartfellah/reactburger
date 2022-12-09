@@ -42,6 +42,7 @@ export const BurgerConstructor = () => {
             return elem["_id"];
           }
         );
+        ingredientsToSend.push(constructorState.bun);
         if (!ingredientsToSend.length) {
           throw new Error("пустой заказ");
         }
@@ -75,8 +76,14 @@ export const BurgerConstructor = () => {
       <article className={`${burgerConstructorStyles["ConstructorColumn"]}`}>
         {/*-Top Bun Section-----------------------------------------------*/}
         <section className={`${burgerConstructorStyles["Bun"]}`}>
-          {constructorState.bun.text && (
-            <ConstructorElement type={"top"} isLocked={true} />
+          {constructorState.bun.name && (
+            <ConstructorElement
+              type={"top"}
+              text={constructorState.bun.name}
+              thumbnail={constructorState.bun.image}
+              price={constructorState.bun.price}
+              isLocked={true}
+            />
           )}
         </section>
         {/*-Ingredients Section-------------------------------------------*/}
@@ -104,9 +111,9 @@ export const BurgerConstructor = () => {
         </section>
         {/*-Bottom Bun Section--------------------------------------------*/}
         <section className={`${burgerConstructorStyles["Bun"]}`}>
-          {constructorState.bun.text && (
+          {constructorState.bun.name && (
             <ConstructorElement
-              text={constructorState.bun.text}
+              text={constructorState.bun.name}
               price={constructorState.bun.price}
               thumbnail={constructorState.bun.image}
               type={"bottom"}
