@@ -23,8 +23,7 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 import { ingredientType } from "../../utils/types";
 
 export const BurgerConstructor = () => {
-  const [constructorState, constructorDispatcher] =
-    useContext(ConstructorContext);
+  const [constructorState] = useContext(ConstructorContext);
 
   const [showOrder, setShowOrder] = useState();
   const toggleShowOrder = () => {
@@ -34,62 +33,54 @@ export const BurgerConstructor = () => {
   return (
     <>
       <article className={`${burgerConstructorStyles["ConstructorColumn"]}`}>
+        {/*-Top Bun Section-----------------------------------------------*/}
         <section className={`${burgerConstructorStyles["Bun"]}`}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={
-              constructorState.allIngredients.find((elem) => {
-                return elem.name === "Краторная булка N-200i";
-              }).image
-            }
-          />
+          {constructorState.bun.text && (
+            <ConstructorElement type={"top"} isLocked={true} />
+          )}
         </section>
+        {/*-Ingredients Section-------------------------------------------*/}
         <section className={`${burgerConstructorStyles["ConstructorList"]}`}>
-          {constructorState.usedIngredients
-            .filter((elem) => {
-              return elem.type !== "bun";
-            })
-            .map((ingredient) => {
-              return (
+          {constructorState.usedIngredients.map((ingredient) => {
+            return (
+              <div
+                key={ingredient["_id"]}
+                className={`${burgerConstructorStyles["ListElement"]}`}
+              >
                 <div
-                  key={ingredient["_id"]}
-                  className={`${burgerConstructorStyles["ListElement"]}`}
+                  className={`${burgerConstructorStyles["DragIconWrapper"]}`}
                 >
-                  <div
-                    className={`${burgerConstructorStyles["DragIconWrapper"]}`}
-                  >
-                    <DragIcon />
-                  </div>
-                  <ConstructorElement
-                    isLocked={false}
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                  ></ConstructorElement>
+                  <DragIcon />
                 </div>
-              );
-            })}
+                <ConstructorElement
+                  isLocked={false}
+                  text={ingredient.name}
+                  price={ingredient.price}
+                  thumbnail={ingredient.image}
+                ></ConstructorElement>
+              </div>
+            );
+          })}
         </section>
+        {/*-Bottom Bun Section--------------------------------------------*/}
         <section className={`${burgerConstructorStyles["Bun"]}`}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={200}
-            thumbnail={
-              constructorState.allIngredients.find((elem) => {
-                return elem.name === "Краторная булка N-200i";
-              }).image
-            }
-          />
+          {constructorState.bun.text && (
+            <ConstructorElement
+              text={constructorState.bun.text}
+              price={constructorState.bun.price}
+              thumbnail={constructorState.bun.image}
+              type={"bottom"}
+              isLocked={true}
+            />
+          )}
         </section>
+        {/*-Order Section-----------------------------------------------*/}
         <section className={`${burgerConstructorStyles["OrderSection"]}`}>
           <div className={`${burgerConstructorStyles["TotalPrice"]}`}>
-            <p className="text text_type_digits-medium">610</p>
-            <CurrencyIcon></CurrencyIcon>
+            <p className="text text_type_digits-medium">
+              {constructorState.totalCost}
+            </p>
+            <CurrencyIcon />
           </div>
           <Button
             onClick={toggleShowOrder}
@@ -101,9 +92,10 @@ export const BurgerConstructor = () => {
           </Button>
         </section>
       </article>
+      {/*-Modal-------------------------------------------------------*/}
       {showOrder ? (
         <Modal closePopup={toggleShowOrder}>
-          <OrderDetails></OrderDetails>
+          <OrderDetails />
         </Modal>
       ) : null}
     </>

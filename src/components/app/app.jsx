@@ -15,8 +15,9 @@ function App() {
   const dataURL = "https://norma.nomoreparties.space/api";
 
   const constructorInitialState = {
-    bunType: "",
+    bun: {},
     usedIngredients: [],
+    totalCost: 0,
     allIngredients: [],
   };
   const constructorReducer = (state, action) => {
@@ -27,6 +28,7 @@ function App() {
         return {
           ...state,
           usedIngredients: [...state.usedIngredients, action.newIngredient],
+          totalCost: state.totalCost + action.newIngredient.price,
         };
       default:
         throw new Error("Wrong type of atcion/action is empty");
@@ -42,12 +44,21 @@ function App() {
   const [dataHasError, setDataHasError] = useState(false);
 
   const getData = async () => {
+    //-Data Fetch-----------------------------------------------
     try {
       const response = await fetch(`${dataURL}/ingredients`);
       if (!response.ok) throw new Error(response.status);
+
       const dataResponse = await response.json();
+
       setIngredientsData(dataResponse.data);
-      constructorDispatcher({ type: "initAll", fullData: dataResponse.data });
+
+      constructorDispatcher({
+        type: "initAll",
+        fullData: dataResponse.data.filter((elem) => {
+          return elem.type !== "bun";
+        }),
+      });
     } catch (error) {
       setDataHasError(true);
       alert("Ошибка при загрузке данных: " + error);
