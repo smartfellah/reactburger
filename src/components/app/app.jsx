@@ -36,7 +36,9 @@ function App() {
         return {
           ...state,
           bun: action.bunData,
-          totalCost: state.totalCost + action.bunData.price * 2,
+          totalCost: state.bun.price
+            ? state.totalCost + action.bunData.price * 2 - state.bun.price * 2
+            : state.totalCost + action.bunData.price * 2,
         };
       case "makeOrder":
         return {
