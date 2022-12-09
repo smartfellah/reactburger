@@ -9,7 +9,6 @@
 .Bun {
   min-width: 536px;
   padding-left: var(--s-8);
-  padding-right: var(--s-4);
 }
 .ConstructorList {
   max-height: 440px;
