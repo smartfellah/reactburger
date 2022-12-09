@@ -37,16 +37,23 @@ export const BurgerConstructor = () => {
   const onOrderClick = () => {
     const postOrder = async () => {
       try {
+        const ingredientsToSend = constructorState.usedIngredients.map(
+          (elem) => {
+            return elem["_id"];
+          }
+        );
+        if (!ingredientsToSend.length) {
+          throw new Error("пустой заказ");
+        }
         const response = await fetch(`${dataURL}/orders`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            ingredients: [
-              "60d3b41abdacab0026a733c6",
-              "60d3b41abdacab0026a733c8",
-            ],
+            ingredients: constructorState.usedIngredients.map((elem) => {
+              return elem["_id"];
+            }),
           }),
         });
         if (!response.ok) throw new Error(response.status);
@@ -55,12 +62,12 @@ export const BurgerConstructor = () => {
           type: "makeOrder",
           lastOrderNumber: responseData.order.number,
         });
+        toggleShowOrder();
       } catch (error) {
         alert("Ошибка при загрузке данных: " + error);
       }
     };
     postOrder();
-    toggleShowOrder();
   };
 
   return (
