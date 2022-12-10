@@ -6,7 +6,7 @@ import { ConstructorContext } from "../../context/constructor-context";
 
 //API
 import { dataURL } from "../../services/endpoint";
-import { checkResponse } from "../../utils/check-response";
+import { apiRequest } from "../../utils/api-request";
 
 //UI elements
 import {
@@ -48,7 +48,7 @@ export const BurgerConstructor = () => {
         if (!ingredientsToSend.length) {
           throw new Error("пустой заказ");
         }
-        const response = await fetch(`${dataURL}/orders`, {
+        const response = await apiRequest(`${dataURL}/orders`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -59,10 +59,9 @@ export const BurgerConstructor = () => {
             }),
           }),
         });
-        const responseData = await checkResponse(response);
         constructorDispatcher({
           type: "makeOrder",
-          lastOrderNumber: responseData.order.number,
+          lastOrderNumber: response.order.number,
         });
         toggleShowOrder();
       } catch (error) {

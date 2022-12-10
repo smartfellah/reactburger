@@ -5,7 +5,7 @@ import { ConstructorContext } from "../../context/constructor-context";
 
 //API
 import { dataURL } from "../../services/endpoint";
-import { checkResponse } from "../../utils/check-response";
+import { apiRequest } from "../../utils/api-request";
 
 //Components
 import { AppHeader } from "../app-header/app-header";
@@ -62,15 +62,13 @@ function App() {
   const getData = async () => {
     //-Data Fetch-----------------------------------------------
     try {
-      const response = await fetch(`${dataURL}/ingredients`);
+      const response = await apiRequest(`${dataURL}/ingredients`);
 
-      const dataResponse = await checkResponse(response);
-
-      setIngredientsData(dataResponse.data);
+      setIngredientsData(response.data);
 
       constructorDispatcher({
         type: "initAll",
-        fullData: dataResponse.data.filter((elem) => {
+        fullData: response.data.filter((elem) => {
           return elem.type !== "bun";
         }),
       });
