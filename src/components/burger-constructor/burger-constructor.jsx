@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useMemo } from "react";
 //Context
 import { ConstructorContext } from "../../context/constructor-context";
 
@@ -86,24 +86,30 @@ export const BurgerConstructor = () => {
         </section>
         {/*-Ingredients Section-------------------------------------------*/}
         <section className={`${burgerConstructorStyles.ConstructorList}`}>
-          {constructorState.usedIngredients.map((ingredient) => {
-            return (
-              <div
-                key={ingredient.Uid}
-                className={`${burgerConstructorStyles.ListElement}`}
-              >
-                <div className={`${burgerConstructorStyles.DragIconWrapper}`}>
-                  <DragIcon />
-                </div>
-                <ConstructorElement
-                  isLocked={false}
-                  text={ingredient.name}
-                  price={ingredient.price}
-                  thumbnail={ingredient.image}
-                ></ConstructorElement>
-              </div>
-            );
-          })}
+          {useMemo(
+            () =>
+              constructorState.usedIngredients.map((ingredient) => {
+                return (
+                  <div
+                    key={ingredient.Uid}
+                    className={`${burgerConstructorStyles.ListElement}`}
+                  >
+                    <div
+                      className={`${burgerConstructorStyles.DragIconWrapper}`}
+                    >
+                      <DragIcon />
+                    </div>
+                    <ConstructorElement
+                      isLocked={false}
+                      text={ingredient.name}
+                      price={ingredient.price}
+                      thumbnail={ingredient.image}
+                    ></ConstructorElement>
+                  </div>
+                );
+              }),
+            [constructorState.usedIngredients]
+          )}
         </section>
         {/*-Bottom Bun Section--------------------------------------------*/}
         <section className={`${burgerConstructorStyles.Bun}`}>
