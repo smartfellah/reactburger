@@ -21,9 +21,6 @@ import { Modal } from "../modal/modal";
 //Styles
 import burgerConstructorStyles from "./burger-constructor.module.css";
 
-//Data
-import { ingredientType } from "../../utils/types";
-
 export const BurgerConstructor = () => {
   const [constructorState, constructorDispatcher] =
     useContext(ConstructorContext);
