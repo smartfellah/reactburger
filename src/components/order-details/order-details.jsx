@@ -6,7 +6,7 @@ export const OrderDetails = () => {
   const [constructorState] = useContext(ConstructorContext);
   const orderNumber = constructorState.lastOrderNumber;
   return (
-    <article className={`${orderDetailsStyles["OrderDetails"]}`}>
+    <article className={`${orderDetailsStyles.OrderDetails}`}>
       {orderNumber ? (
         <p
           className={`${orderDetailsStyles["OrderDetails-OrderId"]} text text_type_digits-large`}

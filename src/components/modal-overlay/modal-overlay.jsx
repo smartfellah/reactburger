@@ -4,7 +4,7 @@ export const ModalOverlay = ({ onClick }) => {
   return (
     <div
       onClick={onClick}
-      className={`${modalOverlayStyles["ModalOverlay"]}`}
+      className={`${modalOverlayStyles.ModalOverlay}`}
     ></div>
   );
 };

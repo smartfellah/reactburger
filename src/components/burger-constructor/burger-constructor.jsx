@@ -73,9 +73,9 @@ export const BurgerConstructor = () => {
 
   return (
     <>
-      <article className={`${burgerConstructorStyles["ConstructorColumn"]}`}>
+      <article className={`${burgerConstructorStyles.ConstructorColumn}`}>
         {/*-Top Bun Section-----------------------------------------------*/}
-        <section className={`${burgerConstructorStyles["Bun"]}`}>
+        <section className={`${burgerConstructorStyles.Bun}`}>
           {constructorState.bun.name && (
             <ConstructorElement
               type={"top"}
@@ -87,16 +87,14 @@ export const BurgerConstructor = () => {
           )}
         </section>
         {/*-Ingredients Section-------------------------------------------*/}
-        <section className={`${burgerConstructorStyles["ConstructorList"]}`}>
+        <section className={`${burgerConstructorStyles.ConstructorList}`}>
           {constructorState.usedIngredients.map((ingredient) => {
             return (
               <div
                 key={ingredient.Uid}
-                className={`${burgerConstructorStyles["ListElement"]}`}
+                className={`${burgerConstructorStyles.ListElement}`}
               >
-                <div
-                  className={`${burgerConstructorStyles["DragIconWrapper"]}`}
-                >
+                <div className={`${burgerConstructorStyles.DragIconWrapper}`}>
                   <DragIcon />
                 </div>
                 <ConstructorElement
@@ -110,7 +108,7 @@ export const BurgerConstructor = () => {
           })}
         </section>
         {/*-Bottom Bun Section--------------------------------------------*/}
-        <section className={`${burgerConstructorStyles["Bun"]}`}>
+        <section className={`${burgerConstructorStyles.Bun}`}>
           {constructorState.bun.name && (
             <ConstructorElement
               text={constructorState.bun.name}
@@ -122,8 +120,8 @@ export const BurgerConstructor = () => {
           )}
         </section>
         {/*-Order Section-----------------------------------------------*/}
-        <section className={`${burgerConstructorStyles["OrderSection"]}`}>
-          <div className={`${burgerConstructorStyles["TotalPrice"]}`}>
+        <section className={`${burgerConstructorStyles.OrderSection}`}>
+          <div className={`${burgerConstructorStyles.TotalPrice}`}>
             <p className="text text_type_digits-medium">
               {constructorState.totalCost}
             </p>

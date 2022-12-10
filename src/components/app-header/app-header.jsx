@@ -8,9 +8,9 @@ import {
 
 export const AppHeader = () => {
   return (
-    <header className={`${headerStyles["Header"]}`}>
-      <nav className={`${headerStyles["NavBar"]} `}>
-        <menu className={`${headerStyles["MenuBox"]}`}>
+    <header className={`${headerStyles.Header}`}>
+      <nav className={`${headerStyles.NavBar} `}>
+        <menu className={`${headerStyles.MenuBox}`}>
           <a className={`${headerStyles["MenuBox-Item-Active"]}`} href="#">
             <BurgerIcon type="primary" />
             <p className="text text_type_main-default">Конструктор</p>
@@ -20,10 +20,10 @@ export const AppHeader = () => {
             <p className="text text_type_main-default">Лента заказов</p>
           </a>
         </menu>
-        <div className={`${headerStyles["LogoBox"]}`}>
+        <div className={`${headerStyles.LogoBox}`}>
           <Logo className={`${headerStyles["LogoBox-Item"]}`}></Logo>
         </div>
-        <div className={`${headerStyles["ProfileBox"]}`}>
+        <div className={`${headerStyles.ProfileBox}`}>
           <a className={`${headerStyles["ProfileBox-Item"]}`} href="#">
             <ProfileIcon type="secondary" />
             <p className="text text_type_main-default">Личный кабинет</p>

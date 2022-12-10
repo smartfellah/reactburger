@@ -13,7 +13,7 @@ export const IngredientsArea = ({
   return (
     <section
       ref={areaRef}
-      className={`${ingredientsAreaStyles["IngredientsArea"]}`}
+      className={`${ingredientsAreaStyles.IngredientsArea}`}
     >
       <h2
         className={`text text_type_main-medium ${ingredientsAreaStyles["IngredientsArea-Header"]}`}
