@@ -43,6 +43,9 @@ export const BurgerConstructor = () => {
         if (!ingredientsToSend.length) {
           throw new Error("пустой заказ");
         }
+        if (!constructorState.bun.name) {
+          throw new Error("добавьте булку");
+        }
         const response = await apiRequest(`${dataURL}/orders`, {
           method: "POST",
           headers: {
@@ -60,7 +63,7 @@ export const BurgerConstructor = () => {
         });
         toggleShowOrder();
       } catch (error) {
-        alert("Ошибка при загрузке данных: " + error);
+        alert(error);
       }
     };
     postOrder();
