@@ -26,7 +26,7 @@ function App() {
   const constructorReducer = (state, action) => {
     switch (action.type) {
       case "initAll":
-        return { ...state, allIngredients: action.fullData };
+        return { ...constructorInitialState, allIngredients: action.fullData };
       case "addIngredient":
         return {
           ...state,
@@ -43,7 +43,7 @@ function App() {
         };
       case "makeOrder":
         return {
-          ...state,
+          ...constructorInitialState,
           lastOrderNumber: action.lastOrderNumber,
         };
       default:
