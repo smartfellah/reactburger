@@ -79,7 +79,7 @@ export const BurgerConstructor = () => {
           {constructorState.bun.name && (
             <ConstructorElement
               type={"top"}
-              text={constructorState.bun.name}
+              text={constructorState.bun.name + " (верх)"}
               thumbnail={constructorState.bun.image}
               price={constructorState.bun.price}
               isLocked={true}
@@ -111,7 +111,7 @@ export const BurgerConstructor = () => {
         <section className={`${burgerConstructorStyles.Bun}`}>
           {constructorState.bun.name && (
             <ConstructorElement
-              text={constructorState.bun.name}
+              text={constructorState.bun.name + " (низ)"}
               price={constructorState.bun.price}
               thumbnail={constructorState.bun.image}
               type={"bottom"}
