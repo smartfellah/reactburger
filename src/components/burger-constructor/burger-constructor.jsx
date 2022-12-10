@@ -1,6 +1,4 @@
 import { useState, useContext } from "react";
-import PropTypes from "prop-types";
-
 //Context
 import { ConstructorContext } from "../../context/constructor-context";
 
@@ -145,7 +143,4 @@ export const BurgerConstructor = () => {
       ) : null}
     </>
   );
-};
-BurgerConstructor.propTypes = {
-  ingredientsData: PropTypes.arrayOf(ingredientType),
 };
