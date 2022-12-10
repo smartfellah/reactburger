@@ -5,6 +5,7 @@ import { ConstructorContext } from "../../context/constructor-context";
 
 //API
 import { dataURL } from "../../services/endpoint";
+import { checkResponse } from "../../utils/check-response";
 
 //Components
 import { AppHeader } from "../app-header/app-header";
@@ -62,9 +63,8 @@ function App() {
     //-Data Fetch-----------------------------------------------
     try {
       const response = await fetch(`${dataURL}/ingredients`);
-      if (!response.ok) throw new Error(response.status);
 
-      const dataResponse = await response.json();
+      const dataResponse = await checkResponse(response);
 
       setIngredientsData(dataResponse.data);
 

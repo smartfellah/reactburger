@@ -6,6 +6,7 @@ import { ConstructorContext } from "../../context/constructor-context";
 
 //API
 import { dataURL } from "../../services/endpoint";
+import { checkResponse } from "../../utils/check-response";
 
 //UI elements
 import {
@@ -58,8 +59,7 @@ export const BurgerConstructor = () => {
             }),
           }),
         });
-        if (!response.ok) throw new Error(response.status);
-        const responseData = await response.json();
+        const responseData = await checkResponse(response);
         constructorDispatcher({
           type: "makeOrder",
           lastOrderNumber: responseData.order.number,
