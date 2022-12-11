@@ -55,7 +55,7 @@ export const BurgerIngredients = ({ ingredientsData }) => {
   return (
     <>
       <article
-        className={`text text_type_main-default ${ingredientsStyles["IngredientsColumn"]}`}
+        className={`text text_type_main-default ${ingredientsStyles.IngredientsColumn}`}
       >
         <header
           className={`text text_type_main-large ${ingredientsStyles["IngredientsColumn-Header"]}`}

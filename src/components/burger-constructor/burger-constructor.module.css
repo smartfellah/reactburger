@@ -34,6 +34,7 @@
 .ListElement {
   display: flex;
   align-items: center;
+  padding-right: var(--s-3);
 }
 .DragIconWrapper {
   width: 32px;

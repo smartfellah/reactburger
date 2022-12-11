@@ -1,20 +1,77 @@
-import React, { useEffect, useState } from "react";
-import appStyles from "./app.module.css";
+import React, { useEffect, useState, useReducer } from "react";
+
+//Context
+import { ConstructorContext } from "../../context/constructor-context";
+
+//API
+import { dataURL } from "../../services/endpoint";
+import { apiRequest } from "../../utils/api-request";
+
+//Components
 import { AppHeader } from "../app-header/app-header";
 import { BurgerIngredients } from "../burger-ingredients/burger-ingredients";
 import { BurgerConstructor } from "../burger-constructor/burger-constructor";
 
+//Styles
+import appStyles from "./app.module.css";
+
 function App() {
-  const dataURL = "https://norma.nomoreparties.space/api";
+  const constructorInitialState = {
+    bun: {},
+    usedIngredients: [],
+    totalCost: 0,
+    allIngredients: [],
+    lastOrderNumber: 0,
+  };
+  const constructorReducer = (state, action) => {
+    switch (action.type) {
+      case "initAll":
+        return { ...constructorInitialState, allIngredients: action.fullData };
+      case "addIngredient":
+        return {
+          ...state,
+          usedIngredients: [...state.usedIngredients, action.newIngredient],
+          totalCost: state.totalCost + action.newIngredient.price,
+        };
+      case "addBun":
+        return {
+          ...state,
+          bun: action.bunData,
+          totalCost: state.bun.price
+            ? state.totalCost + action.bunData.price * 2 - state.bun.price * 2
+            : state.totalCost + action.bunData.price * 2,
+        };
+      case "makeOrder":
+        return {
+          ...constructorInitialState,
+          lastOrderNumber: action.lastOrderNumber,
+        };
+      default:
+        throw new Error("Wrong type of atcion/action is empty");
+    }
+  };
+  const [constructorState, constructorDispatcher] = useReducer(
+    constructorReducer,
+    constructorInitialState
+  );
+
   const [ingredientsData, setIngredientsData] = useState([]);
   const [dataIsLoading, setDataIsLoading] = useState(true);
   const [dataHasError, setDataHasError] = useState(false);
+
   const getData = async () => {
+    //-Data Fetch-----------------------------------------------
     try {
-      const response = await fetch(`${dataURL}/ingredients`);
-      if (!response.ok) throw new Error(response.status);
-      const dataResponse = await response.json();
-      setIngredientsData(dataResponse.data);
+      const response = await apiRequest(`${dataURL}/ingredients`);
+
+      setIngredientsData(response.data);
+
+      constructorDispatcher({
+        type: "initAll",
+        fullData: response.data.filter((elem) => {
+          return elem.type !== "bun";
+        }),
+      });
     } catch (error) {
       setDataHasError(true);
       alert("Ошибка при загрузке данных: " + error);
@@ -22,16 +79,22 @@ function App() {
       setDataIsLoading(false);
     }
   };
+
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <div className={`${appStyles.App}`}>
       <AppHeader />
       {!dataHasError && !dataIsLoading ? (
         <main className={`${appStyles.ColumnsWrapper}`}>
-          <BurgerIngredients ingredientsData={ingredientsData} />
-          <BurgerConstructor ingredientsData={ingredientsData} />
+          <ConstructorContext.Provider
+            value={[constructorState, constructorDispatcher]}
+          >
+            <BurgerIngredients ingredientsData={ingredientsData} />
+            <BurgerConstructor />
+          </ConstructorContext.Provider>
         </main>
       ) : null}
     </div>

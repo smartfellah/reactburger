@@ -2,7 +2,7 @@ import detailsStyles from "./ingredient-details.module.css";
 import { ingredientDetailsType } from "../../utils/types";
 export const IngredientDetails = ({ details }) => {
   return (
-    <article className={`${detailsStyles["DetailsList"]}`}>
+    <article className={`${detailsStyles.DetailsList}`}>
       <img
         className={`${detailsStyles["DetailsList-Image"]}`}
         src={details.image}

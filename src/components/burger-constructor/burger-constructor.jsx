@@ -1,82 +1,138 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
+import { useState, useContext, useMemo } from "react";
+//Context
+import { ConstructorContext } from "../../context/constructor-context";
+
+//API
+import { dataURL } from "../../services/endpoint";
+import { apiRequest } from "../../utils/api-request";
+
+//UI elements
 import {
   CurrencyIcon,
   DragIcon,
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
+//Components
 import { OrderDetails } from "../order-details/order-details";
 import { Modal } from "../modal/modal";
+
+//Styles
 import burgerConstructorStyles from "./burger-constructor.module.css";
-import { ingredientType } from "../../utils/types";
-export const BurgerConstructor = ({ ingredientsData }) => {
+
+export const BurgerConstructor = () => {
+  const [constructorState, constructorDispatcher] =
+    useContext(ConstructorContext);
+
   const [showOrder, setShowOrder] = useState();
   const toggleShowOrder = () => {
     setShowOrder(!showOrder);
   };
+
+  const onOrderClick = () => {
+    const postOrder = async () => {
+      try {
+        const ingredientsToSend = constructorState.usedIngredients.map(
+          (elem) => {
+            return elem["_id"];
+          }
+        );
+        constructorState.bun.name &&
+          ingredientsToSend.push(constructorState.bun["_id"]);
+        if (!ingredientsToSend.length) {
+          throw new Error("пустой заказ");
+        }
+        if (!constructorState.bun.name) {
+          throw new Error("добавьте булку");
+        }
+        const response = await apiRequest(`${dataURL}/orders`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ingredients: constructorState.usedIngredients.map((elem) => {
+              return elem["_id"];
+            }),
+          }),
+        });
+        constructorDispatcher({
+          type: "makeOrder",
+          lastOrderNumber: response.order.number,
+        });
+        toggleShowOrder();
+      } catch (error) {
+        alert(error);
+      }
+    };
+    postOrder();
+  };
+
   return (
     <>
-      <article className={`${burgerConstructorStyles["ConstructorColumn"]}`}>
-        <section className={`${burgerConstructorStyles["Bun"]}`}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={
-              ingredientsData.find((elem) => {
-                return elem.name === "Краторная булка N-200i";
-              }).image
-            }
-          />
+      <article className={`${burgerConstructorStyles.ConstructorColumn}`}>
+        {/*-Top Bun Section-----------------------------------------------*/}
+        <section className={`${burgerConstructorStyles.Bun}`}>
+          {constructorState.bun.name && (
+            <ConstructorElement
+              type={"top"}
+              text={constructorState.bun.name + " (верх)"}
+              thumbnail={constructorState.bun.image}
+              price={constructorState.bun.price}
+              isLocked={true}
+            />
+          )}
         </section>
-        <section className={`${burgerConstructorStyles["ConstructorList"]}`}>
-          {ingredientsData
-            .filter((elem) => {
-              return elem.type !== "bun";
-            })
-            .map((ingredient) => {
-              return (
-                <div
-                  key={ingredient["_id"]}
-                  className={`${burgerConstructorStyles["ListElement"]}`}
-                >
+        {/*-Ingredients Section-------------------------------------------*/}
+        <section className={`${burgerConstructorStyles.ConstructorList}`}>
+          {useMemo(
+            () =>
+              constructorState.usedIngredients.map((ingredient) => {
+                return (
                   <div
-                    className={`${burgerConstructorStyles["DragIconWrapper"]}`}
+                    key={ingredient.Uid}
+                    className={`${burgerConstructorStyles.ListElement}`}
                   >
-                    <DragIcon />
+                    <div
+                      className={`${burgerConstructorStyles.DragIconWrapper}`}
+                    >
+                      <DragIcon />
+                    </div>
+                    <ConstructorElement
+                      isLocked={false}
+                      text={ingredient.name}
+                      price={ingredient.price}
+                      thumbnail={ingredient.image}
+                    ></ConstructorElement>
                   </div>
-                  <ConstructorElement
-                    isLocked={false}
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                  ></ConstructorElement>
-                </div>
-              );
-            })}
+                );
+              }),
+            [constructorState.usedIngredients]
+          )}
         </section>
-        <section className={`${burgerConstructorStyles["Bun"]}`}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={200}
-            thumbnail={
-              ingredientsData.find((elem) => {
-                return elem.name === "Краторная булка N-200i";
-              }).image
-            }
-          />
+        {/*-Bottom Bun Section--------------------------------------------*/}
+        <section className={`${burgerConstructorStyles.Bun}`}>
+          {constructorState.bun.name && (
+            <ConstructorElement
+              text={constructorState.bun.name + " (низ)"}
+              price={constructorState.bun.price}
+              thumbnail={constructorState.bun.image}
+              type={"bottom"}
+              isLocked={true}
+            />
+          )}
         </section>
-        <section className={`${burgerConstructorStyles["OrderSection"]}`}>
-          <div className={`${burgerConstructorStyles["TotalPrice"]}`}>
-            <p className="text text_type_digits-medium">610</p>
-            <CurrencyIcon></CurrencyIcon>
+        {/*-Order Section-----------------------------------------------*/}
+        <section className={`${burgerConstructorStyles.OrderSection}`}>
+          <div className={`${burgerConstructorStyles.TotalPrice}`}>
+            <p className="text text_type_digits-medium">
+              {constructorState.totalCost}
+            </p>
+            <CurrencyIcon />
           </div>
           <Button
-            onClick={toggleShowOrder}
+            onClick={onOrderClick}
             htmlType="button"
             type="primary"
             size="large"
@@ -85,14 +141,12 @@ export const BurgerConstructor = ({ ingredientsData }) => {
           </Button>
         </section>
       </article>
+      {/*-Modal-------------------------------------------------------*/}
       {showOrder ? (
         <Modal closePopup={toggleShowOrder}>
-          <OrderDetails></OrderDetails>
+          <OrderDetails />
         </Modal>
       ) : null}
     </>
   );
-};
-BurgerConstructor.propTypes = {
-  ingredientsData: PropTypes.arrayOf(ingredientType),
 };

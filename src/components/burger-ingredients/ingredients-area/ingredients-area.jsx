@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import ingredientsAreaStyles from "./ingredients-area.module.css";
 import { IngredientsItem } from "../ingredients-item/ingredients-item";
 import PropTypes from "prop-types";
@@ -13,7 +14,7 @@ export const IngredientsArea = ({
   return (
     <section
       ref={areaRef}
-      className={`${ingredientsAreaStyles["IngredientsArea"]}`}
+      className={`${ingredientsAreaStyles.IngredientsArea}`}
     >
       <h2
         className={`text text_type_main-medium ${ingredientsAreaStyles["IngredientsArea-Header"]}`}
@@ -21,19 +22,23 @@ export const IngredientsArea = ({
         {areaTitle}
       </h2>
       <div className={`${ingredientsAreaStyles["IngredientsArea-List"]}`}>
-        {ingredientsData
-          .filter((elem) => {
-            return elem.type === type;
-          })
-          .map((ingredient) => {
-            return (
-              <IngredientsItem
-                key={ingredient["_id"]}
-                singleIngredientData={ingredient}
-                toggleShowDetails={toggleShowDetails}
-              ></IngredientsItem>
-            );
-          })}
+        {useMemo(
+          () =>
+            ingredientsData
+              .filter((elem) => {
+                return elem.type === type;
+              })
+              .map((ingredient) => {
+                return (
+                  <IngredientsItem
+                    key={ingredient["_id"]}
+                    singleIngredientData={ingredient}
+                    toggleShowDetails={toggleShowDetails}
+                  ></IngredientsItem>
+                );
+              }),
+          [ingredientsData]
+        )}
       </div>
     </section>
   );
