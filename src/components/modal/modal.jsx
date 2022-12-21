@@ -4,8 +4,20 @@ import { ModalOverlay } from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
 import modalStyles from "./modal.module.css";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { HIDE_INGREDIENT_DETAILS } from "../../services/actions/single-ingredient-actions";
+
 const modalRoot = document.getElementById("modal");
-export const Modal = ({ children, closePopup, modalTitle }) => {
+
+export const Modal = ({ children, modalTitle }) => {
+  const dispatch = useDispatch();
+
+  const closePopup = () => {
+    dispatch({
+      type: HIDE_INGREDIENT_DETAILS,
+    });
+  };
+
   useEffect(() => {
     const onEsc = (e) => {
       e.key === "Escape" && closePopup();
@@ -16,6 +28,7 @@ export const Modal = ({ children, closePopup, modalTitle }) => {
       document.removeEventListener("keydown", onEsc);
     };
   });
+
   return ReactDOM.createPortal(
     <>
       <ModalOverlay onClick={closePopup} />
@@ -35,6 +48,5 @@ export const Modal = ({ children, closePopup, modalTitle }) => {
 Modal.propTypes = {
   children: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     .isRequired,
-  closePopup: PropTypes.func.isRequired,
   modalTitle: PropTypes.string,
 };

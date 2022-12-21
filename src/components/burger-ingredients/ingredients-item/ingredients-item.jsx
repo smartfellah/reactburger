@@ -4,21 +4,26 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientItemStyles from "./ingredients-item.module.css";
 import { ingredientType } from "../../../utils/types";
-import { func } from "prop-types";
-export const IngredientsItem = ({
-  singleIngredientData,
-  toggleShowDetails,
-}) => {
+import { useDispatch } from "react-redux";
+import { SHOW_INGREDIENT_DETAILS } from "../../../services/actions/single-ingredient-actions";
+
+export const IngredientsItem = ({ singleIngredientData }) => {
+  const dispatch = useDispatch();
+
   const handleClick = (e) => {
-    toggleShowDetails({
-      image: singleIngredientData.image_large,
-      name: singleIngredientData.name,
-      calories: singleIngredientData.calories,
-      proteins: singleIngredientData.proteins,
-      fat: singleIngredientData.fat,
-      carbohydrates: singleIngredientData.carbohydrates,
+    dispatch({
+      type: SHOW_INGREDIENT_DETAILS,
+      payload: {
+        image: singleIngredientData.image_large,
+        name: singleIngredientData.name,
+        calories: singleIngredientData.calories,
+        proteins: singleIngredientData.proteins,
+        fat: singleIngredientData.fat,
+        carbohydrates: singleIngredientData.carbohydrates,
+      },
     });
   };
+
   return (
     <div
       className={`${ingredientItemStyles.IngredientContainer}`}
@@ -42,5 +47,4 @@ export const IngredientsItem = ({
 };
 IngredientsItem.propTypes = {
   singleIngredientData: ingredientType.isRequired,
-  toggleShowDetails: func.isRequired,
 };

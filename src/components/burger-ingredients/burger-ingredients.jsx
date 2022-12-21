@@ -4,18 +4,18 @@ import { IngredientsArea } from "./ingredients-area/ingredients-area";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
+import { useSelector } from "react-redux";
 export const BurgerIngredients = () => {
-  const [details, setDetails] = useState({});
-  const [showDetails, setShowDetails] = useState(false);
-  const toggleShowDetails = (passedDetails) => {
-    setShowDetails(!showDetails);
-    setDetails(passedDetails);
-  };
+  const showDetails = useSelector(
+    (store) => store.singleIngredientReducer.isShown
+  );
+
   const [current, setCurrent] = useState("bun");
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
   const toppingsRef = useRef(null);
   const scrollRef = useRef(null);
+
   const handleTabClick = (e) => {
     setCurrent(e);
     if (e === "bun") {
@@ -35,6 +35,7 @@ export const BurgerIngredients = () => {
       });
     }
   };
+
   const ingredientScrollHandler = (e) => {
     const scrollPos = scrollRef.current.scrollTop;
     const bunHeight = bunsRef.current.offsetHeight;
@@ -43,6 +44,7 @@ export const BurgerIngredients = () => {
     else if (scrollPos < sauceHeight + bunHeight) setCurrent("sauce");
     else setCurrent("topping");
   };
+
   useEffect(() => {
     const scrolledNode = scrollRef.current;
     scrollRef.current.addEventListener("scroll", ingredientScrollHandler);
@@ -50,6 +52,7 @@ export const BurgerIngredients = () => {
       scrolledNode.removeEventListener("scroll", ingredientScrollHandler);
     };
   }, []);
+
   return (
     <>
       <article
@@ -83,30 +86,15 @@ export const BurgerIngredients = () => {
           ref={scrollRef}
           className={`${ingredientsStyles["IngredientsColumn-Body"]}`}
         >
-          <IngredientsArea
-            areaRef={bunsRef}
-            type="bun"
-            toggleShowDetails={toggleShowDetails}
-          />
-          <IngredientsArea
-            areaRef={saucesRef}
-            type="sauce"
-            toggleShowDetails={toggleShowDetails}
-          />
-          <IngredientsArea
-            areaRef={toppingsRef}
-            type="main"
-            toggleShowDetails={toggleShowDetails}
-          />
+          <IngredientsArea areaRef={bunsRef} type="bun" />
+          <IngredientsArea areaRef={saucesRef} type="sauce" />
+          <IngredientsArea areaRef={toppingsRef} type="main" />
         </div>
       </article>
       {showDetails ? (
         <>
-          <Modal
-            modalTitle={"Детали ингредиента"}
-            closePopup={toggleShowDetails}
-          >
-            <IngredientDetails details={details}></IngredientDetails>
+          <Modal modalTitle={"Детали ингредиента"}>
+            <IngredientDetails />
           </Modal>
         </>
       ) : null}

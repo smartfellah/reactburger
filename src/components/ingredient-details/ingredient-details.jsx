@@ -1,6 +1,9 @@
 import detailsStyles from "./ingredient-details.module.css";
-import { ingredientDetailsType } from "../../utils/types";
-export const IngredientDetails = ({ details }) => {
+import { useSelector } from "react-redux";
+
+export const IngredientDetails = () => {
+  const details = useSelector((store) => store.singleIngredientReducer.data);
+
   return (
     <article className={`${detailsStyles.DetailsList}`}>
       <img
@@ -33,7 +36,4 @@ export const IngredientDetails = ({ details }) => {
       </section>
     </article>
   );
-};
-IngredientDetails.propTypes = {
-  details: ingredientDetailsType.isRequired,
 };

@@ -3,7 +3,7 @@ import ingredientsAreaStyles from "./ingredients-area.module.css";
 import { IngredientsItem } from "../ingredients-item/ingredients-item";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-export const IngredientsArea = ({ areaRef, type, toggleShowDetails }) => {
+export const IngredientsArea = ({ areaRef, type }) => {
   const ingredientsData = useSelector((store) => store.ingredientsReducer.data);
 
   const areaTitle =
@@ -30,7 +30,6 @@ export const IngredientsArea = ({ areaRef, type, toggleShowDetails }) => {
                   <IngredientsItem
                     key={ingredient["_id"]}
                     singleIngredientData={ingredient}
-                    toggleShowDetails={toggleShowDetails}
                   ></IngredientsItem>
                 );
               }),
@@ -42,7 +41,6 @@ export const IngredientsArea = ({ areaRef, type, toggleShowDetails }) => {
 };
 
 IngredientsArea.propTypes = {
-  toggleShowDetails: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   areaRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     .isRequired,
