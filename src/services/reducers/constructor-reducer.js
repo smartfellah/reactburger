@@ -30,7 +30,7 @@ export const constructorReducer = (state = initialState, action) => {
     case DELETE_FROM_CONSTRUCTOR:
       return {
         ...state,
-        data: state.data.filter((elem) => {
+        data: [...state.data].filter((elem) => {
           return elem.Uid !== action.Uid;
         }),
       };
