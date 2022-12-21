@@ -1,6 +1,7 @@
 const initialState = [
   {
-    lastOrder: {},
+    data: {},
+    isShown: false,
   },
 ];
 

@@ -28,7 +28,7 @@ function App() {
       {!hasError && !isLoading ? (
         <main className={`${appStyles.ColumnsWrapper}`}>
           <BurgerIngredients />
-          {/* <BurgerConstructor /> */}
+          <BurgerConstructor />
         </main>
       ) : null}
     </div>
