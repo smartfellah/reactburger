@@ -22,7 +22,10 @@ import {
   SHOW_ORDER_DETAILS,
 } from "../../services/actions/order-actions";
 import { useDrop } from "react-dnd/dist/hooks";
-import { addIngredient } from "../../services/actions/constructor-actions";
+import {
+  addIngredient,
+  DELETE_FROM_CONSTRUCTOR,
+} from "../../services/actions/constructor-actions";
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -48,6 +51,13 @@ export const BurgerConstructor = () => {
     dispatch(sendOrder());
     dispatch({
       type: SHOW_ORDER_DETAILS,
+    });
+  };
+
+  const onDeleteClick = (ingredientData) => {
+    dispatch({
+      type: DELETE_FROM_CONSTRUCTOR,
+      payload: { ...ingredientData },
     });
   };
 
@@ -89,6 +99,7 @@ export const BurgerConstructor = () => {
                       text={ingredient.name}
                       price={ingredient.price}
                       thumbnail={ingredient.image}
+                      handleClose={() => onDeleteClick(ingredient)}
                     ></ConstructorElement>
                   </div>
                 );

@@ -31,8 +31,9 @@ export const constructorReducer = (state = initialState, action) => {
       return {
         ...state,
         data: [...state.data].filter((elem) => {
-          return elem.Uid !== action.Uid;
+          return elem.Uid !== action.payload.Uid;
         }),
+        totalCost: state.totalCost - action.payload.price,
       };
     default:
       return state;
