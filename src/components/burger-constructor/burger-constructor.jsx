@@ -22,11 +22,19 @@ import {
   SHOW_ORDER_DETAILS,
 } from "../../services/actions/order-actions";
 import { useDrop } from "react-dnd/dist/hooks";
+import { addIngredient } from "../../services/actions/constructor-actions";
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
+
+  const onDropHandler = (item) => {
+    dispatch(addIngredient(item));
+  };
   const [, dropRef] = useDrop({
     accept: "ingredient",
+    drop(item) {
+      onDropHandler(item);
+    },
   });
 
   const constructorIngredients = useSelector(

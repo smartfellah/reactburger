@@ -13,7 +13,7 @@ export const IngredientsItem = ({ singleIngredientData }) => {
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: {
-      id: singleIngredientData["_id"],
+      ...singleIngredientData,
     },
   });
 
