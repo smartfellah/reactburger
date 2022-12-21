@@ -21,9 +21,13 @@ import {
   sendOrder,
   SHOW_ORDER_DETAILS,
 } from "../../services/actions/order-actions";
+import { useDrop } from "react-dnd/dist/hooks";
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const [, dropRef] = useDrop({
+    accept: "ingredient",
+  });
 
   const constructorIngredients = useSelector(
     (store) => store.constructorReducer.data
@@ -41,7 +45,10 @@ export const BurgerConstructor = () => {
 
   return (
     <>
-      <article className={`${burgerConstructorStyles.ConstructorColumn}`}>
+      <article
+        className={`${burgerConstructorStyles.ConstructorColumn}`}
+        ref={dropRef}
+      >
         {/*-Top Bun Section-----------------------------------------------*/}
         <section className={`${burgerConstructorStyles.Bun}`}>
           {constructorBun.name && (

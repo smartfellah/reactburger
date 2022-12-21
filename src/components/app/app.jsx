@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
 
+//React-DND
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 //Redux
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { getAllIngredients } from "../../services/actions/ingredients-actions";
@@ -26,10 +30,12 @@ function App() {
     <div className={`${appStyles.App}`}>
       <AppHeader />
       {!hasError && !isLoading ? (
-        <main className={`${appStyles.ColumnsWrapper}`}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </main>
+        <DndProvider backend={HTML5Backend}>
+          <main className={`${appStyles.ColumnsWrapper}`}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </main>
+        </DndProvider>
       ) : null}
     </div>
   );

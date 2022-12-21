@@ -6,9 +6,16 @@ import ingredientItemStyles from "./ingredients-item.module.css";
 import { ingredientType } from "../../../utils/types";
 import { useDispatch } from "react-redux";
 import { SHOW_INGREDIENT_DETAILS } from "../../../services/actions/single-ingredient-actions";
+import { useDrag } from "react-dnd/dist/hooks";
 
 export const IngredientsItem = ({ singleIngredientData }) => {
   const dispatch = useDispatch();
+  const [, dragRef] = useDrag({
+    type: "ingredient",
+    item: {
+      id: singleIngredientData["_id"],
+    },
+  });
 
   const handleClick = (e) => {
     dispatch({
@@ -28,6 +35,7 @@ export const IngredientsItem = ({ singleIngredientData }) => {
     <div
       className={`${ingredientItemStyles.IngredientContainer}`}
       onClick={handleClick}
+      ref={dragRef}
     >
       <Counter count={1} size="default" extraClass="m-1" />
       <div className={`${ingredientItemStyles.IngredientImg}`}>
