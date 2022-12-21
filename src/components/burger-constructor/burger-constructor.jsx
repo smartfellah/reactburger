@@ -23,6 +23,7 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
+import { sendOrder } from "../../services/actions/order-actions";
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -34,59 +35,9 @@ export const BurgerConstructor = () => {
   const totalCost = useSelector((store) => store.constructorReducer.totalCost);
   const showOrder = useSelector((store) => store.orderReducer.isShown);
 
-  const onOrderClick = () => {};
-  /*
-  const [constructorIngredients, constructorDispatcher] =
-    useContext(ConstructorContext);
-  */
-
-  /*
-  const [showOrder, setShowOrder] = useState();
-  const toggleShowOrder = () => {
-    setShowOrder(!showOrder);
-  };
-  */
-
-  /*
   const onOrderClick = () => {
-    const postOrder = async () => {
-      try {
-        const ingredientsToSend = constructorIngredients.usedIngredients.map(
-          (elem) => {
-            return elem["_id"];
-          }
-        );
-        constructorBun.name &&
-          ingredientsToSend.push(constructorBun["_id"]);
-        if (!ingredientsToSend.length) {
-          throw new Error("пустой заказ");
-        }
-        if (!constructorBun.name) {
-          throw new Error("добавьте булку");
-        }
-        const response = await apiRequest(`${dataURL}/orders`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ingredients: constructorIngredients.usedIngredients.map((elem) => {
-              return elem["_id"];
-            }),
-          }),
-        });
-        constructorDispatcher({
-          type: "makeOrder",
-          lastOrderNumber: response.order.number,
-        });
-        toggleShowOrder();
-      } catch (error) {
-        alert(error);
-      }
-    };
-    postOrder();
+    dispatch(sendOrder());
   };
-  */
 
   return (
     <>
