@@ -3,7 +3,7 @@ import { useState, useContext, useMemo } from "react";
 import { ConstructorContext } from "../../context/constructor-context";
 
 //API
-import { dataURL } from "../../services/endpoint";
+import { dataURL } from "../../utils/endpoint";
 import { apiRequest } from "../../utils/api-request";
 
 //UI elements
