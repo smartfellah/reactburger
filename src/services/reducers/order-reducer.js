@@ -2,6 +2,8 @@ import {
   SEND_ORDER_REQUEST,
   SEND_ORDER_ERROR,
   SEND_ORDER_SUCCESS,
+  SHOW_ORDER_DETAILS,
+  HIDE_ORDER_DETAILS,
 } from "../actions/order-actions";
 
 const initialState = {
@@ -30,6 +32,16 @@ export const orderReducer = (state = initialState, action) => {
         ...initialState,
         isLoading: false,
         hasError: true,
+      };
+    case SHOW_ORDER_DETAILS:
+      return {
+        ...state,
+        isShown: true,
+      };
+    case HIDE_ORDER_DETAILS:
+      return {
+        ...initialState,
+        isShown: true,
       };
     default:
       return state;

@@ -1,10 +1,8 @@
 import orderDetailsStyles from "./order-details.module.css";
 import doneIconPath from "../../images/done.svg";
-import { useContext } from "react";
-import { ConstructorContext } from "../../context/constructor-context";
+import { useSelector } from "react-redux";
 export const OrderDetails = () => {
-  const [constructorState] = useContext(ConstructorContext);
-  const orderNumber = constructorState.lastOrderNumber;
+  const orderNumber = useSelector((store) => store.orderReducer.data.number);
   return (
     <article className={`${orderDetailsStyles.OrderDetails}`}>
       {orderNumber ? (

@@ -1,10 +1,4 @@
-import { useState, useContext, useMemo } from "react";
-//Context
-import { ConstructorContext } from "../../context/constructor-context";
-
-//API
-import { dataURL } from "../../utils/endpoint";
-import { apiRequest } from "../../utils/api-request";
+import { useMemo } from "react";
 
 //UI elements
 import {
@@ -23,7 +17,10 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { sendOrder } from "../../services/actions/order-actions";
+import {
+  sendOrder,
+  SHOW_ORDER_DETAILS,
+} from "../../services/actions/order-actions";
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -37,6 +34,9 @@ export const BurgerConstructor = () => {
 
   const onOrderClick = () => {
     dispatch(sendOrder());
+    dispatch({
+      type: SHOW_ORDER_DETAILS,
+    });
   };
 
   return (
