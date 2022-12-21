@@ -15,7 +15,7 @@ export const constructorReducer = (state = initialState, action) => {
     case ADD_INGREDIENT_TO_CONSTRUCTOR:
       return {
         ...state,
-        data: [...state.data, action.payload],
+        data: [...state.data, { ...action.payload, Uid: crypto.randomUUID() }],
         totalCost: (state.totalCost += action.payload.price),
       };
     case ADD_BUN_TO_CONSTRUCTOR:
