@@ -2,11 +2,9 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useRef, useEffect } from "react";
 import { IngredientsArea } from "./ingredients-area/ingredients-area";
 import ingredientsStyles from "./burger-ingredients.module.css";
-import { ingredientType } from "../../utils/types";
 import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
-import PropTypes from "prop-types";
-export const BurgerIngredients = ({ ingredientsData }) => {
+export const BurgerIngredients = () => {
   const [details, setDetails] = useState({});
   const [showDetails, setShowDetails] = useState(false);
   const toggleShowDetails = (passedDetails) => {
@@ -88,19 +86,16 @@ export const BurgerIngredients = ({ ingredientsData }) => {
           <IngredientsArea
             areaRef={bunsRef}
             type="bun"
-            ingredientsData={ingredientsData}
             toggleShowDetails={toggleShowDetails}
           />
           <IngredientsArea
             areaRef={saucesRef}
             type="sauce"
-            ingredientsData={ingredientsData}
             toggleShowDetails={toggleShowDetails}
           />
           <IngredientsArea
             areaRef={toppingsRef}
             type="main"
-            ingredientsData={ingredientsData}
             toggleShowDetails={toggleShowDetails}
           />
         </div>
@@ -117,7 +112,4 @@ export const BurgerIngredients = ({ ingredientsData }) => {
       ) : null}
     </>
   );
-};
-BurgerIngredients.propTypes = {
-  ingredientsData: PropTypes.arrayOf(ingredientType).isRequired,
 };

@@ -2,13 +2,10 @@ import { useMemo } from "react";
 import ingredientsAreaStyles from "./ingredients-area.module.css";
 import { IngredientsItem } from "../ingredients-item/ingredients-item";
 import PropTypes from "prop-types";
-import { ingredientType } from "../../../utils/types";
-export const IngredientsArea = ({
-  areaRef,
-  type,
-  ingredientsData,
-  toggleShowDetails,
-}) => {
+import { useSelector } from "react-redux/es/hooks/useSelector";
+export const IngredientsArea = ({ areaRef, type, toggleShowDetails }) => {
+  const ingredientsData = useSelector((store) => store.ingredientsReducer.data);
+
   const areaTitle =
     type === "bun" ? "Булки" : type === "sauce" ? "Соусы" : "Начинка";
   return (
@@ -45,7 +42,6 @@ export const IngredientsArea = ({
 };
 
 IngredientsArea.propTypes = {
-  ingredientsData: PropTypes.arrayOf(ingredientType).isRequired,
   toggleShowDetails: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   areaRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })

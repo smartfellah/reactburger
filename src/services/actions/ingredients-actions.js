@@ -9,17 +9,18 @@ export const getAllIngredients = () => (dispatch) => {
   dispatch({
     type: GET_ALL_INGREDIENTS,
   });
-  try {
-    const data = apiRequest(`${dataURL}/ingredients`);
-    dispatch({
-      type: GET_ALL_INGREDIENTS_SUCCESS,
-      payload: {
-        ...data,
-      },
+  apiRequest(`${dataURL}/ingredients`)
+    .then((result) => {
+      if (result && result.success) {
+        dispatch({
+          type: GET_ALL_INGREDIENTS_SUCCESS,
+          payload: result,
+        });
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: GET_ALL_INGREDIENTS_ERROR,
+      });
     });
-  } catch (error) {
-    dispatch({
-      type: GET_ALL_INGREDIENTS_ERROR,
-    });
-  }
 };
