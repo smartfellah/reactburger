@@ -48,7 +48,13 @@ export const BurgerConstructor = () => {
   const showOrder = useSelector((store) => store.orderReducer.isShown);
 
   const onOrderClick = () => {
-    dispatch(sendOrder());
+    dispatch(
+      sendOrder(
+        constructorIngredients.map((elem) => {
+          return elem["_id"];
+        })
+      )
+    );
     dispatch({
       type: SHOW_ORDER_DETAILS,
     });
