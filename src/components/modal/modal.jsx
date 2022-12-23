@@ -6,17 +6,12 @@ import modalStyles from "./modal.module.css";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { HIDE_INGREDIENT_DETAILS } from "../../services/actions/single-ingredient-actions";
+import { HIDE_ORDER_DETAILS } from "../../services/actions/order-actions";
 
 const modalRoot = document.getElementById("modal");
 
-export const Modal = ({ children, modalTitle }) => {
+export const Modal = ({ children, modalTitle, closePopup }) => {
   const dispatch = useDispatch();
-
-  const closePopup = () => {
-    dispatch({
-      type: HIDE_INGREDIENT_DETAILS,
-    });
-  };
 
   useEffect(() => {
     const onEsc = (e) => {
@@ -49,4 +44,5 @@ Modal.propTypes = {
   children: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     .isRequired,
   modalTitle: PropTypes.string,
+  closePopup: PropTypes.func.isRequired,
 };

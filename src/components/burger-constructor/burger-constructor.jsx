@@ -18,6 +18,7 @@ import burgerConstructorStyles from "./burger-constructor.module.css";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
+  HIDE_ORDER_DETAILS,
   sendOrder,
   SHOW_ORDER_DETAILS,
 } from "../../services/actions/order-actions";
@@ -64,6 +65,12 @@ export const BurgerConstructor = () => {
     dispatch({
       type: DELETE_FROM_CONSTRUCTOR,
       payload: { ...ingredientData },
+    });
+  };
+
+  const hideDetails = () => {
+    dispatch({
+      type: HIDE_ORDER_DETAILS,
     });
   };
 
@@ -143,7 +150,7 @@ export const BurgerConstructor = () => {
       </article>
       {/*-Modal-------------------------------------------------------*/}
       {showOrder ? (
-        <Modal>
+        <Modal closePopup={hideDetails}>
           <OrderDetails />
         </Modal>
       ) : null}

@@ -41,7 +41,7 @@ export const orderReducer = (state = initialState, action) => {
     case HIDE_ORDER_DETAILS:
       return {
         ...initialState,
-        isShown: true,
+        isShown: false,
       };
     default:
       return state;

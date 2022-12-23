@@ -4,11 +4,18 @@ import { IngredientsArea } from "./ingredients-area/ingredients-area";
 import ingredientsStyles from "./burger-ingredients.module.css";
 import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { HIDE_INGREDIENT_DETAILS } from "../../services/actions/single-ingredient-actions";
 export const BurgerIngredients = () => {
+  const dispatch = useDispatch();
+
   const showDetails = useSelector(
     (store) => store.singleIngredientReducer.isShown
   );
+
+  const hideDetails = () => {
+    dispatch({ type: HIDE_INGREDIENT_DETAILS });
+  };
 
   const [current, setCurrent] = useState("bun");
   const bunsRef = useRef(null);
@@ -93,7 +100,7 @@ export const BurgerIngredients = () => {
       </article>
       {showDetails ? (
         <>
-          <Modal modalTitle={"Детали ингредиента"}>
+          <Modal modalTitle={"Детали ингредиента"} closePopup={hideDetails}>
             <IngredientDetails />
           </Modal>
         </>
