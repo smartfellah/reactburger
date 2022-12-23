@@ -2,6 +2,7 @@ import {
   ADD_INGREDIENT_TO_CONSTRUCTOR,
   ADD_BUN_TO_CONSTRUCTOR,
   DELETE_FROM_CONSTRUCTOR,
+  CLEAR_CONSTRUCTOR,
 } from "../actions/constructor-actions";
 
 const initialState = {
@@ -34,6 +35,10 @@ export const constructorReducer = (state = initialState, action) => {
           return elem.Uid !== action.payload.Uid;
         }),
         totalCost: state.totalCost - action.payload.price,
+      };
+    case CLEAR_CONSTRUCTOR:
+      return {
+        ...initialState,
       };
     default:
       return state;

@@ -25,6 +25,7 @@ import {
 import { useDrop } from "react-dnd/dist/hooks";
 import {
   addIngredient,
+  CLEAR_CONSTRUCTOR,
   DELETE_FROM_CONSTRUCTOR,
 } from "../../services/actions/constructor-actions";
 
@@ -58,6 +59,9 @@ export const BurgerConstructor = () => {
     );
     dispatch({
       type: SHOW_ORDER_DETAILS,
+    });
+    dispatch({
+      type: CLEAR_CONSTRUCTOR,
     });
   };
 
