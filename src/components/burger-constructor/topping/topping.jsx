@@ -1,6 +1,7 @@
 import toppingStyles from "./topping.module.css";
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 import {
   DELETE_FROM_CONSTRUCTOR,
   SWAP_ELEMENTS,
@@ -8,6 +9,7 @@ import {
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useRef } from "react";
+import { ingredientType } from "../../../utils/types";
 
 export const Topping = ({ ingredient, position }) => {
   const dispatch = useDispatch();
@@ -76,4 +78,8 @@ export const Topping = ({ ingredient, position }) => {
       ></ConstructorElement>
     </div>
   );
+};
+Topping.propTypes = {
+  ingredient: ingredientType.isRequired,
+  position: PropTypes.number.isRequired,
 };
