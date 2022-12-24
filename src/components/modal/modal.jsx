@@ -4,15 +4,10 @@ import { ModalOverlay } from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
 import modalStyles from "./modal.module.css";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { HIDE_INGREDIENT_DETAILS } from "../../services/actions/single-ingredient-actions";
-import { HIDE_ORDER_DETAILS } from "../../services/actions/order-actions";
 
 const modalRoot = document.getElementById("modal");
 
 export const Modal = ({ children, modalTitle, closePopup }) => {
-  const dispatch = useDispatch();
-
   useEffect(() => {
     const onEsc = (e) => {
       e.key === "Escape" && closePopup();
