@@ -7,32 +7,42 @@ import {
 } from "../../../services/actions/constructor-actions";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useRef } from "react";
 
 export const Topping = ({ ingredient, position }) => {
   const dispatch = useDispatch();
 
+  const ref = useRef(null);
+
   const [{ isDrag }, innerDragRef] = useDrag({
     type: "constructorIngredient",
-    item: {
-      dragPosition: position,
+    item: () => {
+      return { position };
     },
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
   });
 
-  const constructorData = useSelector((store) => store.constructorReducer.data);
-
   const [, innerDropRef] = useDrop({
     accept: "constructorIngredient",
-    drop({ dragPosition }, monitor) {
+    hover(item) {
+      if (!ref.current) {
+        return;
+      }
+      const dragFrom = item.position;
+      const dropTo = position;
+
+      if (dragFrom === dropTo) {
+        return;
+      }
+
       dispatch({
         type: SWAP_ELEMENTS,
-        payload: {
-          dragFrom: dragPosition,
-          dropTo: position,
-        },
+        payload: { dragFrom, dropTo },
       });
+
+      item.position = dropTo;
     },
   });
 
@@ -45,12 +55,11 @@ export const Topping = ({ ingredient, position }) => {
 
   const transparentStyle = isDrag && { opacity: 0 };
 
+  innerDragRef(innerDropRef(ref));
+
   return (
     <div
-      ref={(elem) => {
-        innerDragRef(elem);
-        innerDropRef(elem);
-      }}
+      ref={ref}
       style={{ ...transparentStyle }}
       key={ingredient.Uid}
       className={`${toppingStyles.ListElement}`}
