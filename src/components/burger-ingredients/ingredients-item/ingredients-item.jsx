@@ -4,46 +4,62 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientItemStyles from "./ingredients-item.module.css";
 import { ingredientType } from "../../../utils/types";
-import { useContext } from "react";
-import { ConstructorContext } from "../../../context/constructor-context";
-import { func } from "prop-types";
-export const IngredientsItem = ({
-  singleIngredientData,
-  toggleShowDetails,
-}) => {
-  const [constructorState, constructorDispatcher] =
-    useContext(ConstructorContext);
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { SHOW_INGREDIENT_DETAILS } from "../../../services/actions/single-ingredient-actions";
+import { useDrag } from "react-dnd/dist/hooks";
+
+export const IngredientsItem = ({ singleIngredientData }) => {
+  const dispatch = useDispatch();
+  const [amount, setAmount] = useState(0);
+  const constructorIngredients = useSelector(
+    (store) => store.constructorReducer.data
+  );
+  const constructorBun = useSelector((store) => store.constructorReducer.bun);
+
+  const [, dragRef] = useDrag({
+    type: "ingredient",
+    item: {
+      ...singleIngredientData,
+    },
+  });
+
+  useEffect(() => {
+    if (singleIngredientData.type === "bun") {
+      constructorBun._id === singleIngredientData._id
+        ? setAmount(2)
+        : setAmount(0);
+    } else
+      setAmount(
+        constructorIngredients.filter(
+          (ingredient) => ingredient._id === singleIngredientData._id
+        ).length
+      );
+  }, [constructorIngredients, constructorBun]);
 
   const handleClick = (e) => {
-    toggleShowDetails({
-      image: singleIngredientData.image_large,
-      name: singleIngredientData.name,
-      calories: singleIngredientData.calories,
-      proteins: singleIngredientData.proteins,
-      fat: singleIngredientData.fat,
-      carbohydrates: singleIngredientData.carbohydrates,
+    dispatch({
+      type: SHOW_INGREDIENT_DETAILS,
+      payload: {
+        image: singleIngredientData.image_large,
+        name: singleIngredientData.name,
+        calories: singleIngredientData.calories,
+        proteins: singleIngredientData.proteins,
+        fat: singleIngredientData.fat,
+        carbohydrates: singleIngredientData.carbohydrates,
+      },
     });
-    singleIngredientData.type !== "bun"
-      ? constructorDispatcher({
-          type: "addIngredient",
-          newIngredient: {
-            ...singleIngredientData,
-            Uid: crypto.randomUUID(),
-          },
-        })
-      : constructorDispatcher({
-          type: "addBun",
-          bunData: {
-            ...singleIngredientData,
-          },
-        });
   };
+
   return (
     <div
       className={`${ingredientItemStyles.IngredientContainer}`}
       onClick={handleClick}
+      ref={dragRef}
     >
-      <Counter count={1} size="default" extraClass="m-1" />
+      {amount ? (
+        <Counter count={amount} size="default" extraClass="m-1" />
+      ) : null}
       <div className={`${ingredientItemStyles.IngredientImg}`}>
         <img src={singleIngredientData.image} alt="ingredient" />
       </div>
@@ -61,5 +77,4 @@ export const IngredientsItem = ({
 };
 IngredientsItem.propTypes = {
   singleIngredientData: ingredientType.isRequired,
-  toggleShowDetails: func.isRequired,
 };

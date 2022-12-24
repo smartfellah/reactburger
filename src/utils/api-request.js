@@ -1,4 +1,5 @@
 import { checkResponse } from "./check-response";
-export const apiRequest = (url, options) => {
-  return fetch(url, options).then(checkResponse);
+import { checkSuccess } from "./check-success";
+export const apiRequest = async (url, options) => {
+  return await fetch(url, options).then(checkResponse).then(checkSuccess);
 };

@@ -2,49 +2,76 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useRef, useEffect } from "react";
 import { IngredientsArea } from "./ingredients-area/ingredients-area";
 import ingredientsStyles from "./burger-ingredients.module.css";
-import { ingredientType } from "../../utils/types";
 import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
-import PropTypes from "prop-types";
-export const BurgerIngredients = ({ ingredientsData }) => {
-  const [details, setDetails] = useState({});
-  const [showDetails, setShowDetails] = useState(false);
-  const toggleShowDetails = (passedDetails) => {
-    setShowDetails(!showDetails);
-    setDetails(passedDetails);
+import { useDispatch, useSelector } from "react-redux";
+import { HIDE_INGREDIENT_DETAILS } from "../../services/actions/single-ingredient-actions";
+export const BurgerIngredients = () => {
+  const dispatch = useDispatch();
+
+  const showDetails = useSelector(
+    (store) => store.singleIngredientReducer.isShown
+  );
+
+  const hideDetails = () => {
+    dispatch({ type: HIDE_INGREDIENT_DETAILS });
   };
+
   const [current, setCurrent] = useState("bun");
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
   const toppingsRef = useRef(null);
   const scrollRef = useRef(null);
+  const tabRef = useRef(null);
+
   const handleTabClick = (e) => {
     setCurrent(e);
     if (e === "bun") {
+      setCurrent("bun");
       scrollRef.current.scroll({
         top: 0,
         behavior: "smooth",
       });
     } else if (e === "sauce") {
+      setCurrent("sauce");
       scrollRef.current.scroll({
         top: bunsRef.current.offsetHeight,
         behavior: "smooth",
       });
     } else {
+      setCurrent("main");
       scrollRef.current.scroll({
         top: bunsRef.current.offsetHeight + saucesRef.current.offsetHeight,
         behavior: "smooth",
       });
     }
   };
+
   const ingredientScrollHandler = (e) => {
-    const scrollPos = scrollRef.current.scrollTop;
-    const bunHeight = bunsRef.current.offsetHeight;
-    const sauceHeight = saucesRef.current.offsetHeight;
-    if (scrollPos < bunHeight) setCurrent("bun");
-    else if (scrollPos < sauceHeight + bunHeight) setCurrent("sauce");
-    else setCurrent("topping");
+    const getAreaPos = (areaRef, tabRef) => {
+      const tabBottom = tabRef.current.getBoundingClientRect().bottom;
+      return Math.abs(
+        tabBottom -
+          Math.min(
+            areaRef.current.getBoundingClientRect().top,
+            areaRef.current.getBoundingClientRect().bottom
+          )
+      );
+    };
+    const bunPos = getAreaPos(bunsRef, tabRef);
+    const saucePos = getAreaPos(saucesRef, tabRef);
+    const toppingPos = getAreaPos(toppingsRef, tabRef);
+    const areas = [
+      { name: "bun", pos: bunPos },
+      { name: "sauce", pos: saucePos },
+      { name: "topping", pos: toppingPos },
+    ];
+    areas.sort((a, b) => {
+      return a.pos - b.pos;
+    });
+    setCurrent(areas[0].name);
   };
+
   useEffect(() => {
     const scrolledNode = scrollRef.current;
     scrollRef.current.addEventListener("scroll", ingredientScrollHandler);
@@ -52,6 +79,7 @@ export const BurgerIngredients = ({ ingredientsData }) => {
       scrolledNode.removeEventListener("scroll", ingredientScrollHandler);
     };
   }, []);
+
   return (
     <>
       <article
@@ -62,7 +90,10 @@ export const BurgerIngredients = ({ ingredientsData }) => {
         >
           <h1>Соберите бургер</h1>
         </header>
-        <section className={`${ingredientsStyles["IngredientsColumn-Tab"]}`}>
+        <section
+          className={`${ingredientsStyles["IngredientsColumn-Tab"]}`}
+          ref={tabRef}
+        >
           <Tab value="bun" active={current === "bun"} onClick={handleTabClick}>
             Булки
           </Tab>
@@ -85,39 +116,18 @@ export const BurgerIngredients = ({ ingredientsData }) => {
           ref={scrollRef}
           className={`${ingredientsStyles["IngredientsColumn-Body"]}`}
         >
-          <IngredientsArea
-            areaRef={bunsRef}
-            type="bun"
-            ingredientsData={ingredientsData}
-            toggleShowDetails={toggleShowDetails}
-          />
-          <IngredientsArea
-            areaRef={saucesRef}
-            type="sauce"
-            ingredientsData={ingredientsData}
-            toggleShowDetails={toggleShowDetails}
-          />
-          <IngredientsArea
-            areaRef={toppingsRef}
-            type="main"
-            ingredientsData={ingredientsData}
-            toggleShowDetails={toggleShowDetails}
-          />
+          <IngredientsArea areaRef={bunsRef} type="bun" />
+          <IngredientsArea areaRef={saucesRef} type="sauce" />
+          <IngredientsArea areaRef={toppingsRef} type="main" />
         </div>
       </article>
       {showDetails ? (
         <>
-          <Modal
-            modalTitle={"Детали ингредиента"}
-            closePopup={toggleShowDetails}
-          >
-            <IngredientDetails details={details}></IngredientDetails>
+          <Modal modalTitle={"Детали ингредиента"} closePopup={hideDetails}>
+            <IngredientDetails />
           </Modal>
         </>
       ) : null}
     </>
   );
-};
-BurgerIngredients.propTypes = {
-  ingredientsData: PropTypes.arrayOf(ingredientType).isRequired,
 };
