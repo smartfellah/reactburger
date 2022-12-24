@@ -1,5 +1,5 @@
 import {
-  GET_ALL_INGREDIENTS,
+  GET_ALL_INGREDIENTS_REQUEST,
   GET_ALL_INGREDIENTS_ERROR,
   GET_ALL_INGREDIENTS_SUCCESS,
 } from "../actions/ingredients-actions";
@@ -12,7 +12,7 @@ const initialState = {
 
 export const ingredientsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL_INGREDIENTS:
+    case GET_ALL_INGREDIENTS_REQUEST:
       return {
         ...state,
         hasError: false,
