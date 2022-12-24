@@ -19,12 +19,10 @@ export const sendOrder = (ingredients) => (dispatch) => {
     body: JSON.stringify({ ingredients }),
   })
     .then((result) => {
-      if (result && result.success) {
-        dispatch({
-          type: SEND_ORDER_SUCCESS,
-          payload: { name: result.name, number: result.order.number },
-        });
-      }
+      dispatch({
+        type: SEND_ORDER_SUCCESS,
+        payload: { name: result.name, number: result.order.number },
+      });
     })
     .catch((error) => {
       dispatch({

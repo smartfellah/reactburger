@@ -11,12 +11,10 @@ export const getAllIngredients = () => (dispatch) => {
   });
   apiRequest(`${dataURL}/ingredients`)
     .then((result) => {
-      if (result && result.success) {
-        dispatch({
-          type: GET_ALL_INGREDIENTS_SUCCESS,
-          payload: result,
-        });
-      }
+      dispatch({
+        type: GET_ALL_INGREDIENTS_SUCCESS,
+        payload: result,
+      });
     })
     .catch((error) => {
       dispatch({
