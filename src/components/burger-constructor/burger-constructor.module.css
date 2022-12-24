@@ -31,14 +31,6 @@
 .ConstructorList::-webkit-scrollbar-corner {
   background-color: var(--bg-secondary);
 }
-.ListElement {
-  display: flex;
-  align-items: center;
-  padding-right: var(--s-3);
-}
-.DragIconWrapper {
-  width: 32px;
-}
 .OrderSection {
   display: flex;
   padding-top: var(--l-1);

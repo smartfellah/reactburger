@@ -28,6 +28,7 @@ import {
   CLEAR_CONSTRUCTOR,
   DELETE_FROM_CONSTRUCTOR,
 } from "../../services/actions/constructor-actions";
+import { Topping } from "./topping/topping";
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -65,13 +66,6 @@ export const BurgerConstructor = () => {
     });
   };
 
-  const onDeleteClick = (ingredientData) => {
-    dispatch({
-      type: DELETE_FROM_CONSTRUCTOR,
-      payload: { ...ingredientData },
-    });
-  };
-
   const hideDetails = () => {
     dispatch({
       type: HIDE_ORDER_DETAILS,
@@ -100,25 +94,30 @@ export const BurgerConstructor = () => {
         <section className={`${burgerConstructorStyles.ConstructorList}`}>
           {useMemo(
             () =>
-              constructorIngredients.map((ingredient) => {
+              constructorIngredients.map((ingredient, index) => {
                 return (
-                  <div
+                  <Topping
+                    position={index}
                     key={ingredient.Uid}
-                    className={`${burgerConstructorStyles.ListElement}`}
-                  >
-                    <div
-                      className={`${burgerConstructorStyles.DragIconWrapper}`}
-                    >
-                      <DragIcon />
-                    </div>
-                    <ConstructorElement
-                      isLocked={false}
-                      text={ingredient.name}
-                      price={ingredient.price}
-                      thumbnail={ingredient.image}
-                      handleClose={() => onDeleteClick(ingredient)}
-                    ></ConstructorElement>
-                  </div>
+                    ingredient={ingredient}
+                  />
+                  // <div
+                  //   key={ingredient.Uid}
+                  //   className={`${burgerConstructorStyles.ListElement}`}
+                  // >
+                  //   <div
+                  //     className={`${burgerConstructorStyles.DragIconWrapper}`}
+                  //   >
+                  //     <DragIcon />
+                  //   </div>
+                  //   <ConstructorElement
+                  //     isLocked={false}
+                  //     text={ingredient.name}
+                  //     price={ingredient.price}
+                  //     thumbnail={ingredient.image}
+                  //     handleClose={() => onDeleteClick(ingredient)}
+                  //   ></ConstructorElement>
+                  // </div>
                 );
               }),
             [constructorIngredients]
