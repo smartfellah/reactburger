@@ -3,7 +3,6 @@ import { useMemo } from "react";
 //UI elements
 import {
   CurrencyIcon,
-  DragIcon,
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -20,13 +19,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   HIDE_ORDER_DETAILS,
   sendOrder,
+  SEND_ORDER_ERROR,
   SHOW_ORDER_DETAILS,
 } from "../../services/actions/order-actions";
 import { useDrop } from "react-dnd/dist/hooks";
 import {
   addIngredient,
   CLEAR_CONSTRUCTOR,
-  DELETE_FROM_CONSTRUCTOR,
 } from "../../services/actions/constructor-actions";
 import { Topping } from "./topping/topping";
 
@@ -56,16 +55,20 @@ export const BurgerConstructor = () => {
   const showOrder = useSelector((store) => store.orderReducer.isShown);
 
   const onOrderClick = () => {
-    dispatch(
-      sendOrder(
-        constructorIngredients.map((elem) => {
-          return elem["_id"];
-        })
-      )
-    );
-    dispatch({
-      type: SHOW_ORDER_DETAILS,
+    const dataToSend = constructorIngredients.map((elem) => {
+      return elem["_id"];
     });
+
+    constructorBun._id && dataToSend.push(constructorBun._id);
+    if (!constructorBun._id) {
+      dispatch({ type: SEND_ORDER_ERROR });
+      alert("В бургер нужно добавить булку");
+    } else {
+      dispatch(sendOrder(dataToSend));
+      dispatch({
+        type: SHOW_ORDER_DETAILS,
+      });
+    }
   };
 
   const hideDetails = () => {
