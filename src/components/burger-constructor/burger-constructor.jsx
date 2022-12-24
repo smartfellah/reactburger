@@ -47,7 +47,12 @@ export const BurgerConstructor = () => {
     (store) => store.constructorReducer.data
   );
   const constructorBun = useSelector((store) => store.constructorReducer.bun);
-  const totalCost = useSelector((store) => store.constructorReducer.totalCost);
+  const totalCost =
+    (constructorIngredients[0]
+      ? [...constructorIngredients].reduce((acc, elem) => {
+          return acc + elem.price;
+        }, 0)
+      : 0) + (constructorBun.price ? constructorBun.price * 2 : 0);
   const showOrder = useSelector((store) => store.orderReducer.isShown);
 
   const onOrderClick = () => {

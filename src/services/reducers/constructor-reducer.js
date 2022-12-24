@@ -9,7 +9,6 @@ import {
 const initialState = {
   bun: {},
   data: [],
-  totalCost: 0,
 };
 
 export const constructorReducer = (state = initialState, action) => {
@@ -18,16 +17,11 @@ export const constructorReducer = (state = initialState, action) => {
       return {
         ...state,
         data: [...state.data, { ...action.payload, Uid: crypto.randomUUID() }],
-        totalCost: (state.totalCost += action.payload.price),
       };
     case ADD_BUN_TO_CONSTRUCTOR:
       return {
         ...state,
         bun: { ...action.payload },
-        totalCost:
-          state.totalCost +
-          action.payload.price * 2 -
-          (state.bun.price ? state.bun.price * 2 : 0),
       };
     case DELETE_FROM_CONSTRUCTOR:
       return {
@@ -35,12 +29,10 @@ export const constructorReducer = (state = initialState, action) => {
         data: [...state.data].filter((elem) => {
           return elem.Uid !== action.payload.Uid;
         }),
-        totalCost: state.totalCost - action.payload.price,
       };
     case CLEAR_CONSTRUCTOR:
       return {
         ...initialState,
-        totalCost: 0,
       };
     case SWAP_ELEMENTS:
       let mutableArray = [...state.data];
