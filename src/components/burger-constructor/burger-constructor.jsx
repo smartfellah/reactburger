@@ -33,7 +33,7 @@ export const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const onDropHandler = (item) => {
-    dispatch(addIngredient(item));
+    dispatch(addIngredient(item, crypto.randomUUID()));
   };
   const [, dropRef] = useDrop({
     accept: "ingredient",

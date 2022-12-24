@@ -4,7 +4,7 @@ export const DELETE_FROM_CONSTRUCTOR = "DELETE_FROM_CONSTRUCTOR";
 export const CLEAR_CONSTRUCTOR = "CLEAR_CONSTRUCTOR";
 export const SWAP_ELEMENTS = "SWAP_ELEMENTS";
 
-export const addIngredient = (ingredientData) => {
+export const addIngredient = (ingredientData, uid) => {
   switch (ingredientData.type) {
     case "bun":
       return {
@@ -15,7 +15,7 @@ export const addIngredient = (ingredientData) => {
     default:
       return {
         type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-        payload: ingredientData,
+        payload: { ...ingredientData, Uid: uid },
       };
   }
 };
