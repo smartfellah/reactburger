@@ -22,20 +22,24 @@ export const BurgerIngredients = () => {
   const saucesRef = useRef(null);
   const toppingsRef = useRef(null);
   const scrollRef = useRef(null);
+  const tabRef = useRef(null);
 
   const handleTabClick = (e) => {
     setCurrent(e);
     if (e === "bun") {
+      setCurrent("bun");
       scrollRef.current.scroll({
         top: 0,
         behavior: "smooth",
       });
     } else if (e === "sauce") {
+      setCurrent("sauce");
       scrollRef.current.scroll({
         top: bunsRef.current.offsetHeight,
         behavior: "smooth",
       });
     } else {
+      setCurrent("main");
       scrollRef.current.scroll({
         top: bunsRef.current.offsetHeight + saucesRef.current.offsetHeight,
         behavior: "smooth",
@@ -44,12 +48,28 @@ export const BurgerIngredients = () => {
   };
 
   const ingredientScrollHandler = (e) => {
-    const scrollPos = scrollRef.current.scrollTop;
-    const bunHeight = bunsRef.current.offsetHeight;
-    const sauceHeight = saucesRef.current.offsetHeight;
-    if (scrollPos < bunHeight) setCurrent("bun");
-    else if (scrollPos < sauceHeight + bunHeight) setCurrent("sauce");
-    else setCurrent("topping");
+    const getAreaPos = (areaRef, tabRef) => {
+      const tabBottom = tabRef.current.getBoundingClientRect().bottom;
+      return Math.abs(
+        tabBottom -
+          Math.min(
+            areaRef.current.getBoundingClientRect().top,
+            areaRef.current.getBoundingClientRect().bottom
+          )
+      );
+    };
+    const bunPos = getAreaPos(bunsRef, tabRef);
+    const saucePos = getAreaPos(saucesRef, tabRef);
+    const toppingPos = getAreaPos(toppingsRef, tabRef);
+    const areas = [
+      { name: "bun", pos: bunPos },
+      { name: "sauce", pos: saucePos },
+      { name: "topping", pos: toppingPos },
+    ];
+    areas.sort((a, b) => {
+      return a.pos - b.pos;
+    });
+    setCurrent(areas[0].name);
   };
 
   useEffect(() => {
@@ -70,7 +90,10 @@ export const BurgerIngredients = () => {
         >
           <h1>Соберите бургер</h1>
         </header>
-        <section className={`${ingredientsStyles["IngredientsColumn-Tab"]}`}>
+        <section
+          className={`${ingredientsStyles["IngredientsColumn-Tab"]}`}
+          ref={tabRef}
+        >
           <Tab value="bun" active={current === "bun"} onClick={handleTabClick}>
             Булки
           </Tab>
