@@ -61,14 +61,14 @@ export const BurgerConstructor = () => {
     dispatch({
       type: SHOW_ORDER_DETAILS,
     });
-    dispatch({
-      type: CLEAR_CONSTRUCTOR,
-    });
   };
 
   const hideDetails = () => {
     dispatch({
       type: HIDE_ORDER_DETAILS,
+    });
+    dispatch({
+      type: CLEAR_CONSTRUCTOR,
     });
   };
 
@@ -101,23 +101,6 @@ export const BurgerConstructor = () => {
                     key={ingredient.Uid}
                     ingredient={ingredient}
                   />
-                  // <div
-                  //   key={ingredient.Uid}
-                  //   className={`${burgerConstructorStyles.ListElement}`}
-                  // >
-                  //   <div
-                  //     className={`${burgerConstructorStyles.DragIconWrapper}`}
-                  //   >
-                  //     <DragIcon />
-                  //   </div>
-                  //   <ConstructorElement
-                  //     isLocked={false}
-                  //     text={ingredient.name}
-                  //     price={ingredient.price}
-                  //     thumbnail={ingredient.image}
-                  //     handleClose={() => onDeleteClick(ingredient)}
-                  //   ></ConstructorElement>
-                  // </div>
                 );
               }),
             [constructorIngredients]

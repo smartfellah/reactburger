@@ -40,6 +40,7 @@ export const constructorReducer = (state = initialState, action) => {
     case CLEAR_CONSTRUCTOR:
       return {
         ...initialState,
+        totalCost: 0,
       };
     case SWAP_ELEMENTS:
       let mutableArray = [...state.data];
