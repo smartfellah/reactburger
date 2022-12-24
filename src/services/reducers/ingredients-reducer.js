@@ -27,7 +27,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     case GET_ALL_INGREDIENTS_ERROR:
       return {
-        ...state,
+        ...initialState,
         hasError: true,
         isLoading: false,
       };
