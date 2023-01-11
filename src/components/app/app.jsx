@@ -38,18 +38,22 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact={true}>
-            <div className={`${appStyles.App}`}>
-              {!hasError && !isLoading ? (
-                <DndProvider backend={HTML5Backend}>
-                  <main className={`${appStyles.ColumnsWrapper}`}>
-                    <BurgerIngredients />
-                    <BurgerConstructor />
-                  </main>
-                </DndProvider>
-              ) : null}
-            </div>
+            <Pages.HomePage>
+              <div className={`${appStyles.App}`}>
+                {!hasError && !isLoading ? (
+                  <DndProvider backend={HTML5Backend}>
+                    <main className={`${appStyles.ColumnsWrapper}`}>
+                      <BurgerIngredients />
+                      <BurgerConstructor />
+                    </main>
+                  </DndProvider>
+                ) : null}
+              </div>
+            </Pages.HomePage>
           </Route>
-          <Route path="*">{Pages.Page404}</Route>
+          <Route path="*">
+            <Pages.Page404 />
+          </Route>
         </Switch>
       </Router>
     </>

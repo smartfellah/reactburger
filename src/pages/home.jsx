@@ -1,3 +1,3 @@
 export const HomePage = ({ children }) => {
-  return { children };
+  return { ...children };
 };
