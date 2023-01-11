@@ -51,6 +51,9 @@ function App() {
               </div>
             </Pages.HomePage>
           </Route>
+          <Route path="/login">
+            <Pages.LogInPage></Pages.LogInPage>
+          </Route>
           <Route path="*">
             <Pages.Page404 />
           </Route>
