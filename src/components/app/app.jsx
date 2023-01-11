@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
 
+//React-Router
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+//Pages
+import * as Pages from "../../pages";
+
 //React-DND
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -27,17 +33,26 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className={`${appStyles.App}`}>
+    <>
       <AppHeader />
-      {!hasError && !isLoading ? (
-        <DndProvider backend={HTML5Backend}>
-          <main className={`${appStyles.ColumnsWrapper}`}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </main>
-        </DndProvider>
-      ) : null}
-    </div>
+      <Router>
+        <Switch>
+          <Route path="/" exact={true}>
+            <div className={`${appStyles.App}`}>
+              {!hasError && !isLoading ? (
+                <DndProvider backend={HTML5Backend}>
+                  <main className={`${appStyles.ColumnsWrapper}`}>
+                    <BurgerIngredients />
+                    <BurgerConstructor />
+                  </main>
+                </DndProvider>
+              ) : null}
+            </div>
+          </Route>
+          <Route path="*">{Pages.Page404}</Route>
+        </Switch>
+      </Router>
+    </>
   );
 }
 

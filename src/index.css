@@ -1,4 +1,5 @@
 :root {
+  height: 100%;
   /*Size variables*/
   --s-1: 4px;
   --s-2: 8px;
@@ -19,4 +20,10 @@
   --bg-secondary: #1c1c21;
   --text-primary: #f2f2f3;
   --text-secondary: #8585ad;
+}
+body {
+  height: 100%;
+}
+#root {
+  height: 100%;
 }
