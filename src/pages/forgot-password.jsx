@@ -5,9 +5,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-//React
-import { useState } from "react";
-
 //Router
 import { Link } from "react-router-dom";
 
