@@ -34,8 +34,8 @@ function App() {
 
   return (
     <>
-      <AppHeader />
       <Router>
+        <AppHeader />
         <Switch>
           <Route path="/" exact={true}>
             <Pages.HomePage>
@@ -57,7 +57,7 @@ function App() {
           <Route path="/register">
             <Pages.RegisterPage />
           </Route>
-          <Route path="profile">
+          <Route path="/profile">
             <Pages.Profile />
           </Route>
           <Route path="/forgot-password">

@@ -6,6 +6,8 @@ import {
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { Link } from "react-router-dom";
+
 export const AppHeader = () => {
   return (
     <header className={`${headerStyles.Header}`}>
@@ -24,10 +26,10 @@ export const AppHeader = () => {
           <Logo className={`${headerStyles["LogoBox-Item"]}`}></Logo>
         </div>
         <div className={`${headerStyles.ProfileBox}`}>
-          <a className={`${headerStyles["ProfileBox-Item"]}`} href="#">
+          <Link to="/profile" className={`${headerStyles["ProfileBox-Item"]}`}>
             <ProfileIcon type="secondary" />
             <p className="text text_type_main-default">Личный кабинет</p>
-          </a>
+          </Link>
         </div>
       </nav>
     </header>
