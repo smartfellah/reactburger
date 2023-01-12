@@ -1,10 +1,17 @@
+//React
 import { useState } from "react";
+
+//Router
+import { Link } from "react-router-dom";
+
+//UI
 import {
   EmailInput,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./page-styles/login.module.css";
+
 export const LogInPage = () => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -43,15 +50,17 @@ export const LogInPage = () => {
         </div>
         <div className={`${styles.OptionMenuContainer}`}>
           <div className={`${styles.OptionContainer}`}>
-            <p className="text text_type_main-default text_color_inactive">
+            <p className="text text_type_main-default text_color_inactive pl-10">
               Вы - новый пользователь?
             </p>
-            <Button htmlType="button" type="secondary" size="medium">
-              Зарегистрироваться
-            </Button>
+            <Link to="/register">
+              <Button htmlType="button" type="secondary" size="medium">
+                Зарегистрироваться
+              </Button>
+            </Link>
           </div>
           <div className={`${styles.OptionContainer}`}>
-            <p className="text text_type_main-default text_color_inactive">
+            <p className="text text_type_main-default text_color_inactive pl-10">
               Забыли пароль?
             </p>
             <Button htmlType="button" type="secondary" size="medium">
