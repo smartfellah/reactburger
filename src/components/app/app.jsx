@@ -57,6 +57,9 @@ function App() {
           <Route path="/register">
             <Pages.RegisterPage />
           </Route>
+          <Route path="profile">
+            <Pages.Profile />
+          </Route>
           <Route path="/forgot-password">
             <Pages.ForgotPassword />
           </Route>

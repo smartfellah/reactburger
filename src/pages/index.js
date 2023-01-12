@@ -4,3 +4,4 @@ export { LogInPage } from "./login";
 export { RegisterPage } from "./register";
 export { ForgotPassword } from "./forgot-password";
 export { ResetPassword } from "./reset-password";
+export { Profile } from "./profile";
