@@ -52,10 +52,13 @@ function App() {
             </Pages.HomePage>
           </Route>
           <Route path="/login">
-            <Pages.LogInPage></Pages.LogInPage>
+            <Pages.LogInPage />
           </Route>
           <Route path="/register">
-            <Pages.RegisterPage></Pages.RegisterPage>
+            <Pages.RegisterPage />
+          </Route>
+          <Route path="/forgot-password">
+            <Pages.ForgotPassword />
           </Route>
           <Route path="*">
             <Pages.Page404 />

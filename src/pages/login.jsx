@@ -60,9 +60,11 @@ export const LogInPage = () => {
             <p className="text text_type_main-default text_color_inactive pl-10">
               Забыли пароль?
             </p>
-            <Button htmlType="button" type="secondary" size="medium">
-              Восстановить пароль
-            </Button>
+            <Link to="/forgot-password">
+              <Button htmlType="button" type="secondary" size="medium">
+                Восстановить пароль
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
