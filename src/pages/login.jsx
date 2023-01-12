@@ -25,9 +25,7 @@ export const LogInPage = () => {
     <div className={`${styles.LoginWrapper}`}>
       <div className={`${styles.LoginContainer}`}>
         <div className={`${styles.FormContainer}`}>
-          <h2 className={`${styles.FormHeader} text text_type_main-medium`}>
-            Вход
-          </h2>
+          <h2 className={`text text_type_main-medium`}>Вход</h2>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <EmailInput
               onChange={onEmailChange}
@@ -41,7 +39,6 @@ export const LogInPage = () => {
               onChange={onPasswordChange}
               value={passwordValue}
               name={"password"}
-              extraClass="mb-2"
             />
           </div>
           <Button htmlType="button" type="primary" size="medium">
