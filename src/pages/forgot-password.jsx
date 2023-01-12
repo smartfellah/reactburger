@@ -27,6 +27,11 @@ export const ForgotPassword = () => {
       payload: e.target.value,
     });
   };
+
+  const sendEmailCheckRequest = (e) => {
+    dispatch(a.checkEmail(emailValue));
+  };
+
   return (
     <div className={`${styles["forgot-password__wrapper"]}`}>
       <div className={`${styles["forgot-password__container"]}`}>
@@ -44,7 +49,12 @@ export const ForgotPassword = () => {
             />
           </div>
           <Link to="reset-password">
-            <Button htmlType="button" type="primary" size="medium">
+            <Button
+              onClick={sendEmailCheckRequest}
+              htmlType="button"
+              type="primary"
+              size="medium"
+            >
               Восстановить
             </Button>
           </Link>
