@@ -35,7 +35,7 @@ export const ForgotPassword = () => {
           </div>
           <Link to="reset-password">
             <Button htmlType="button" type="primary" size="medium">
-              Восствновить
+              Восстановить
             </Button>
           </Link>
         </div>
