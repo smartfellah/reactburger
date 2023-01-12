@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export const ForgotPassword = () => {
-  const [emailValue, setEmailValue] = useState();
+  const [emailValue, setEmailValue] = useState("");
 
   const onEmailChange = (e) => {
     setEmailValue(e.target.value);
@@ -33,9 +33,11 @@ export const ForgotPassword = () => {
               isIcon={false}
             />
           </div>
-          <Button htmlType="button" type="primary" size="medium">
-            Восствновить
-          </Button>
+          <Link to="reset-password">
+            <Button htmlType="button" type="primary" size="medium">
+              Восствновить
+            </Button>
+          </Link>
         </div>
         <div className={`${styles["options-menu__container"]}`}>
           <div className={`${styles["option__container"]}`}>

@@ -60,6 +60,9 @@ function App() {
           <Route path="/forgot-password">
             <Pages.ForgotPassword />
           </Route>
+          <Route path="/reset-password">
+            <Pages.ResetPassword />
+          </Route>
           <Route path="*">
             <Pages.Page404 />
           </Route>
