@@ -64,7 +64,7 @@ export const RegisterPage = () => {
             <p className="text text_type_main-default text_color_inactive pl-10">
               Уже зарегистрированы?
             </p>
-            <Link to="/register">
+            <Link to="/login">
               <Button htmlType="button" type="secondary" size="medium">
                 Войти
               </Button>
