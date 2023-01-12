@@ -11,11 +11,24 @@ import { useState } from "react";
 //Router
 import { Link } from "react-router-dom";
 
+//Redux
+import { useSelector, useDispatch } from "react-redux";
+
+//Actions
+import * as a from "../services/actions/forgot-password-actions";
+
 export const ForgotPassword = () => {
-  const [emailValue, setEmailValue] = useState("");
+  const dispatch = useDispatch();
+
+  const emailValue = useSelector(
+    (store) => store.forgotPasswordReducer.emailForm
+  );
 
   const onEmailChange = (e) => {
-    setEmailValue(e.target.value);
+    dispatch({
+      type: a.EMAIL_CHANGE,
+      payload: e.target.value,
+    });
   };
   return (
     <div className={`${styles["forgot-password__wrapper"]}`}>

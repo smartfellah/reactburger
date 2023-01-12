@@ -1,0 +1,4 @@
+export const EMAIL_CHANGE = "(forgot-password)EMAIL_CHANGE";
+export const CHECK_EMAIL_REQUEST = "CHECK_EMAIL_REQUEST";
+export const CHECK_EMAIL_SUCCESS = "CHECK_EMAIL_SUCCESS";
+export const CHECK_EMAIL_ERROR = "CHECK_EMAIL_ERROR";
