@@ -13,14 +13,14 @@ export const AppHeader = () => {
     <header className={`${headerStyles.Header}`}>
       <nav className={`${headerStyles.NavBar} `}>
         <menu className={`${headerStyles.MenuBox}`}>
-          <a className={`${headerStyles["MenuBox-Item-Active"]}`} href="#">
+          <Link to="/" className={`${headerStyles["MenuBox-Item-Active"]}`}>
             <BurgerIcon type="primary" />
             <p className="text text_type_main-default">Конструктор</p>
-          </a>
-          <a className={`${headerStyles["MenuBox-Item"]}`} href="#">
+          </Link>
+          <Link to="404" className={`${headerStyles["MenuBox-Item"]}`}>
             <ListIcon type="secondary" />
             <p className="text text_type_main-default">Лента заказов</p>
-          </a>
+          </Link>
         </menu>
         <div className={`${headerStyles.LogoBox}`}>
           <Logo className={`${headerStyles["LogoBox-Item"]}`}></Logo>
