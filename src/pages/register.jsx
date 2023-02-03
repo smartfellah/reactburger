@@ -6,6 +6,10 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+import * as registerActions from "../services/actions/register-actions";
+
 //React
 import { useState } from "react";
 
@@ -13,19 +17,47 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export const RegisterPage = () => {
-  const [nameValue, setNameValue] = useState("");
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const dispatch = useDispatch();
+
+  const nameValue = useSelector(function registerNameSelector(store) {
+    return store.registerReducer.name;
+  });
+  const emailValue = useSelector(function registerEmailSelector(store) {
+    return store.registerReducer.email;
+  });
+  const passwordValue = useSelector(function registerPasswordSelector(store) {
+    return store.registerReducer.password;
+  });
+  const requestData = useSelector(function registerFormSelector(store) {
+    return {
+      email: store.registerReducer.email,
+      password: store.registerReducer.password,
+      name: store.registerReducer.name,
+    };
+  });
 
   const onNameChange = (e) => {
-    setNameValue(e.target.value);
+    dispatch({
+      type: registerActions.NAME_CHANGE,
+      payload: e.target.value,
+    });
   };
   const onEmailChange = (e) => {
-    setEmailValue(e.target.value);
+    dispatch({
+      type: registerActions.EMAIL_CHANGE,
+      payload: e.target.value,
+    });
   };
   const onPasswordChange = (e) => {
-    setPasswordValue(e.target.value);
+    dispatch({
+      type: registerActions.PASSWORD_CHANGE,
+      payload: e.target.value,
+    });
   };
+
+  function onRegisterClickHandler(e) {
+    dispatch(registerActions.sendRegisterRequest(requestData));
+  }
   return (
     <div className={`${styles["register-wrapper"]}`}>
       <div className={`${styles["register-container"]}`}>
@@ -55,7 +87,12 @@ export const RegisterPage = () => {
               name={"password"}
             />
           </div>
-          <Button htmlType="button" type="primary" size="medium">
+          <Button
+            onClick={onRegisterClickHandler}
+            htmlType="button"
+            type="primary"
+            size="medium"
+          >
             Зарегистрироваться
           </Button>
         </div>
