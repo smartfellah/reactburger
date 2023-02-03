@@ -2,7 +2,7 @@
 import styles from "./page-styles/reset-password.module.css";
 import {
   PasswordInput,
-  EmailInput,
+  Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -40,12 +40,11 @@ export const ResetPassword = () => {
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <EmailInput
+            <Input
               onChange={onCodeChange}
               value={codeValue}
-              name={"email"}
+              name={"code"}
               placeholder={"Введите код из письма"}
-              isIcon={false}
             />
           </div>
           <Link to="reset-password">

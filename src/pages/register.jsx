@@ -2,6 +2,7 @@
 import styles from "./page-styles/register.module.css";
 import {
   EmailInput,
+  Input,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -64,12 +65,11 @@ export const RegisterPage = () => {
         <div className={`${styles["form__container"]}`}>
           <h2 className={`text text_type_main-medium`}>Регистраця</h2>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <EmailInput
+            <Input
               onChange={onNameChange}
               value={nameValue}
-              name={"email"}
+              name={"name"}
               placeholder="Имя"
-              isIcon={false}
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>

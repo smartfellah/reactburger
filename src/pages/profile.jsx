@@ -3,15 +3,18 @@ import styles from "./page-styles/profile.module.css";
 import {
   PasswordInput,
   EmailInput,
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //React
+import React from "react";
 import { useState } from "react";
 
 //Router
 import { Link } from "react-router-dom";
 
 export const Profile = () => {
+  const [inputIsDisabled, setInputIsDisabled] = useState(true);
   const [nameValue, setNameValue] = useState("Name");
   const [emailValue, setEmailValue] = useState("name@email.com");
   const [passwordValue, setPasswordValue] = useState("12345678");
@@ -24,6 +27,15 @@ export const Profile = () => {
   };
   const onPasswordChange = (e) => {
     setPasswordValue(e.target.value);
+  };
+
+  const inputRef = React.useRef(null);
+  const onIconClick = () => {
+    setInputIsDisabled(!inputIsDisabled);
+    setTimeout(() => inputRef.current.focus(), 0);
+  };
+  const onBlur = () => {
+    setInputIsDisabled(!inputIsDisabled);
   };
   return (
     <div className={`${styles["profile-page__wrapper"]}`}>
@@ -55,12 +67,17 @@ export const Profile = () => {
         </div>
         <div className={`${styles["profile-page__form"]}`}>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <EmailInput
+            <Input
+              type="text"
               onChange={onNameChange}
+              icon={inputIsDisabled ? "EditIcon" : ""}
+              disabled={inputIsDisabled}
+              onIconClick={onIconClick}
+              onBlur={onBlur}
               value={nameValue}
-              name={"email"}
+              name={"name"}
               placeholder="Имя"
-              isIcon={true}
+              ref={inputRef}
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
