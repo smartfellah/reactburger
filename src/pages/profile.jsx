@@ -30,7 +30,7 @@ export const Profile = () => {
       <div className={`${styles["profile-page__container"]}`}>
         <div className={`${styles["profile-page__menu-container"]}`}>
           <div className={`${styles["profile-page__menu-nav"]}`}>
-            <Link to="profile">
+            <Link to="/profile">
               <p className="text text_type_main-medium pt-3 pb-3">Профиль</p>
             </Link>
             <Link to="404">

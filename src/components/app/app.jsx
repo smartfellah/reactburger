@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 //React-Router
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 //Pages
 import * as Pages from "../../pages";
@@ -36,40 +36,31 @@ function App() {
     <>
       <Router>
         <AppHeader />
-        <Switch>
-          <Route path="/" exact={true}>
-            <Pages.HomePage>
-              <div className={`${appStyles.App}`}>
-                {!hasError && !isLoading ? (
-                  <DndProvider backend={HTML5Backend}>
-                    <main className={`${appStyles.ColumnsWrapper}`}>
-                      <BurgerIngredients />
-                      <BurgerConstructor />
-                    </main>
-                  </DndProvider>
-                ) : null}
-              </div>
-            </Pages.HomePage>
-          </Route>
-          <Route path="/login">
-            <Pages.LogInPage />
-          </Route>
-          <Route path="/register">
-            <Pages.RegisterPage />
-          </Route>
-          <Route path="/profile">
-            <Pages.Profile />
-          </Route>
-          <Route path="/forgot-password">
-            <Pages.ForgotPassword />
-          </Route>
-          <Route path="/reset-password">
-            <Pages.ResetPassword />
-          </Route>
-          <Route path="*">
-            <Pages.Page404 />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Pages.HomePage>
+                <div className={`${appStyles.App}`}>
+                  {!hasError && !isLoading ? (
+                    <DndProvider backend={HTML5Backend}>
+                      <main className={`${appStyles.ColumnsWrapper}`}>
+                        <BurgerIngredients />
+                        <BurgerConstructor />
+                      </main>
+                    </DndProvider>
+                  ) : null}
+                </div>
+              </Pages.HomePage>
+            }
+          />
+          <Route path="/login" element={<Pages.LogInPage />} />
+          <Route path="/register" element={<Pages.RegisterPage />} />
+          <Route path="/profile" element={<Pages.Profile />} />
+          <Route path="/forgot-password" element={<Pages.ForgotPassword />} />
+          <Route path="/reset-password" element={<Pages.ResetPassword />} />
+          <Route path="*" element={<Pages.Page404 />} />
+        </Routes>
       </Router>
     </>
   );
