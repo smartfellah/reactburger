@@ -48,7 +48,7 @@ export const ForgotPassword = () => {
               isIcon={false}
             />
           </div>
-          <Link to="reset-password">
+          <Link to="/reset-password">
             <Button
               onClick={sendEmailCheckRequest}
               htmlType="button"

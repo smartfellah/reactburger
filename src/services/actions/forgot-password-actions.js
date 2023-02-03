@@ -8,7 +8,7 @@ export const CHECK_EMAIL_ERROR = "(forgot-password)CHECK_EMAIL_ERROR";
 
 export const checkEmail = (email) => async (dispatch) => {
   dispatch({ type: CHECK_EMAIL_REQUEST });
-  const response = await apiRequest(`${dataURL}/password-reset`, {
+  await apiRequest(`${dataURL}/password-reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
