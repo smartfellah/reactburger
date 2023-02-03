@@ -54,7 +54,7 @@ function App() {
               </Pages.HomePage>
             }
           />
-          <Route path="/login" element={<Pages.LogInPage />} />
+          <Route path="/login" element={<Pages.LoginPage />} />
           <Route path="/register" element={<Pages.RegisterPage />} />
           <Route path="/profile" element={<Pages.Profile />} />
           <Route path="/forgot-password" element={<Pages.ForgotPassword />} />

@@ -12,7 +12,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./page-styles/login.module.css";
 
-export const LogInPage = () => {
+export const LoginPage = () => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const onEmailChange = (e) => {
