@@ -36,6 +36,7 @@ export const ResetPassword = () => {
               onChange={onPasswordChange}
               value={passwordValue}
               name={"password"}
+              placeholder={"Введите новый пароль"}
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
