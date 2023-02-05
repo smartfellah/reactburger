@@ -18,17 +18,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export const RegisterPage = () => {
+  const [nameValue, setNameValue] = useState();
+  const [emailValue, setEmailValue] = useState();
+  const [passwordValue, setPasswordValue] = useState();
+
   const dispatch = useDispatch();
 
-  const nameValue = useSelector(function registerNameSelector(store) {
-    return store.authReducer.name;
-  });
-  const emailValue = useSelector(function registerEmailSelector(store) {
-    return store.authReducer.email;
-  });
-  const passwordValue = useSelector(function registerPasswordSelector(store) {
-    return store.authReducer.password;
-  });
   const requestData = useSelector(function registerFormSelector(store) {
     return {
       email: store.authReducer.email,
@@ -38,22 +33,13 @@ export const RegisterPage = () => {
   });
 
   const onNameChange = (e) => {
-    dispatch({
-      type: authActions.NAME_CHANGE,
-      payload: e.target.value,
-    });
+    setNameValue(e.target.value);
   };
   const onEmailChange = (e) => {
-    dispatch({
-      type: authActions.EMAIL_CHANGE,
-      payload: e.target.value,
-    });
+    setEmailValue(e.target.value);
   };
   const onPasswordChange = (e) => {
-    dispatch({
-      type: authActions.PASSWORD_CHANGE,
-      payload: e.target.value,
-    });
+    setPasswordValue(e.target.value);
   };
 
   function onRegisterClickHandler(e) {

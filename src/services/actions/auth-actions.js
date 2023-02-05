@@ -2,14 +2,6 @@ import { dataURL } from "../../utils/endpoint";
 import { apiRequest } from "../../utils/api-request";
 import { setCookie } from "../../utils/set-cookie";
 
-export const EMAIL_CHANGE = "(register)EMAIL_CHANGE";
-export const PASSWORD_CHANGE = "(register)PASSWORD_CHANGE";
-export const NAME_CHANGE = "(register)NAME_CHANGE";
-
-export const REGISTER_REQUEST = "(register)REGISTER_REQUEST";
-export const REGISTER_ERROR = "(register)REGISTER_ERROR";
-export const REGISTER_SUCCESS = "(register)REGISTER_SUCCESS";
-
 export function registerRequestAction(actionTypeString) {
   switch (actionTypeString) {
     case "request":

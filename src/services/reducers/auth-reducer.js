@@ -1,9 +1,4 @@
-import {
-  EMAIL_CHANGE,
-  PASSWORD_CHANGE,
-  NAME_CHANGE,
-  registerRequestAction,
-} from "../actions/auth-actions";
+import { registerRequestAction } from "../actions/auth-actions";
 
 const initialState = {
   email: "",
@@ -15,21 +10,6 @@ const initialState = {
 
 export function authReducer(state = initialState, action) {
   switch (action.type) {
-    case EMAIL_CHANGE:
-      return {
-        ...state,
-        email: action.payload,
-      };
-    case PASSWORD_CHANGE:
-      return {
-        ...state,
-        password: action.payload,
-      };
-    case NAME_CHANGE:
-      return {
-        ...state,
-        name: action.payload,
-      };
     case registerRequestAction("request").type:
       return {
         ...state,
