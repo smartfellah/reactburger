@@ -9,7 +9,7 @@ import {
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import * as registerActions from "../services/actions/register-actions";
+import * as authActions from "../services/actions/auth-actions";
 
 //React
 import { useState } from "react";
@@ -21,43 +21,43 @@ export const RegisterPage = () => {
   const dispatch = useDispatch();
 
   const nameValue = useSelector(function registerNameSelector(store) {
-    return store.registerReducer.name;
+    return store.authReducer.name;
   });
   const emailValue = useSelector(function registerEmailSelector(store) {
-    return store.registerReducer.email;
+    return store.authReducer.email;
   });
   const passwordValue = useSelector(function registerPasswordSelector(store) {
-    return store.registerReducer.password;
+    return store.authReducer.password;
   });
   const requestData = useSelector(function registerFormSelector(store) {
     return {
-      email: store.registerReducer.email,
-      password: store.registerReducer.password,
-      name: store.registerReducer.name,
+      email: store.authReducer.email,
+      password: store.authReducer.password,
+      name: store.authReducer.name,
     };
   });
 
   const onNameChange = (e) => {
     dispatch({
-      type: registerActions.NAME_CHANGE,
+      type: authActions.NAME_CHANGE,
       payload: e.target.value,
     });
   };
   const onEmailChange = (e) => {
     dispatch({
-      type: registerActions.EMAIL_CHANGE,
+      type: authActions.EMAIL_CHANGE,
       payload: e.target.value,
     });
   };
   const onPasswordChange = (e) => {
     dispatch({
-      type: registerActions.PASSWORD_CHANGE,
+      type: authActions.PASSWORD_CHANGE,
       payload: e.target.value,
     });
   };
 
   function onRegisterClickHandler(e) {
-    dispatch(registerActions.sendRegisterRequest(requestData));
+    dispatch(authActions.sendRegisterRequest(requestData));
   }
   return (
     <div className={`${styles["register-wrapper"]}`}>
