@@ -47,7 +47,7 @@ export const ResetPassword = () => {
               placeholder={"Введите код из письма"}
             />
           </div>
-          <Link to="reset-password">
+          <Link to="/reset-password">
             <Button htmlType="button" type="primary" size="medium">
               Сохранить
             </Button>

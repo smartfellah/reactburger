@@ -45,7 +45,7 @@ export const Profile = () => {
             <Link to="/profile">
               <p className="text text_type_main-medium pt-3 pb-3">Профиль</p>
             </Link>
-            <Link to="404">
+            <Link to="orders">
               <p className="text text_type_main-medium text_color_inactive pt-3 pb-3">
                 История заказов
               </p>
