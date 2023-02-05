@@ -38,7 +38,7 @@ export function sendRegisterRequest(requestBody) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify({} /*requestBody*/),
     });
     console.log(response);
   };
