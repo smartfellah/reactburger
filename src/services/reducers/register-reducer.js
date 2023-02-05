@@ -30,18 +30,18 @@ export function registerReducer(state = initialState, action) {
         ...state,
         name: action.payload,
       };
-    case registerRequestAction("request"):
+    case registerRequestAction("request").type:
       return {
         ...state,
         requestPending: true,
       };
-    case registerRequestAction("error"):
+    case registerRequestAction("error").type:
       return {
         ...state,
         requestError: true,
         requestPending: false,
       };
-    case registerRequestAction("success"):
+    case registerRequestAction("success").type:
       return {
         ...state,
         requestError: false,

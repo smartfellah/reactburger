@@ -9,6 +9,6 @@ export const apiRequest = async (url, options) => {
     return data;
   } catch (error) {
     console.log(`Error! \n${error.message}`);
-    //throw error;
+    throw error;
   }
 };

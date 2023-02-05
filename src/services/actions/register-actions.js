@@ -33,13 +33,20 @@ export function registerRequestAction(actionTypeString) {
 export function sendRegisterRequest(requestBody) {
   return async function registerRequestThunk(dispatch) {
     dispatch(registerRequestAction());
-    const response = await apiRequest(`${dataURL}/auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({} /*requestBody*/),
-    });
-    console.log(response);
+    let response;
+    try {
+      response = await apiRequest(`${dataURL}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      dispatch(registerRequestAction("success"));
+    } catch (error) {
+      dispatch(registerRequestAction("error"));
+      console.log(error.name);
+    }
+    //console.log(response);
   };
 }
