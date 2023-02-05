@@ -40,13 +40,13 @@ export function sendRegisterRequest(requestBody) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify({ ...requestBody }),
       });
       dispatch(registerRequestAction("success"));
     } catch (error) {
       dispatch(registerRequestAction("error"));
       console.log(error.name);
     }
-    //console.log(response);
+    console.log(response);
   };
 }
