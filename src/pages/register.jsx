@@ -24,13 +24,11 @@ export const RegisterPage = () => {
 
   const dispatch = useDispatch();
 
-  const requestData = useSelector(function registerFormSelector(store) {
-    return {
-      email: store.authReducer.email,
-      password: store.authReducer.password,
-      name: store.authReducer.name,
-    };
-  });
+  const requestData = {
+    email: emailValue,
+    password: passwordValue,
+    name: nameValue,
+  };
 
   const onNameChange = (e) => {
     setNameValue(e.target.value);
@@ -45,6 +43,7 @@ export const RegisterPage = () => {
   function onRegisterClickHandler(e) {
     dispatch(authActions.sendRegisterRequest(requestData));
   }
+
   return (
     <div className={`${styles["register-wrapper"]}`}>
       <div className={`${styles["register-container"]}`}>
