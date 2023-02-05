@@ -1,5 +1,6 @@
 import { dataURL } from "../../utils/endpoint";
 import { apiRequest } from "../../utils/api-request";
+import { setCookie } from "../../utils/set-cookie";
 
 export const EMAIL_CHANGE = "(register)EMAIL_CHANGE";
 export const PASSWORD_CHANGE = "(register)PASSWORD_CHANGE";
@@ -42,6 +43,11 @@ export function sendRegisterRequest(requestBody) {
         },
         body: JSON.stringify({ ...requestBody }),
       });
+      const accessToken = response.accessToken.split("Bearer ")[1];
+      const refreshToken = response.refreshToken;
+      setCookie("accessToken", accessToken, { expires: 1200 });
+      setCookie("refreshToken", refreshToken);
+
       dispatch(registerRequestAction("success"));
     } catch (error) {
       dispatch(registerRequestAction("error"));
