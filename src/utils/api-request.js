@@ -3,7 +3,7 @@ import { checkSuccess } from "./check-success";
 export const apiRequest = async (url, options) => {
   let data;
   try {
-    const response = await fetch(url, options); //.then(checkResponse).then(checkSuccess);
+    const response = await fetch(url, options);
     data = await checkResponse(response);
     checkSuccess(data);
     return data;
