@@ -21,6 +21,7 @@ import { BurgerConstructor } from "../burger-constructor/burger-constructor";
 
 //Styles
 import appStyles from "./app.module.css";
+import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,7 +57,10 @@ function App() {
           />
           <Route path="/login" element={<Pages.LoginPage />} />
           <Route path="/register" element={<Pages.RegisterPage />} />
-          <Route path="/profile" element={<Pages.Profile />} />
+          <Route
+            path="/profile"
+            element={<ProtectedRouteElement element={<Pages.Profile />} />}
+          />
           <Route path="/forgot-password" element={<Pages.ForgotPassword />} />
           <Route path="/reset-password" element={<Pages.ResetPassword />} />
           <Route path="*" element={<Pages.Page404 />} />
