@@ -10,7 +10,8 @@ import {
 import { useState } from "react";
 
 //Router
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { getCookie } from "../utils/cookie";
 
 export const ResetPassword = () => {
   const [passwordValue, setPasswordValue] = useState("");
@@ -24,6 +25,10 @@ export const ResetPassword = () => {
     setCodeValue(e.target.value);
   };
 
+  const isAuth = getCookie("accessToken") ? true : false;
+  if (isAuth) {
+    return <Navigate to="/" replace />;
+  }
   return (
     <div className={`${styles["reset-password__wrapper"]}`}>
       <div className={`${styles["reset-password__container"]}`}>
