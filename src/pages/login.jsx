@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 //Router
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 //UI
 import {
@@ -13,12 +13,19 @@ import {
 import styles from "./page-styles/login.module.css";
 import { useDispatch } from "react-redux";
 import { sendLoginRequest } from "../services/actions/auth-actions";
+import { getCookie } from "../utils/cookie";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
 
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+
+  const isAuth = getCookie("accessToken") ? true : false;
+
+  if (isAuth) {
+    return <Navigate to="/" replace />;
+  }
 
   const onEmailChange = (e) => {
     setEmailValue(e.target.value);
