@@ -11,16 +11,30 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./page-styles/login.module.css";
+import { useDispatch } from "react-redux";
+import { sendLoginRequest } from "../services/actions/auth-actions";
 
 export const LoginPage = () => {
+  const dispatch = useDispatch();
+
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+
   const onEmailChange = (e) => {
     setEmailValue(e.target.value);
   };
   const onPasswordChange = (e) => {
     setPasswordValue(e.target.value);
   };
+
+  function onLoginClick(e) {
+    const requestBody = {
+      email: emailValue,
+      password: passwordValue,
+    };
+    dispatch(sendLoginRequest(requestBody));
+  }
+
   return (
     <div className={`${styles.LoginWrapper}`}>
       <div className={`${styles.LoginContainer}`}>
@@ -41,7 +55,12 @@ export const LoginPage = () => {
               name={"password"}
             />
           </div>
-          <Button htmlType="button" type="primary" size="medium">
+          <Button
+            onClick={onLoginClick}
+            htmlType="button"
+            type="primary"
+            size="medium"
+          >
             Войти
           </Button>
         </div>

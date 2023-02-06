@@ -1,4 +1,7 @@
-import { registerRequestAction } from "../actions/auth-actions";
+import {
+  loginRequestAction,
+  registerRequestAction,
+} from "../actions/auth-actions";
 
 const initialState = {
   user: null,
@@ -25,6 +28,25 @@ export function authReducer(state = initialState, action) {
         user: action.payload,
         requestError: false,
         requestPending: false,
+      };
+
+    case loginRequestAction("request").type:
+      return {
+        ...state,
+        requestPending: true,
+      };
+    case loginRequestAction("error").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: true,
+      };
+    case loginRequestAction("success").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: false,
+        user: action.payload,
       };
     default:
       return state;

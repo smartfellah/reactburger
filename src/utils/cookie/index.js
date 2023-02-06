@@ -31,3 +31,11 @@ export function getCookie(name) {
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+export function setTokenCookies(response) {
+  const accessToken = response.accessToken.split("Bearer ")[1];
+  const refreshToken = response.refreshToken;
+
+  setCookie("accessToken", accessToken, { expires: 1200 });
+  setCookie("refreshToken", refreshToken);
+}
