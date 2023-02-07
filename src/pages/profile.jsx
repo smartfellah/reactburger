@@ -11,10 +11,16 @@ import React from "react";
 import { useState } from "react";
 
 //Router
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { sendLogoutRequest } from "../services/actions/auth-actions";
 
 export const Profile = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [inputIsDisabled, setInputIsDisabled] = useState(true);
+
   const [nameValue, setNameValue] = useState("Name");
   const [emailValue, setEmailValue] = useState("name@email.com");
   const [passwordValue, setPasswordValue] = useState("12345678");
@@ -37,6 +43,10 @@ export const Profile = () => {
   const onBlur = () => {
     setInputIsDisabled(!inputIsDisabled);
   };
+
+  function onLogoutClick(e) {
+    dispatch(sendLogoutRequest(navigate));
+  }
   return (
     <div className={`${styles["profile-page__wrapper"]}`}>
       <div className={`${styles["profile-page__container"]}`}>
@@ -50,11 +60,11 @@ export const Profile = () => {
                 История заказов
               </p>
             </Link>
-            <Link to="404">
+            <button onClick={onLogoutClick}>
               <p className="text text_type_main-medium text_color_inactive pt-3 pb-3">
                 Выход
               </p>
-            </Link>
+            </button>
           </div>
           <div className={`${styles["profile__menu-description"]}`}>
             <p

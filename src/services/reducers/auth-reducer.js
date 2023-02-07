@@ -1,5 +1,6 @@
 import {
   loginRequestAction,
+  logoutRequestAction,
   registerRequestAction,
 } from "../actions/auth-actions";
 
@@ -47,6 +48,24 @@ export function authReducer(state = initialState, action) {
         requestPending: false,
         requestError: false,
         user: action.payload,
+      };
+
+    case logoutRequestAction("request").type:
+      return {
+        ...state,
+        requestPending: false,
+      };
+    case logoutRequestAction("error").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: true,
+      };
+    case logoutRequestAction("success").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: false,
       };
     default:
       return state;

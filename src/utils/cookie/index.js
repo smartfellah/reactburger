@@ -32,10 +32,19 @@ export function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
+export function deleteCookie(name) {
+  setCookie(name, null, { expires: -1 });
+}
+
 export function setTokenCookies(response) {
   const accessToken = response.accessToken.split("Bearer ")[1];
   const refreshToken = response.refreshToken;
 
   setCookie("accessToken", accessToken, { expires: 1200 });
   setCookie("refreshToken", refreshToken);
+}
+
+export function clearTokenCookies() {
+  deleteCookie("accessToken");
+  deleteCookie("refreshToken");
 }

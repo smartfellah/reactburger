@@ -1,6 +1,10 @@
 import { dataURL } from "../../utils/endpoint";
 import { apiRequest } from "../../utils/api-request";
-import { setTokenCookies } from "../../utils/cookie/";
+import {
+  clearTokenCookies,
+  getCookie,
+  setTokenCookies,
+} from "../../utils/cookie/";
 
 export function registerRequestAction(actionTypeString, userInfo) {
   switch (actionTypeString) {
@@ -42,6 +46,27 @@ export function loginRequestAction(actionTypeString, userInfo) {
     default:
       return {
         type: "(login)LOGIN_REQUEST",
+      };
+  }
+}
+
+export function logoutRequestAction(actionTypeString) {
+  switch (actionTypeString) {
+    case "request":
+      return {
+        type: "(logout)LOGIN_REQUEST",
+      };
+    case "error":
+      return {
+        type: "(logout)LOGOUT_ERROR",
+      };
+    case "success":
+      return {
+        type: "(logout)LOGOUT_SUCCESS",
+      };
+    default:
+      return {
+        type: "(logout)LOGOUT_REQUEST",
       };
   }
 }
@@ -96,6 +121,29 @@ export function sendLoginRequest(requestBody, navigate) {
     } catch (error) {
       dispatch(loginRequestAction("error"));
       console.log(error.name);
+    }
+  };
+}
+
+export function sendLogoutRequest(navigate) {
+  return async function logoutRequestThunk(dispatch) {
+    dispatch(logoutRequestAction());
+
+    try {
+      await apiRequest(`${dataURL}/auth/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: getCookie("refreshToken") }),
+      });
+
+      dispatch(logoutRequestAction("success"));
+      clearTokenCookies();
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.log(error.name);
+      dispatch(logoutRequestAction("error"));
     }
   };
 }
