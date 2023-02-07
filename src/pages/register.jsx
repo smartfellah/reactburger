@@ -15,10 +15,11 @@ import * as authActions from "../services/actions/auth-actions";
 import { useState } from "react";
 
 //Router
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { getCookie } from "../utils/cookie";
 
 export const RegisterPage = () => {
+  const navigate = useNavigate();
   const [nameValue, setNameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -48,7 +49,7 @@ export const RegisterPage = () => {
   };
 
   function onRegisterClickHandler(e) {
-    dispatch(authActions.sendRegisterRequest(requestData));
+    dispatch(authActions.sendRegisterRequest(requestData, navigate));
   }
 
   return (

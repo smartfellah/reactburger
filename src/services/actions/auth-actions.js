@@ -46,7 +46,7 @@ export function loginRequestAction(actionTypeString, userInfo) {
   }
 }
 
-export function sendRegisterRequest(requestBody) {
+export function sendRegisterRequest(requestBody, navigate) {
   return async function registerRequestThunk(dispatch) {
     dispatch(registerRequestAction());
 
@@ -66,6 +66,7 @@ export function sendRegisterRequest(requestBody) {
       const userInfo = response.user;
 
       dispatch(registerRequestAction("success", userInfo));
+      navigate("/", { replace: true });
     } catch (error) {
       dispatch(registerRequestAction("error"));
       console.log(error.name);
