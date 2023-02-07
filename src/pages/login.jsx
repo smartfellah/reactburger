@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 //Router
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 //UI
 import {
@@ -17,6 +17,7 @@ import { getCookie } from "../utils/cookie";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -39,7 +40,7 @@ export const LoginPage = () => {
       email: emailValue,
       password: passwordValue,
     };
-    dispatch(sendLoginRequest(requestBody));
+    dispatch(sendLoginRequest(requestBody, navigate));
   }
 
   return (
