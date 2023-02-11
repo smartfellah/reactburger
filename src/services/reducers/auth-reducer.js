@@ -1,4 +1,5 @@
 import {
+  getUserRequestAction,
   loginRequestAction,
   logoutRequestAction,
   registerRequestAction,
@@ -53,7 +54,7 @@ export function authReducer(state = initialState, action) {
     case logoutRequestAction("request").type:
       return {
         ...state,
-        requestPending: false,
+        requestPending: true,
       };
     case logoutRequestAction("error").type:
       return {
@@ -64,6 +65,25 @@ export function authReducer(state = initialState, action) {
     case logoutRequestAction("success").type:
       return {
         ...state,
+        requestPending: false,
+        requestError: false,
+      };
+
+    case getUserRequestAction("request").type:
+      return {
+        ...state,
+        requestPending: true,
+      };
+    case getUserRequestAction("error").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: true,
+      };
+    case getUserRequestAction("success").type:
+      return {
+        ...state,
+        user: action.payload,
         requestPending: false,
         requestError: false,
       };

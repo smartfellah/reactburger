@@ -71,6 +71,27 @@ export function logoutRequestAction(actionTypeString) {
   }
 }
 
+export function getUserRequestAction(actionTypeString) {
+  switch (actionTypeString) {
+    case "request":
+      return {
+        type: "(getUser)GET_USER_REQUEST",
+      };
+    case "error":
+      return {
+        type: "(getUser)GET_USER_ERROR",
+      };
+    case "success":
+      return {
+        type: "(getUser)GET_USER_SUCCESS",
+      };
+    default:
+      return {
+        type: "(getUser)GET_USER_REQUEST",
+      };
+  }
+}
+
 export function sendRegisterRequest(requestBody, navigate) {
   return async function registerRequestThunk(dispatch) {
     dispatch(registerRequestAction());
@@ -144,6 +165,32 @@ export function sendLogoutRequest(navigate) {
     } catch (error) {
       console.log(error.name);
       dispatch(logoutRequestAction("error"));
+    }
+  };
+}
+
+export function sendGetUserRequest() {
+  return async function getUserRequestThunk(dispatch) {
+    dispatch(getUserRequestAction());
+
+    try {
+      const response = await apiRequest(`${dataURL}/auth/user`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${getCookie("accessToken")}`,
+        },
+      });
+
+      console.log(response);
+      /*
+      localStorage.setItem("name", response.user.name);
+      localStorage.setItem("email", response.user.email);
+      */
+
+      dispatch(getUserRequestAction("success"));
+    } catch (error) {
+      console.log(error.name);
+      dispatch(getUserRequestAction("error"));
     }
   };
 }

@@ -7,13 +7,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //React
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 //Router
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { sendLogoutRequest } from "../services/actions/auth-actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  sendGetUserRequest,
+  sendLogoutRequest,
+} from "../services/actions/auth-actions";
 
 export const Profile = () => {
   const navigate = useNavigate();
@@ -47,6 +50,15 @@ export const Profile = () => {
   function onLogoutClick(e) {
     dispatch(sendLogoutRequest(navigate));
   }
+
+  const userData = useSelector(function profileUserSelector(store) {
+    return store.authReducer.user;
+  });
+
+  useEffect(function profileRenderEffect() {
+    dispatch(sendGetUserRequest());
+  }, []);
+
   return (
     <div className={`${styles["profile-page__wrapper"]}`}>
       <div className={`${styles["profile-page__container"]}`}>
