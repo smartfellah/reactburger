@@ -24,6 +24,7 @@ export const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [renderButtons, setRenderButtons] = useState(false);
   const [inputIsDisabled, setInputIsDisabled] = useState(true);
 
   const [nameValue, setNameValue] = useState("Name");
@@ -32,12 +33,15 @@ export const Profile = () => {
 
   const onNameChange = (e) => {
     setNameValue(e.target.value);
+    setRenderButtons(true);
   };
   const onEmailChange = (e) => {
     setEmailValue(e.target.value);
+    setRenderButtons(true);
   };
   const onPasswordChange = (e) => {
     setPasswordValue(e.target.value);
+    setRenderButtons(true);
   };
 
   const inputRef = React.useRef(null);
@@ -45,8 +49,9 @@ export const Profile = () => {
     setInputIsDisabled(!inputIsDisabled);
     setTimeout(() => inputRef.current.focus(), 0);
   };
-  const onBlur = () => {
+  const onBlur = (e) => {
     setInputIsDisabled(!inputIsDisabled);
+    onFormBlur(e);
   };
 
   function onLogoutClick(e) {
@@ -66,6 +71,7 @@ export const Profile = () => {
       setEmailValue(userData ? userData.email : emailValue);
       setNameValue(userData ? userData.name : nameValue);
       setPasswordValue(userData ? "" : passwordValue);
+      setRenderButtons(false);
     },
     [userData]
   );
@@ -78,12 +84,29 @@ export const Profile = () => {
         password: passwordValue,
       })
     );
+    setRenderButtons(false);
   }
 
   function onAbortClick(e) {
     setEmailValue(userData.email);
     setNameValue(userData.name);
     setPasswordValue("");
+    setRenderButtons(false);
+  }
+
+  function onFormFocus(e) {
+    //setRenderButtons(true);
+  }
+
+  function onFormBlur(e) {
+    const inputName = e.target.name;
+    const value = e.target.value;
+    if (inputName === "password") {
+      value ? setRenderButtons(true) : setRenderButtons(false);
+    } else
+      value === userData[`${inputName}`]
+        ? setRenderButtons(false)
+        : setRenderButtons(true);
   }
 
   return (
@@ -123,6 +146,7 @@ export const Profile = () => {
               disabled={inputIsDisabled}
               onIconClick={onIconClick}
               onBlur={onBlur}
+              onFocus={onFormFocus}
               value={nameValue}
               name={"name"}
               placeholder="Имя"
@@ -135,6 +159,8 @@ export const Profile = () => {
               value={emailValue}
               name={"email"}
               isIcon={true}
+              onFocus={onFormFocus}
+              onBlur={onFormBlur}
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -143,26 +169,30 @@ export const Profile = () => {
               value={passwordValue}
               name={"password"}
               icon={"EditIcon"}
+              onFocus={onFormFocus}
+              onBlur={onFormBlur}
             />
           </div>
-          <div className={`${styles["profile-page-form_buttons"]}`}>
-            <Button
-              onClick={onAbortClick}
-              htmlType="reset"
-              type="secondary"
-              size="medium"
-            >
-              Отмена
-            </Button>
-            <Button
-              onClick={onSubmitClick}
-              htmlType="submit"
-              type="primary"
-              size="medium"
-            >
-              Сохранить
-            </Button>
-          </div>
+          {renderButtons ? (
+            <div className={`${styles["profile-page-form_buttons"]}`}>
+              <Button
+                onClick={onAbortClick}
+                htmlType="reset"
+                type="secondary"
+                size="medium"
+              >
+                Отмена
+              </Button>
+              <Button
+                onClick={onSubmitClick}
+                htmlType="submit"
+                type="primary"
+                size="medium"
+              >
+                Сохранить
+              </Button>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
