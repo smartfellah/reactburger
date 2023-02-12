@@ -69,7 +69,7 @@ export const Profile = () => {
   });
 
   useEffect(function profileRenderEffect() {
-    dispatch(sendGetUserRequest());
+    dispatch(sendGetUserRequest(navigate));
   }, []);
 
   useEffect(
@@ -84,11 +84,14 @@ export const Profile = () => {
 
   function onSubmitClick(e) {
     dispatch(
-      sendPatchUserRequest({
-        name: nameValue,
-        email: emailValue,
-        password: passwordValue,
-      })
+      sendPatchUserRequest(
+        {
+          name: nameValue,
+          email: emailValue,
+          password: passwordValue,
+        },
+        navigate
+      )
     );
     setRenderButtons(false);
   }

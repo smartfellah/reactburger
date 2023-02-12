@@ -3,6 +3,7 @@ import { apiRequest } from "../../utils/api-request";
 import {
   clearTokenCookies,
   getCookie,
+  setCookie,
   setTokenCookies,
 } from "../../utils/cookie/";
 
@@ -201,7 +202,7 @@ export function sendLogoutRequest(navigate) {
   };
 }
 
-export function sendGetUserRequest() {
+export function sendGetUserRequest(navigate) {
   return async function getUserRequestThunk(dispatch) {
     dispatch(getUserRequestAction());
 
@@ -215,18 +216,20 @@ export function sendGetUserRequest() {
 
       dispatch(getUserRequestAction("success", response.user));
     } catch (error) {
-      console.log(error.name);
+      if (error === 403)
+        refreshAccessAndContinue(dispatch, sendPatchUserRequest, navigate);
       dispatch(getUserRequestAction("error"));
     }
   };
 }
 
-export function sendPatchUserRequest(infoToPatch) {
+export function sendPatchUserRequest(infoToPatch, navigate) {
   return async function patchUserRequestThunk(dispatch) {
     dispatch(patchUserRequestAction());
 
+    let response;
     try {
-      const response = await apiRequest(`${dataURL}/auth/user`, {
+      response = await apiRequest(`${dataURL}/auth/user`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -236,8 +239,31 @@ export function sendPatchUserRequest(infoToPatch) {
       });
       dispatch(patchUserRequestAction("success", response.user));
     } catch (error) {
-      console.log(error.name);
+      if (error === 403)
+        refreshAccessAndContinue(
+          dispatch,
+          sendPatchUserRequest,
+          navigate,
+          infoToPatch
+        );
       dispatch(patchUserRequestAction("error"));
     }
   };
+}
+
+async function refreshAccessAndContinue(dispatch, callback, navigate, payload) {
+  try {
+    const innerResponse = await apiRequest(`${dataURL}/auth/token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: getCookie("refreshToken") }),
+    });
+    const accessToken = innerResponse.accessToken.split("Bearer ")[1];
+    setCookie("accessToken", accessToken, { expires: 1200 });
+    dispatch(payload ? callback(payload) : callback());
+  } catch (error) {
+    if (error === 401) navigate("/login", { replace: true });
+  }
 }
