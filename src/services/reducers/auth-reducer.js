@@ -83,7 +83,7 @@ export function authReducer(state = initialState, action) {
     case getUserRequestAction("success").type:
       return {
         ...state,
-        user: action.payload,
+        user: { ...action.payload },
         requestPending: false,
         requestError: false,
       };

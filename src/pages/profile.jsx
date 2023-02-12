@@ -59,6 +59,15 @@ export const Profile = () => {
     dispatch(sendGetUserRequest());
   }, []);
 
+  useEffect(
+    function profileUpdatedEffect() {
+      setEmailValue(userData ? userData.email : emailValue);
+      setNameValue(userData ? userData.name : nameValue);
+      setPasswordValue(userData ? "" : passwordValue);
+    },
+    [userData]
+  );
+
   return (
     <div className={`${styles["profile-page__wrapper"]}`}>
       <div className={`${styles["profile-page__container"]}`}>

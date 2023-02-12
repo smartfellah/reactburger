@@ -71,7 +71,7 @@ export function logoutRequestAction(actionTypeString) {
   }
 }
 
-export function getUserRequestAction(actionTypeString) {
+export function getUserRequestAction(actionTypeString, userdata) {
   switch (actionTypeString) {
     case "request":
       return {
@@ -84,6 +84,7 @@ export function getUserRequestAction(actionTypeString) {
     case "success":
       return {
         type: "(getUser)GET_USER_SUCCESS",
+        payload: userdata,
       };
     default:
       return {
@@ -181,13 +182,12 @@ export function sendGetUserRequest() {
         },
       });
 
-      console.log(response);
       /*
       localStorage.setItem("name", response.user.name);
       localStorage.setItem("email", response.user.email);
       */
 
-      dispatch(getUserRequestAction("success"));
+      dispatch(getUserRequestAction("success", response.user));
     } catch (error) {
       console.log(error.name);
       dispatch(getUserRequestAction("error"));
