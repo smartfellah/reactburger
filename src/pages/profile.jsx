@@ -27,9 +27,15 @@ export const Profile = () => {
   const [renderButtons, setRenderButtons] = useState(false);
   const [inputIsDisabled, setInputIsDisabled] = useState(true);
 
-  const [nameValue, setNameValue] = useState("Name");
-  const [emailValue, setEmailValue] = useState("name@email.com");
-  const [passwordValue, setPasswordValue] = useState("12345678");
+  const [nameValue, setNameValue] = useState(
+    localStorage.getItem("name") ? localStorage.getItem("name") : "Name"
+  );
+  const [emailValue, setEmailValue] = useState(
+    localStorage.getItem("email")
+      ? localStorage.getItem("email")
+      : "name@email.com"
+  );
+  const [passwordValue, setPasswordValue] = useState("");
 
   const onNameChange = (e) => {
     setNameValue(e.target.value);
