@@ -60,7 +60,12 @@ function App() {
           <Route
             path="/profile"
             element={<ProtectedRouteElement element={<Pages.Profile />} />}
-          />
+          >
+            <Route
+              path="/profile/orders"
+              element={<ProtectedRouteElement element={<Pages.Profile />} />}
+            />
+          </Route>
           <Route path="/forgot-password" element={<Pages.ForgotPassword />} />
           <Route path="/reset-password" element={<Pages.ResetPassword />} />
           <Route path="*" element={<Pages.Page404 />} />

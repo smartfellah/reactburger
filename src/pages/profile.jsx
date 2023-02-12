@@ -12,7 +12,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 
 //Router
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   sendGetUserRequest,
@@ -109,14 +109,32 @@ export const Profile = () => {
       <div className={`${styles["profile-page__container"]}`}>
         <div className={`${styles["profile-page__menu-container"]}`}>
           <div className={`${styles["profile-page__menu-nav"]}`}>
-            <Link to="/profile">
-              <p className="text text_type_main-medium pt-3 pb-3">Профиль</p>
-            </Link>
-            <Link to="orders">
-              <p className="text text_type_main-medium text_color_inactive pt-3 pb-3">
-                История заказов
-              </p>
-            </Link>
+            <NavLink to="/profile" end>
+              {function profileLinkContent({ isActive }) {
+                return (
+                  <p
+                    className={`text text_type_main-medium pt-3 pb-3 ${
+                      !isActive && "text_color_inactive"
+                    }`}
+                  >
+                    Профиль
+                  </p>
+                );
+              }}
+            </NavLink>
+            <NavLink to="/profile/orders">
+              {function ordersLinkContent({ isActive }) {
+                return (
+                  <p
+                    className={`text text_type_main-medium pt-3 pb-3 ${
+                      !isActive && "text_color_inactive"
+                    }`}
+                  >
+                    История заказов
+                  </p>
+                );
+              }}
+            </NavLink>
             <button onClick={onLogoutClick}>
               <p className="text text_type_main-medium text_color_inactive pt-3 pb-3">
                 Выход
