@@ -94,10 +94,6 @@ export const Profile = () => {
     setRenderButtons(false);
   }
 
-  function onFormFocus(e) {
-    //setRenderButtons(true);
-  }
-
   function onFormBlur(e) {
     if (
       emailValue === userData.email &&
@@ -145,7 +141,6 @@ export const Profile = () => {
               disabled={inputIsDisabled}
               onIconClick={onIconClick}
               onBlur={onBlur}
-              onFocus={onFormFocus}
               value={nameValue}
               name={"name"}
               placeholder="Имя"
@@ -158,7 +153,6 @@ export const Profile = () => {
               value={emailValue}
               name={"email"}
               isIcon={true}
-              onFocus={onFormFocus}
               onBlur={onFormBlur}
             />
           </div>
@@ -168,7 +162,6 @@ export const Profile = () => {
               value={passwordValue}
               name={"password"}
               icon={"EditIcon"}
-              onFocus={onFormFocus}
               onBlur={onFormBlur}
             />
           </div>
