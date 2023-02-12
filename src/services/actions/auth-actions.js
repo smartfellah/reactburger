@@ -3,6 +3,7 @@ import { apiRequest } from "../../utils/api-request";
 import {
   clearTokenCookies,
   getCookie,
+  refreshAccessAndContinue,
   setCookie,
   setTokenCookies,
 } from "../../utils/cookie/";
@@ -249,21 +250,4 @@ export function sendPatchUserRequest(infoToPatch, navigate) {
       dispatch(patchUserRequestAction("error"));
     }
   };
-}
-
-async function refreshAccessAndContinue(dispatch, callback, navigate, payload) {
-  try {
-    const innerResponse = await apiRequest(`${dataURL}/auth/token`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: getCookie("refreshToken") }),
-    });
-    const accessToken = innerResponse.accessToken.split("Bearer ")[1];
-    setCookie("accessToken", accessToken, { expires: 1200 });
-    dispatch(payload ? callback(payload) : callback());
-  } catch (error) {
-    if (error === 401) navigate("/login", { replace: true });
-  }
 }

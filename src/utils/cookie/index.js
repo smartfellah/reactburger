@@ -1,3 +1,6 @@
+import { apiRequest } from "../api-request";
+import { dataURL } from "../endpoint";
+
 export function setCookie(name, value, props) {
   props = props || {};
   let exp = props.expires;
@@ -47,4 +50,26 @@ export function setTokenCookies(response) {
 export function clearTokenCookies() {
   deleteCookie("accessToken");
   deleteCookie("refreshToken");
+}
+
+export async function refreshAccessAndContinue(
+  dispatch,
+  callback,
+  navigate,
+  payload
+) {
+  try {
+    const innerResponse = await apiRequest(`${dataURL}/auth/token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: getCookie("refreshToken") }),
+    });
+    const accessToken = innerResponse.accessToken.split("Bearer ")[1];
+    setCookie("accessToken", accessToken, { expires: 1200 });
+    dispatch(payload ? callback(payload) : callback());
+  } catch (error) {
+    if (error === 401) navigate("/login", { replace: true });
+  }
 }
