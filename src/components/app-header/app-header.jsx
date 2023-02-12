@@ -6,30 +6,75 @@ import {
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const AppHeader = () => {
   return (
     <header className={`${headerStyles.Header}`}>
       <nav className={`${headerStyles.NavBar} `}>
         <menu className={`${headerStyles.MenuBox}`}>
-          <Link to="/" className={`${headerStyles["MenuBox-Item-Active"]}`}>
-            <BurgerIcon type="primary" />
-            <p className="text text_type_main-default">Конструктор</p>
-          </Link>
-          <Link to="404" className={`${headerStyles["MenuBox-Item"]}`}>
-            <ListIcon type="secondary" />
-            <p className="text text_type_main-default">Лента заказов</p>
-          </Link>
+          <NavLink className={`${headerStyles["MenuBox-Item"]}`} to="/">
+            {({ isActive }) => {
+              return (
+                <>
+                  <BurgerIcon type={isActive ? "primary" : "secondary"} />
+                  <p
+                    className={
+                      isActive
+                        ? "text text_type_main-default"
+                        : "text text_type_main-default text_color_inactive"
+                    }
+                  >
+                    Конструктор
+                  </p>
+                </>
+              );
+            }}
+          </NavLink>
+          <NavLink to="404" className={`${headerStyles["MenuBox-Item"]}`}>
+            {function ordersLinkContent({ isActive }) {
+              return (
+                <>
+                  <ListIcon type={isActive ? "primary" : "secondary"} />
+                  <p
+                    className={
+                      isActive
+                        ? "text text_type_main-default"
+                        : "text text_type_main-default text_color_inactive"
+                    }
+                  >
+                    Лента заказов
+                  </p>
+                </>
+              );
+            }}
+          </NavLink>
         </menu>
         <div className={`${headerStyles.LogoBox}`}>
           <Logo className={`${headerStyles["LogoBox-Item"]}`}></Logo>
         </div>
         <div className={`${headerStyles.ProfileBox}`}>
-          <Link to="/profile" className={`${headerStyles["ProfileBox-Item"]}`}>
-            <ProfileIcon type="secondary" />
-            <p className="text text_type_main-default">Личный кабинет</p>
-          </Link>
+          <NavLink
+            to="/profile"
+            className={`${headerStyles["ProfileBox-Item"]}`}
+          >
+            {function profileLinkContent({ isActive }) {
+              return (
+                <>
+                  <ProfileIcon type={isActive ? "primary" : "secondary"} />
+                  <p
+                    className={
+                      isActive
+                        ? "text text_type_main-default"
+                        : "text text_type_main-default text_color_inactive"
+                    }
+                  >
+                    Личный кабинет
+                  </p>
+                </>
+              );
+            }}
+          </NavLink>
         </div>
       </nav>
     </header>
