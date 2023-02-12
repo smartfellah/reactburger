@@ -141,7 +141,7 @@ export const Profile = () => {
             <Input
               type="text"
               onChange={onNameChange}
-              icon={inputIsDisabled ? "EditIcon" : ""}
+              icon={inputIsDisabled ? "EditIcon" : "CloseIcon"}
               disabled={inputIsDisabled}
               onIconClick={onIconClick}
               onBlur={onBlur}
