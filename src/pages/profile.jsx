@@ -4,6 +4,7 @@ import {
   PasswordInput,
   EmailInput,
   Input,
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //React
@@ -16,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   sendGetUserRequest,
   sendLogoutRequest,
+  sendPatchUserRequest,
 } from "../services/actions/auth-actions";
 
 export const Profile = () => {
@@ -67,6 +69,22 @@ export const Profile = () => {
     },
     [userData]
   );
+
+  function onSubmitClick(e) {
+    dispatch(
+      sendPatchUserRequest({
+        name: nameValue,
+        email: emailValue,
+        password: passwordValue,
+      })
+    );
+  }
+
+  function onAbortClick(e) {
+    setEmailValue(userData.email);
+    setNameValue(userData.name);
+    setPasswordValue("");
+  }
 
   return (
     <div className={`${styles["profile-page__wrapper"]}`}>
@@ -126,6 +144,24 @@ export const Profile = () => {
               name={"password"}
               icon={"EditIcon"}
             />
+          </div>
+          <div className={`${styles["profile-page-form_buttons"]}`}>
+            <Button
+              onClick={onAbortClick}
+              htmlType="reset"
+              type="secondary"
+              size="medium"
+            >
+              Отмена
+            </Button>
+            <Button
+              onClick={onSubmitClick}
+              htmlType="submit"
+              type="primary"
+              size="medium"
+            >
+              Сохранить
+            </Button>
           </div>
         </div>
       </div>

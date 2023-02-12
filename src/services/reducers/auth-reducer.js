@@ -2,6 +2,7 @@ import {
   getUserRequestAction,
   loginRequestAction,
   logoutRequestAction,
+  patchUserRequestAction,
   registerRequestAction,
 } from "../actions/auth-actions";
 
@@ -86,6 +87,25 @@ export function authReducer(state = initialState, action) {
         user: { ...action.payload },
         requestPending: false,
         requestError: false,
+      };
+
+    case patchUserRequestAction("request").type:
+      return {
+        ...state,
+        requestPending: true,
+      };
+    case patchUserRequestAction("error").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: true,
+      };
+    case patchUserRequestAction("success").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: false,
+        user: { ...action.payload },
       };
     default:
       return state;

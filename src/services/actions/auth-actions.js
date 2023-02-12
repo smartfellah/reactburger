@@ -71,7 +71,7 @@ export function logoutRequestAction(actionTypeString) {
   }
 }
 
-export function getUserRequestAction(actionTypeString, userdata) {
+export function getUserRequestAction(actionTypeString, userData) {
   switch (actionTypeString) {
     case "request":
       return {
@@ -84,11 +84,33 @@ export function getUserRequestAction(actionTypeString, userdata) {
     case "success":
       return {
         type: "(getUser)GET_USER_SUCCESS",
-        payload: userdata,
+        payload: userData,
       };
     default:
       return {
         type: "(getUser)GET_USER_REQUEST",
+      };
+  }
+}
+
+export function patchUserRequestAction(actionTypeString, userData) {
+  switch (actionTypeString) {
+    case "request":
+      return {
+        type: "(patchUser)PATCH_USER_REQUEST",
+      };
+    case "error":
+      return {
+        type: "(patchUser)PATCH_USER_ERROR",
+      };
+    case "success":
+      return {
+        type: "(patchUser)PATCH_USER_SUCCESS",
+        payload: userData,
+      };
+    default:
+      return {
+        type: "(patchUser)PATCH_USER_REQUEST",
       };
   }
 }
@@ -191,6 +213,27 @@ export function sendGetUserRequest() {
     } catch (error) {
       console.log(error.name);
       dispatch(getUserRequestAction("error"));
+    }
+  };
+}
+
+export function sendPatchUserRequest(infoToPatch) {
+  return async function patchUserRequestThunk(dispatch) {
+    dispatch(patchUserRequestAction());
+
+    try {
+      const response = await apiRequest(`${dataURL}/auth/user`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${getCookie("accessToken")}`,
+        },
+        body: JSON.stringify(infoToPatch),
+      });
+      dispatch(patchUserRequestAction("success", response.user));
+    } catch (error) {
+      console.log(error.name);
+      dispatch(patchUserRequestAction("error"));
     }
   };
 }
