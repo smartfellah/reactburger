@@ -134,6 +134,9 @@ export function sendRegisterRequest(requestBody, navigate) {
 
       const userInfo = response.user;
 
+      localStorage.setItem("name", userInfo.name);
+      localStorage.setItem("email", userInfo.email);
+
       dispatch(registerRequestAction("success", userInfo));
       navigate("/", { replace: true });
     } catch (error) {
@@ -160,6 +163,9 @@ export function sendLoginRequest(requestBody, navigate) {
 
       const userInfo = response.user;
 
+      localStorage.setItem("name", userInfo.name);
+      localStorage.setItem("email", userInfo.email);
+
       dispatch(loginRequestAction("success", userInfo));
       navigate("/", { replace: true });
     } catch (error) {
@@ -182,6 +188,9 @@ export function sendLogoutRequest(navigate) {
         body: JSON.stringify({ token: getCookie("refreshToken") }),
       });
 
+      localStorage.removeItem("name");
+      localStorage.removeItem("email");
+
       dispatch(logoutRequestAction("success"));
       clearTokenCookies();
       navigate("/", { replace: true });
@@ -203,11 +212,6 @@ export function sendGetUserRequest() {
           authorization: `Bearer ${getCookie("accessToken")}`,
         },
       });
-
-      /*
-      localStorage.setItem("name", response.user.name);
-      localStorage.setItem("email", response.user.email);
-      */
 
       dispatch(getUserRequestAction("success", response.user));
     } catch (error) {
