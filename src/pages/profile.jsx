@@ -99,14 +99,13 @@ export const Profile = () => {
   }
 
   function onFormBlur(e) {
-    const inputName = e.target.name;
-    const value = e.target.value;
-    if (inputName === "password") {
-      value ? setRenderButtons(true) : setRenderButtons(false);
-    } else
-      value === userData[`${inputName}`]
-        ? setRenderButtons(false)
-        : setRenderButtons(true);
+    if (
+      emailValue === userData.email &&
+      nameValue === userData.name &&
+      passwordValue === ""
+    ) {
+      setRenderButtons(false);
+    } else setRenderButtons(true);
   }
 
   return (
