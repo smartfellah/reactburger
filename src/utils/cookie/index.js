@@ -66,8 +66,7 @@ export async function refreshAccessAndContinue(
       },
       body: JSON.stringify({ token: getCookie("refreshToken") }),
     });
-    const accessToken = innerResponse.accessToken.split("Bearer ")[1];
-    setCookie("accessToken", accessToken, { expires: 1200 });
+    setTokenCookies(innerResponse);
     dispatch(payload ? callback(payload) : callback());
   } catch (error) {
     if (error === 401) navigate("/login", { replace: true });
