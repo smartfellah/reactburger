@@ -55,6 +55,23 @@ function App() {
               </Pages.HomePage>
             }
           />
+          <Route
+            path="/ingredients/:id"
+            element={
+              <Pages.HomePage>
+                <div className={`${appStyles.App}`}>
+                  {!hasError && !isLoading ? (
+                    <DndProvider backend={HTML5Backend}>
+                      <main className={`${appStyles.ColumnsWrapper}`}>
+                        <BurgerIngredients />
+                        <BurgerConstructor />
+                      </main>
+                    </DndProvider>
+                  ) : null}
+                </div>
+              </Pages.HomePage>
+            }
+          />
           <Route path="/login" element={<Pages.LoginPage />} />
           <Route path="/register" element={<Pages.RegisterPage />} />
           <Route
