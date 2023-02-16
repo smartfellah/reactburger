@@ -95,7 +95,7 @@ export const BurgerIngredients = () => {
         payload: { ...location.state.ingredientDetails },
       });
     }
-  });
+  }, []);
 
   return (
     <>
