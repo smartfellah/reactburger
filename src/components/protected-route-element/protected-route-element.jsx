@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { getCookie } from "../../utils/cookie";
+import { ProtectedRouteLoader } from "./protected-route-loader";
 
 export function ProtectedRouteElement({ element }) {
   const authChecked = useSelector((store) => {
@@ -11,7 +12,7 @@ export function ProtectedRouteElement({ element }) {
   });
 
   if (!authChecked) {
-    return null;
+    return <ProtectedRouteLoader />;
   }
 
   if (isUser) {
