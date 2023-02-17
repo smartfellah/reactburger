@@ -66,6 +66,7 @@ export function authReducer(state = initialState, action) {
     case logoutRequestAction("success").type:
       return {
         ...state,
+        user: null,
         requestPending: false,
         requestError: false,
       };

@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 
 //React-Router
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 
 //Pages
 import * as Pages from "../../pages";
@@ -20,6 +25,10 @@ import { AppHeader } from "../app-header/app-header";
 //Styles
 import appStyles from "./app.module.css";
 import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
+import {
+  checkUserAuth,
+  sendGetUserRequest,
+} from "../../services/actions/auth-actions";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +37,7 @@ function App() {
   });
 
   useEffect(() => {
+    dispatch(checkUserAuth());
     dispatch(getAllIngredients());
   }, [dispatch]);
 

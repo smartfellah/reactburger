@@ -251,3 +251,34 @@ export function sendPatchUserRequest(infoToPatch, navigate) {
     }
   };
 }
+
+export function checkUserAuth() {
+  return async function checkUserAuthThunk(dispatch) {
+    let response;
+    dispatch(getUserRequestAction());
+    try {
+      response = await apiRequest(`${dataURL}/auth/user`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${getCookie("accessToken")}`,
+        },
+      });
+      dispatch(getUserRequestAction("success", response.user));
+    } catch (error) {
+      console.log("checkUserAuthError");
+      try {
+        const innerResponse = await apiRequest(`${dataURL}/auth/token`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: getCookie("refreshToken") }),
+        });
+        setTokenCookies(innerResponse);
+      } catch (error) {
+        if (error === 401) console.log("401 Unauthorized");
+        dispatch(getUserRequestAction("error"));
+      }
+    }
+  };
+}

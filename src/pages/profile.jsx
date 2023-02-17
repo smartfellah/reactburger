@@ -68,10 +68,6 @@ export const Profile = () => {
     return store.authReducer.user;
   });
 
-  useEffect(function profileRenderEffect() {
-    dispatch(sendGetUserRequest(navigate));
-  }, []);
-
   useEffect(
     function profileUpdatedEffect() {
       setEmailValue(userData ? userData.email : emailValue);
