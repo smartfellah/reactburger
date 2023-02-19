@@ -12,7 +12,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 
 //Router
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   sendLogoutRequest,
@@ -22,6 +22,7 @@ import {
 export const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [renderButtons, setRenderButtons] = useState(false);
   const [inputIsDisabled, setInputIsDisabled] = useState(true);
@@ -126,7 +127,7 @@ export const Profile = () => {
                 );
               }}
             </NavLink>
-            <NavLink to="/profile/orders">
+            <NavLink to="orders">
               {function ordersLinkContent({ isActive }) {
                 return (
                   <p
@@ -154,60 +155,62 @@ export const Profile = () => {
             </p>
           </div>
         </div>
-        <div className={`${styles["profile-page__form"]}`}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <Input
-              type="text"
-              onChange={onNameChange}
-              icon={inputIsDisabled ? "EditIcon" : "CloseIcon"}
-              disabled={inputIsDisabled}
-              onIconClick={onIconClick}
-              onBlur={onBlur}
-              value={nameValue}
-              name={"name"}
-              placeholder="Имя"
-              ref={inputRef}
-            />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <EmailInput
-              onChange={onEmailChange}
-              value={emailValue}
-              name={"email"}
-              isIcon={true}
-              onBlur={onFormBlur}
-            />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <PasswordInput
-              onChange={onPasswordChange}
-              value={passwordValue}
-              name={"password"}
-              icon={"EditIcon"}
-              onBlur={onFormBlur}
-            />
-          </div>
-          {renderButtons ? (
-            <div className={`${styles["profile-page-form_buttons"]}`}>
-              <Button
-                onClick={onAbortClick}
-                htmlType="reset"
-                type="secondary"
-                size="medium"
-              >
-                Отмена
-              </Button>
-              <Button
-                onClick={onSubmitClick}
-                htmlType="submit"
-                type="primary"
-                size="medium"
-              >
-                Сохранить
-              </Button>
+        {location?.pathname === "/profile" ? (
+          <div className={`${styles["profile-page__form"]}`}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <Input
+                type="text"
+                onChange={onNameChange}
+                icon={inputIsDisabled ? "EditIcon" : "CloseIcon"}
+                disabled={inputIsDisabled}
+                onIconClick={onIconClick}
+                onBlur={onBlur}
+                value={nameValue}
+                name={"name"}
+                placeholder="Имя"
+                ref={inputRef}
+              />
             </div>
-          ) : null}
-        </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <EmailInput
+                onChange={onEmailChange}
+                value={emailValue}
+                name={"email"}
+                isIcon={true}
+                onBlur={onFormBlur}
+              />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <PasswordInput
+                onChange={onPasswordChange}
+                value={passwordValue}
+                name={"password"}
+                icon={"EditIcon"}
+                onBlur={onFormBlur}
+              />
+            </div>
+            {renderButtons ? (
+              <div className={`${styles["profile-page-form_buttons"]}`}>
+                <Button
+                  onClick={onAbortClick}
+                  htmlType="reset"
+                  type="secondary"
+                  size="medium"
+                >
+                  Отмена
+                </Button>
+                <Button
+                  onClick={onSubmitClick}
+                  htmlType="submit"
+                  type="primary"
+                  size="medium"
+                >
+                  Сохранить
+                </Button>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </div>
   );

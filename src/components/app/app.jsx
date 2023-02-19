@@ -76,7 +76,7 @@ function App() {
                 element={<ProtectedRouteElement element={<Pages.Profile />} />}
               >
                 <Route
-                  path="/profile/orders"
+                  path="orders"
                   element={
                     <ProtectedRouteElement element={<Pages.Profile />} />
                   }
