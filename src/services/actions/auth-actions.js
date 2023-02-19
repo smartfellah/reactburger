@@ -117,6 +117,27 @@ export function patchUserRequestAction(actionTypeString, userData) {
   }
 }
 
+export function resetPasswordRequestAction(actionTypeString) {
+  switch (actionTypeString) {
+    case "request":
+      return {
+        type: "(resetPassword)RESET_PASSWORD_REQUEST",
+      };
+    case "error":
+      return {
+        type: "(resetPassword)RESET_PASSWORD_ERROR",
+      };
+    case "success":
+      return {
+        type: "(resetPassword)RESET_PASSWORD_SUCCESS",
+      };
+    default:
+      return {
+        type: "(resetPassword)RESET_PASSWORD_REQUEST",
+      };
+  }
+}
+
 export function sendRegisterRequest(requestBody, navigate) {
   return async function registerRequestThunk(dispatch) {
     dispatch(registerRequestAction());
@@ -279,6 +300,27 @@ export function checkUserAuth() {
         if (error === 401) console.log("401 Unauthorized");
         dispatch(getUserRequestAction("error"));
       }
+    }
+  };
+}
+
+export function sendResetPasswordRequest(resetCode, newPassword, navigate) {
+  return async function resetPasswordRequestThunk(dispatch) {
+    dispatch(resetPasswordRequestAction());
+
+    try {
+      await apiRequest(`${dataURL}/password-reset/reset`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password: newPassword, token: resetCode }),
+      });
+      dispatch(resetPasswordRequestAction("success"));
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.log(error.name);
+      dispatch(resetPasswordRequestAction("error"));
     }
   };
 }

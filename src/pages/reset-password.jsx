@@ -10,10 +10,18 @@ import {
 import { useState } from "react";
 
 //Router
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { getCookie } from "../utils/cookie";
+import { useDispatch } from "react-redux";
+import {
+  sendRegisterRequest,
+  sendResetPasswordRequest,
+} from "../services/actions/auth-actions";
 
 export const ResetPassword = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [passwordValue, setPasswordValue] = useState("");
   const [codeValue, setCodeValue] = useState("");
 
@@ -29,6 +37,11 @@ export const ResetPassword = () => {
   if (isAuth) {
     return <Navigate to="/" replace />;
   }
+
+  function onSaveClick(e) {
+    dispatch(sendResetPasswordRequest(codeValue, passwordValue, navigate));
+  }
+
   return (
     <div className={`${styles["reset-password__wrapper"]}`}>
       <div className={`${styles["reset-password__container"]}`}>
@@ -53,7 +66,12 @@ export const ResetPassword = () => {
             />
           </div>
           <Link to="/reset-password">
-            <Button htmlType="button" type="primary" size="medium">
+            <Button
+              onClick={onSaveClick}
+              htmlType="button"
+              type="primary"
+              size="medium"
+            >
               Сохранить
             </Button>
           </Link>
