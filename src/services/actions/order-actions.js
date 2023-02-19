@@ -1,5 +1,6 @@
 import { apiRequest } from "../../utils/api-request";
 import { dataURL } from "../../utils/endpoint";
+import { getCookie } from "../../utils/cookie";
 
 export const SEND_ORDER_REQUEST = "SEND_ORDER_REQUEST";
 export const SEND_ORDER_SUCCESS = "SEND_ORDER_SUCCESS";
@@ -15,6 +16,7 @@ export const sendOrder = (ingredients) => (dispatch) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      authorization: `Bearer ${getCookie("accessToken")}`,
     },
     body: JSON.stringify({ ingredients }),
   })
