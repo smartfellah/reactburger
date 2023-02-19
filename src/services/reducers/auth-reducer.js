@@ -12,6 +12,7 @@ const initialState = {
   user: null,
   requestPending: false,
   requestError: false,
+  authChecked: false,
 };
 
 export function authReducer(state = initialState, action) {
@@ -83,6 +84,7 @@ export function authReducer(state = initialState, action) {
         ...state,
         requestPending: false,
         requestError: true,
+        authChecked: true,
       };
     case getUserRequestAction("success").type:
       return {
@@ -90,6 +92,7 @@ export function authReducer(state = initialState, action) {
         user: { ...action.payload },
         requestPending: false,
         requestError: false,
+        authChecked: true,
       };
 
     case patchUserRequestAction("request").type:
