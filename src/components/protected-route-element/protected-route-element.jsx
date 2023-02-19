@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { ProtectedRouteLoader } from "./protected-route-loader";
+import { PropTypes } from "prop-types";
 
 export function ProtectedRouteElement({ element, unAuthOnly = false }) {
   const location = useLocation();
@@ -30,3 +31,8 @@ export function ProtectedRouteElement({ element, unAuthOnly = false }) {
 
   return element;
 }
+
+ProtectedRouteElement.propTypes = {
+  element: PropTypes.element,
+  unAuthOnly: PropTypes.bool,
+};

@@ -22,13 +22,8 @@ import { getAllIngredients } from "../../services/actions/ingredients-actions";
 //Components
 import { AppHeader } from "../app-header/app-header";
 
-//Styles
-import appStyles from "./app.module.css";
 import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
-import {
-  checkUserAuth,
-  sendGetUserRequest,
-} from "../../services/actions/auth-actions";
+import { checkUserAuth } from "../../services/actions/auth-actions";
 
 function App() {
   const dispatch = useDispatch();
