@@ -1,7 +1,6 @@
 import styles from "./page-styles/page404.module.css";
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const Page404 = ({}) => {
+export const Page404 = () => {
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.container}`}>

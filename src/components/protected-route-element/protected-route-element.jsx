@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import { getCookie } from "../../utils/cookie";
 import { ProtectedRouteLoader } from "./protected-route-loader";
 
 export function ProtectedRouteElement({ element, unAuthOnly = false }) {

@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 //Router
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //UI
 import {
@@ -16,7 +16,6 @@ import { sendLoginRequest } from "../services/actions/auth-actions";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");

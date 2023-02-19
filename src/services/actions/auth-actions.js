@@ -4,7 +4,6 @@ import {
   clearTokenCookies,
   getCookie,
   refreshAccessAndContinue,
-  setCookie,
   setTokenCookies,
 } from "../../utils/cookie/";
 
