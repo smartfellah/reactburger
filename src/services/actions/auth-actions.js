@@ -138,6 +138,27 @@ export function resetPasswordRequestAction(actionTypeString) {
   }
 }
 
+export function forgotPasswordRequestAction(actionTypeString) {
+  switch (actionTypeString) {
+    case "request":
+      return {
+        type: "(forgotPassword)FORGOT_PASSWORD_REQUEST",
+      };
+    case "error":
+      return {
+        type: "(forgotPassword)FORGOT_PASSWORD_ERROR",
+      };
+    case "success":
+      return {
+        type: "(forgotPassword)FORGOT_PASSWORD_SUCCESS",
+      };
+    default:
+      return {
+        type: "(forgotPassword)FORGOT_PASSWORD_REQUEST",
+      };
+  }
+}
+
 export function sendRegisterRequest(requestBody, navigate) {
   return async function registerRequestThunk(dispatch) {
     dispatch(registerRequestAction());
@@ -321,6 +342,28 @@ export function sendResetPasswordRequest(resetCode, newPassword, navigate) {
     } catch (error) {
       console.log(error.name);
       dispatch(resetPasswordRequestAction("error"));
+    }
+  };
+}
+
+export function sendForgotPasswordRequest(email, navigate) {
+  return async function (dispatch) {
+    dispatch(forgotPasswordRequestAction());
+
+    try {
+      await apiRequest(`${dataURL}/password-reset`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      dispatch(forgotPasswordRequestAction("success"));
+      navigate("/reset-password", { state: { fromForgot: true } });
+    } catch (error) {
+      console.log(error);
+      dispatch(forgotPasswordRequestAction("error"));
     }
   };
 }

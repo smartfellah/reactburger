@@ -1,9 +1,11 @@
 import {
+  forgotPasswordRequestAction,
   getUserRequestAction,
   loginRequestAction,
   logoutRequestAction,
   patchUserRequestAction,
   registerRequestAction,
+  resetPasswordRequestAction,
 } from "../actions/auth-actions";
 
 const initialState = {
@@ -107,6 +109,42 @@ export function authReducer(state = initialState, action) {
         requestPending: false,
         requestError: false,
         user: { ...action.payload },
+      };
+
+    case forgotPasswordRequestAction("request").type:
+      return {
+        ...state,
+        requestPending: true,
+      };
+    case forgotPasswordRequestAction("error").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: true,
+      };
+    case forgotPasswordRequestAction("success").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: false,
+      };
+
+    case resetPasswordRequestAction("request").type:
+      return {
+        ...state,
+        requestPending: true,
+      };
+    case resetPasswordRequestAction("error").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: true,
+      };
+    case resetPasswordRequestAction("success").type:
+      return {
+        ...state,
+        requestPending: false,
+        requestError: false,
       };
     default:
       return state;

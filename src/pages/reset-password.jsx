@@ -10,17 +10,15 @@ import {
 import { useState } from "react";
 
 //Router
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { getCookie } from "../utils/cookie";
 import { useDispatch } from "react-redux";
-import {
-  sendRegisterRequest,
-  sendResetPasswordRequest,
-} from "../services/actions/auth-actions";
+import { sendResetPasswordRequest } from "../services/actions/auth-actions";
 
 export const ResetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [passwordValue, setPasswordValue] = useState("");
   const [codeValue, setCodeValue] = useState("");
@@ -41,8 +39,7 @@ export const ResetPassword = () => {
   function onSaveClick(e) {
     dispatch(sendResetPasswordRequest(codeValue, passwordValue, navigate));
   }
-
-  return (
+  return location?.state?.fromForgot ? (
     <div className={`${styles["reset-password__wrapper"]}`}>
       <div className={`${styles["reset-password__container"]}`}>
         <div className={`${styles["form__container"]}`}>
@@ -90,5 +87,7 @@ export const ResetPassword = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <Navigate to="/forgot-password" replace />
   );
 };

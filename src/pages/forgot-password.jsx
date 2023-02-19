@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 //UI
 import styles from "./page-styles/forgot-password.module.css";
 import {
@@ -6,31 +8,27 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //Router
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 //Redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 //Actions
-import * as a from "../services/actions/forgot-password-actions";
 import { getCookie } from "../utils/cookie";
+import { sendForgotPasswordRequest } from "../services/actions/auth-actions";
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const emailValue = useSelector(
-    (store) => store.forgotPasswordReducer.emailForm
-  );
+  const [emailValue, setEmailValue] = useState("");
 
   const onEmailChange = (e) => {
-    dispatch({
-      type: a.EMAIL_CHANGE,
-      payload: e.target.value,
-    });
+    setEmailValue(e.target.value);
   };
 
-  const sendEmailCheckRequest = (e) => {
-    dispatch(a.checkEmail(emailValue));
+  const onRestoreClick = (e) => {
+    dispatch(sendForgotPasswordRequest(emailValue, navigate));
   };
 
   const isAuth = getCookie("accessToken") ? true : false;
@@ -53,16 +51,14 @@ export const ForgotPassword = () => {
               isIcon={false}
             />
           </div>
-          <Link to="/reset-password">
-            <Button
-              onClick={sendEmailCheckRequest}
-              htmlType="button"
-              type="primary"
-              size="medium"
-            >
-              Восстановить
-            </Button>
-          </Link>
+          <Button
+            onClick={onRestoreClick}
+            htmlType="button"
+            type="primary"
+            size="medium"
+          >
+            Восстановить
+          </Button>
         </div>
         <div className={`${styles["options-menu__container"]}`}>
           <div className={`${styles["option__container"]}`}>
