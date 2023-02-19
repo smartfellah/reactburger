@@ -65,11 +65,16 @@ export const BurgerConstructor = () => {
 
   const onOrderClick = () => {
     if (isAuth) {
-      const dataToSend = constructorIngredients.map((elem) => {
-        return elem["_id"];
-      });
+      let dataToSend = [];
 
       constructorBun._id && dataToSend.push(constructorBun._id);
+      dataToSend = dataToSend.concat(
+        constructorIngredients.map((elem) => {
+          return elem["_id"];
+        })
+      );
+      constructorBun._id && dataToSend.push(constructorBun._id);
+
       if (!constructorBun._id) {
         dispatch({ type: SEND_ORDER_ERROR });
         alert("В бургер нужно добавить булку");
