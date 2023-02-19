@@ -42,7 +42,7 @@ export const RegisterPage = () => {
   };
 
   function onRegisterClickHandler(e) {
-    dispatch(authActions.sendRegisterRequest(requestData, navigate));
+    dispatch(authActions.sendRegisterRequest(requestData));
   }
 
   return (

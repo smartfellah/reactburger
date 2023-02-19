@@ -33,7 +33,7 @@ export const LoginPage = () => {
       email: emailValue,
       password: passwordValue,
     };
-    dispatch(sendLoginRequest(requestBody, navigate));
+    dispatch(sendLoginRequest(requestBody));
   }
 
   return (

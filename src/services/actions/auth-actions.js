@@ -159,7 +159,7 @@ export function forgotPasswordRequestAction(actionTypeString) {
   }
 }
 
-export function sendRegisterRequest(requestBody, navigate) {
+export function sendRegisterRequest(requestBody) {
   return async function registerRequestThunk(dispatch) {
     dispatch(registerRequestAction());
 
@@ -182,15 +182,14 @@ export function sendRegisterRequest(requestBody, navigate) {
       localStorage.setItem("email", userInfo.email);
 
       dispatch(registerRequestAction("success", userInfo));
-      navigate("/", { replace: true });
     } catch (error) {
       dispatch(registerRequestAction("error"));
-      console.log(error.name);
+      console.log(error);
     }
   };
 }
 
-export function sendLoginRequest(requestBody, navigate) {
+export function sendLoginRequest(requestBody) {
   return async function loginRequestThunk(dispatch) {
     dispatch(loginRequestAction());
 
@@ -211,7 +210,6 @@ export function sendLoginRequest(requestBody, navigate) {
       localStorage.setItem("email", userInfo.email);
 
       dispatch(loginRequestAction("success", userInfo));
-      navigate("/", { replace: true });
     } catch (error) {
       dispatch(loginRequestAction("error"));
       console.log(error);

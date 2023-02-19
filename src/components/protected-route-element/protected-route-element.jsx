@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { getCookie } from "../../utils/cookie";
 import { ProtectedRouteLoader } from "./protected-route-loader";
 
 export function ProtectedRouteElement({ element, unAuthOnly = false }) {
+  const location = useLocation();
   const authChecked = useSelector((store) => {
     return store.authReducer.authChecked;
   });
@@ -16,7 +17,8 @@ export function ProtectedRouteElement({ element, unAuthOnly = false }) {
   }
 
   if (unAuthOnly && isUser) {
-    return <Navigate to="/" replace />;
+    const redirectTo = location?.state?.from;
+    return <Navigate to={redirectTo ? redirectTo : "/"} replace />;
   }
 
   if (!unAuthOnly && isUser) {
@@ -24,7 +26,7 @@ export function ProtectedRouteElement({ element, unAuthOnly = false }) {
   }
 
   if (!unAuthOnly && !isUser) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   return element;
