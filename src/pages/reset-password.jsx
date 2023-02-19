@@ -37,8 +37,10 @@ export const ResetPassword = () => {
   }
 
   function onSaveClick(e) {
+    e.preventDefault();
     dispatch(sendResetPasswordRequest(codeValue, passwordValue, navigate));
   }
+  console.log(location?.state?.fromForgot);
   return location?.state?.fromForgot ? (
     <div className={`${styles["reset-password__wrapper"]}`}>
       <div className={`${styles["reset-password__container"]}`}>

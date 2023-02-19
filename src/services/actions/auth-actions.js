@@ -340,7 +340,7 @@ export function sendResetPasswordRequest(resetCode, newPassword, navigate) {
       dispatch(resetPasswordRequestAction("success"));
       navigate("/login", { replace: true });
     } catch (error) {
-      console.log(error.name);
+      console.log(error);
       dispatch(resetPasswordRequestAction("error"));
     }
   };
