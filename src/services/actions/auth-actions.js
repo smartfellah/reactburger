@@ -214,12 +214,12 @@ export function sendLoginRequest(requestBody, navigate) {
       navigate("/", { replace: true });
     } catch (error) {
       dispatch(loginRequestAction("error"));
-      console.log(error.name);
+      console.log(error);
     }
   };
 }
 
-export function sendLogoutRequest(navigate) {
+export function sendLogoutRequest() {
   return async function logoutRequestThunk(dispatch) {
     dispatch(logoutRequestAction());
 
@@ -231,15 +231,13 @@ export function sendLogoutRequest(navigate) {
         },
         body: JSON.stringify({ token: getCookie("refreshToken") }),
       });
-
       localStorage.removeItem("name");
       localStorage.removeItem("email");
 
       dispatch(logoutRequestAction("success"));
       clearTokenCookies();
-      navigate("/", { replace: true });
     } catch (error) {
-      console.log(error.name);
+      console.log(error);
       dispatch(logoutRequestAction("error"));
     }
   };
@@ -307,7 +305,7 @@ export function checkUserAuth() {
       });
       dispatch(getUserRequestAction("success", response.user));
     } catch (error) {
-      console.log("checkUserAuthError");
+      //console.log("checkUserAuthError");
       try {
         const innerResponse = await apiRequest(`${dataURL}/auth/token`, {
           method: "POST",

@@ -15,8 +15,7 @@ import * as authActions from "../services/actions/auth-actions";
 import { useState } from "react";
 
 //Router
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { getCookie } from "../utils/cookie";
+import { Link, useNavigate } from "react-router-dom";
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -25,12 +24,6 @@ export const RegisterPage = () => {
   const [passwordValue, setPasswordValue] = useState("");
 
   const dispatch = useDispatch();
-
-  const isAuth = getCookie("accessToken") ? true : false;
-
-  if (isAuth) {
-    return <Navigate to="/" replace />;
-  }
 
   const requestData = {
     email: emailValue,

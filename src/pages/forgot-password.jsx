@@ -8,13 +8,12 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //Router
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //Redux
 import { useDispatch } from "react-redux";
 
 //Actions
-import { getCookie } from "../utils/cookie";
 import { sendForgotPasswordRequest } from "../services/actions/auth-actions";
 
 export const ForgotPassword = () => {
@@ -31,10 +30,6 @@ export const ForgotPassword = () => {
     dispatch(sendForgotPasswordRequest(emailValue, navigate));
   };
 
-  const isAuth = getCookie("accessToken") ? true : false;
-  if (isAuth) {
-    return <Navigate to="/" replace />;
-  }
   return (
     <div className={`${styles["forgot-password__wrapper"]}`}>
       <div className={`${styles["forgot-password__container"]}`}>

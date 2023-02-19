@@ -53,8 +53,24 @@ function App() {
                 path="/ingredients/:id"
                 element={<Pages.SingleIngredient />}
               />
-              <Route path="/login" element={<Pages.LoginPage />} />
-              <Route path="/register" element={<Pages.RegisterPage />} />
+              <Route
+                path="/login"
+                element={
+                  <ProtectedRouteElement
+                    element={<Pages.LoginPage />}
+                    unAuthOnly
+                  />
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  <ProtectedRouteElement
+                    element={<Pages.RegisterPage />}
+                    unAuthOnly
+                  />
+                }
+              />
               <Route
                 path="/profile"
                 element={<ProtectedRouteElement element={<Pages.Profile />} />}
@@ -68,9 +84,22 @@ function App() {
               </Route>
               <Route
                 path="/forgot-password"
-                element={<Pages.ForgotPassword />}
+                element={
+                  <ProtectedRouteElement
+                    element={<Pages.ForgotPassword />}
+                    unAuthOnly
+                  />
+                }
               />
-              <Route path="/reset-password" element={<Pages.ResetPassword />} />
+              <Route
+                path="/reset-password"
+                element={
+                  <ProtectedRouteElement
+                    element={<Pages.ResetPassword />}
+                    unAuthOnly
+                  />
+                }
+              />
               <Route path="*" element={<Pages.Page404 />} />
             </Routes>
           </DndProvider>

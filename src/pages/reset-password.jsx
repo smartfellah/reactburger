@@ -11,7 +11,6 @@ import { useState } from "react";
 
 //Router
 import { Link, Navigate, useNavigate, useLocation } from "react-router-dom";
-import { getCookie } from "../utils/cookie";
 import { useDispatch } from "react-redux";
 import { sendResetPasswordRequest } from "../services/actions/auth-actions";
 
@@ -30,11 +29,6 @@ export const ResetPassword = () => {
   const onCodeChange = (e) => {
     setCodeValue(e.target.value);
   };
-
-  const isAuth = getCookie("accessToken") ? true : false;
-  if (isAuth) {
-    return <Navigate to="/" replace />;
-  }
 
   function onSaveClick(e) {
     e.preventDefault();

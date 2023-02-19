@@ -15,7 +15,6 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  sendGetUserRequest,
   sendLogoutRequest,
   sendPatchUserRequest,
 } from "../services/actions/auth-actions";
@@ -61,7 +60,7 @@ export const Profile = () => {
   };
 
   function onLogoutClick(e) {
-    dispatch(sendLogoutRequest(navigate));
+    dispatch(sendLogoutRequest());
   }
 
   const userData = useSelector(function profileUserSelector(store) {

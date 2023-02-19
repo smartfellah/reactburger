@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { getCookie } from "../../utils/cookie";
 import { ProtectedRouteLoader } from "./protected-route-loader";
 
-export function ProtectedRouteElement({ element }) {
+export function ProtectedRouteElement({ element, unAuthOnly = false }) {
   const authChecked = useSelector((store) => {
     return store.authReducer.authChecked;
   });
@@ -15,13 +15,17 @@ export function ProtectedRouteElement({ element }) {
     return <ProtectedRouteLoader />;
   }
 
-  if (isUser) {
+  if (unAuthOnly && isUser) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (!unAuthOnly && isUser) {
     return element;
   }
 
-  if (!isUser) {
+  if (!unAuthOnly && !isUser) {
     return <Navigate to="/login" replace />;
   }
 
-  return null;
+  return element;
 }
