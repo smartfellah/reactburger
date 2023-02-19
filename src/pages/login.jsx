@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 //Router
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //UI
 import {
