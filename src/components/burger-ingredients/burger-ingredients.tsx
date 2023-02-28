@@ -1,68 +1,82 @@
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useRef, useEffect } from "react";
-import { IngredientsArea } from "./ingredients-area/ingredients-area";
-import ingredientsStyles from "./burger-ingredients.module.css";
+//React
+import { useState, useRef, useEffect, RefObject } from "react";
+
+//Components
 import { Modal } from "../modal/modal";
+import { IngredientsArea } from "./ingredients-area/ingredients-area";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
+
+//UI
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import ingredientsStyles from "./burger-ingredients.module.css";
+
+//Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
   HIDE_INGREDIENT_DETAILS,
   SHOW_INGREDIENT_DETAILS,
 } from "../../services/actions/single-ingredient-actions";
-import { useLocation, useNavigate } from "react-router-dom";
-export const BurgerIngredients = () => {
-  const dispatch = useDispatch();
+import { Dispatch } from "redux";
 
-  const showDetails = useSelector(
-    (store) => store.singleIngredientReducer.isShown
+//Router
+import { useLocation, useNavigate } from "react-router-dom";
+
+export const BurgerIngredients = () => {
+  const dispatch = useDispatch<Dispatch<any>>();
+
+  const showDetails: boolean = useSelector(
+    (store: any) => store.singleIngredientReducer.isShown
   );
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  const hideDetails = () => {
+  const hideDetails = (): void => {
     dispatch({ type: HIDE_INGREDIENT_DETAILS });
     navigate("/");
   };
 
-  const [current, setCurrent] = useState("bun");
-  const bunsRef = useRef(null);
-  const saucesRef = useRef(null);
-  const toppingsRef = useRef(null);
-  const scrollRef = useRef(null);
-  const tabRef = useRef(null);
+  const [current, setCurrent] = useState<string>("bun");
+  const bunsRef = useRef<HTMLElement>(null);
+  const saucesRef = useRef<HTMLElement>(null);
+  const toppingsRef = useRef<HTMLElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const tabRef = useRef<HTMLElement>(null);
 
-  const handleTabClick = (e) => {
+  const handleTabClick = (e: string): void => {
     setCurrent(e);
     if (e === "bun") {
       setCurrent("bun");
-      scrollRef.current.scroll({
+      scrollRef.current!.scroll({
         top: 0,
         behavior: "smooth",
       });
     } else if (e === "sauce") {
       setCurrent("sauce");
-      scrollRef.current.scroll({
-        top: bunsRef.current.offsetHeight,
+      scrollRef.current!.scroll({
+        top: bunsRef.current!.offsetHeight,
         behavior: "smooth",
       });
     } else {
       setCurrent("main");
-      scrollRef.current.scroll({
-        top: bunsRef.current.offsetHeight + saucesRef.current.offsetHeight,
+      scrollRef.current!.scroll({
+        top: bunsRef.current!.offsetHeight + saucesRef.current!.offsetHeight,
         behavior: "smooth",
       });
     }
   };
 
-  const ingredientScrollHandler = (e) => {
-    const getAreaPos = (areaRef, tabRef) => {
-      const tabBottom = tabRef.current.getBoundingClientRect().bottom;
+  const ingredientScrollHandler = () => {
+    const getAreaPos = (
+      areaRef: RefObject<HTMLElement>,
+      tabRef: RefObject<HTMLElement>
+    ) => {
+      const tabBottom = tabRef.current!.getBoundingClientRect().bottom;
       return Math.abs(
         tabBottom -
           Math.min(
-            areaRef.current.getBoundingClientRect().top,
-            areaRef.current.getBoundingClientRect().bottom
+            areaRef.current!.getBoundingClientRect().top,
+            areaRef.current!.getBoundingClientRect().bottom
           )
       );
     };
@@ -82,13 +96,13 @@ export const BurgerIngredients = () => {
 
   useEffect(() => {
     const scrolledNode = scrollRef.current;
-    scrollRef.current.addEventListener("scroll", ingredientScrollHandler);
+    scrollRef.current!.addEventListener("scroll", ingredientScrollHandler);
     return () => {
-      scrolledNode.removeEventListener("scroll", ingredientScrollHandler);
+      scrolledNode!.removeEventListener("scroll", ingredientScrollHandler);
     };
   }, []);
 
-  useEffect(function modalFromStateEffect() {
+  useEffect(function modalFromStateEffect(): void {
     if (location?.state?.ingredientDetails) {
       dispatch({
         type: SHOW_INGREDIENT_DETAILS,
