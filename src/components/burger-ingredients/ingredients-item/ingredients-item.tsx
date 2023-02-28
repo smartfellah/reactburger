@@ -1,24 +1,45 @@
+//UI
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientItemStyles from "./ingredients-item.module.css";
-import { ingredientType } from "../../../utils/types";
+
+//Types
+import { TIngredientsItemProps } from "../types";
+import {
+  TConstructorData,
+  TConstructorIngredient,
+} from "../../burger-constructor/types";
+
+//Redux
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import { SHOW_INGREDIENT_DETAILS } from "../../../services/actions/single-ingredient-actions";
-import { useDrag } from "react-dnd/dist/hooks";
+import { Dispatch } from "redux";
+
+//React
+import { FC, SyntheticEvent, useEffect, useState } from "react";
+
+//Router
 import { useNavigate } from "react-router-dom";
 
-export const IngredientsItem = ({ singleIngredientData }) => {
-  const dispatch = useDispatch();
+//DND
+import { useDrag } from "react-dnd/dist/hooks";
+
+export const IngredientsItem: FC<TIngredientsItemProps> = ({
+  singleIngredientData,
+}) => {
+  const dispatch = useDispatch<Dispatch<any>>();
   const navigate = useNavigate();
 
-  const [amount, setAmount] = useState(0);
-  const constructorIngredients = useSelector(
-    (store) => store.constructorReducer.data
+  const [amount, setAmount] = useState<number>(0);
+
+  const constructorIngredients: TConstructorData = useSelector(
+    (store: any) => store.constructorReducer.data
   );
-  const constructorBun = useSelector((store) => store.constructorReducer.bun);
+  const constructorBun: TConstructorIngredient = useSelector(
+    (store: any) => store.constructorReducer.bun
+  );
 
   const [, dragRef] = useDrag({
     type: "ingredient",
@@ -40,7 +61,7 @@ export const IngredientsItem = ({ singleIngredientData }) => {
       );
   }, [constructorIngredients, constructorBun]);
 
-  const handleClick = (e) => {
+  const handleClick = (e: SyntheticEvent): void => {
     const detailsForModal = {
       image: singleIngredientData.image_large,
       name: singleIngredientData.name,
@@ -76,14 +97,11 @@ export const IngredientsItem = ({ singleIngredientData }) => {
         <p className="text text_type_digits-default">
           {singleIngredientData.price}
         </p>
-        <CurrencyIcon></CurrencyIcon>
+        <CurrencyIcon type="primary" />
       </div>
       <div className={`${ingredientItemStyles.IngredientName}`}>
         {singleIngredientData.name}
       </div>
     </div>
   );
-};
-IngredientsItem.propTypes = {
-  singleIngredientData: ingredientType.isRequired,
 };
