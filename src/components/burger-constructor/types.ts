@@ -21,3 +21,8 @@ export type TConstructorIngredient = {
 export type TDroppedItem = {
   position: number;
 };
+
+export type TToppingProps = {
+  ingredient: TConstructorIngredient;
+  position: number;
+};

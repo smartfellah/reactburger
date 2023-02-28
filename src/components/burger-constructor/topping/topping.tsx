@@ -18,28 +18,10 @@ import {
 } from "../../../services/actions/constructor-actions";
 import { useDispatch } from "react-redux";
 
-type TIngredient = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  Uid: string;
-};
+//Types
+import { TConstructorIngredient, TToppingProps } from "../types";
 
-interface IToppingProps {
-  ingredient: TIngredient;
-  position: number;
-}
-
-export const Topping: FC<IToppingProps> = ({ ingredient, position }) => {
+export const Topping: FC<TToppingProps> = ({ ingredient, position }) => {
   const dispatch = useDispatch();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -76,14 +58,16 @@ export const Topping: FC<IToppingProps> = ({ ingredient, position }) => {
     },
   });
 
-  const onDeleteClick = (ingredientData: TIngredient): void => {
+  const onDeleteClick = (ingredientData: TConstructorIngredient): void => {
     dispatch({
       type: DELETE_FROM_CONSTRUCTOR,
       payload: { ...ingredientData },
     });
   };
 
-  const transparentStyle = isDrag && { opacity: 0 };
+  const transparentStyle: { opacity: number } | null = isDrag
+    ? { opacity: 0 }
+    : null;
 
   innerDragRef(innerDropRef(ref));
 
