@@ -40,16 +40,15 @@ export const IngredientsItem = ({ singleIngredientData }) => {
       );
   }, [constructorIngredients, constructorBun]);
 
-  const detailsForModal = {
-    image: singleIngredientData.image_large,
-    name: singleIngredientData.name,
-    calories: singleIngredientData.calories,
-    proteins: singleIngredientData.proteins,
-    fat: singleIngredientData.fat,
-    carbohydrates: singleIngredientData.carbohydrates,
-  };
-
   const handleClick = (e) => {
+    const detailsForModal = {
+      image: singleIngredientData.image_large,
+      name: singleIngredientData.name,
+      calories: singleIngredientData.calories,
+      proteins: singleIngredientData.proteins,
+      fat: singleIngredientData.fat,
+      carbohydrates: singleIngredientData.carbohydrates,
+    };
     dispatch({
       type: SHOW_INGREDIENT_DETAILS,
       payload: {
