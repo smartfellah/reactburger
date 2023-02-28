@@ -59,7 +59,7 @@ export const IngredientsItem: FC<TIngredientsItemProps> = ({
           (ingredient) => ingredient._id === singleIngredientData._id
         ).length
       );
-  }, [constructorIngredients, constructorBun]);
+  }, [constructorIngredients, constructorBun, singleIngredientData]);
 
   const handleClick = (e: SyntheticEvent): void => {
     const detailsForModal = {
