@@ -102,14 +102,17 @@ export const BurgerIngredients = () => {
     };
   }, []);
 
-  useEffect(function modalFromStateEffect(): void {
-    if (location?.state?.ingredientDetails) {
-      dispatch({
-        type: SHOW_INGREDIENT_DETAILS,
-        payload: { ...location.state.ingredientDetails },
-      });
-    }
-  }, []);
+  useEffect(
+    function modalFromStateEffect(): void {
+      if (location?.state?.ingredientDetails) {
+        dispatch({
+          type: SHOW_INGREDIENT_DETAILS,
+          payload: { ...location.state.ingredientDetails },
+        });
+      }
+    },
+    [dispatch, location?.state?.ingredientDetails]
+  );
 
   return (
     <>
