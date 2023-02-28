@@ -49,7 +49,7 @@ export const IngredientsArea: FC<TIngredientsAreaProps> = ({
                   ></IngredientsItem>
                 );
               }),
-          [ingredientsData]
+          [ingredientsData, type]
         )}
       </div>
     </section>
