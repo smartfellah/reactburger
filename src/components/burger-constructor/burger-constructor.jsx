@@ -22,11 +22,13 @@ import {
   SEND_ORDER_ERROR,
   SHOW_ORDER_DETAILS,
 } from "../../services/actions/order-actions";
-import { useDrop } from "react-dnd/dist/hooks";
 import {
   addIngredient,
   CLEAR_CONSTRUCTOR,
 } from "../../services/actions/constructor-actions";
+
+//DND
+import { useDrop } from "react-dnd/dist/hooks";
 
 //Router
 import { useNavigate } from "react-router";
