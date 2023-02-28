@@ -1,13 +1,29 @@
-import { useMemo } from "react";
-import ingredientsAreaStyles from "./ingredients-area.module.css";
-import { IngredientsItem } from "../ingredients-item/ingredients-item";
-import PropTypes from "prop-types";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-export const IngredientsArea = ({ areaRef, type }) => {
-  const ingredientsData = useSelector((store) => store.ingredientsReducer.data);
+//React
+import { FC, useMemo } from "react";
 
-  const areaTitle =
+//Components
+import { IngredientsItem } from "../ingredients-item/ingredients-item";
+
+//Styles
+import ingredientsAreaStyles from "./ingredients-area.module.css";
+
+//Redux
+import { useSelector } from "react-redux/es/hooks/useSelector";
+
+//Types
+import { TIngredientsAreaProps, TIngredientsData } from "../types";
+
+export const IngredientsArea: FC<TIngredientsAreaProps> = ({
+  areaRef,
+  type,
+}) => {
+  const ingredientsData: TIngredientsData = useSelector(
+    (store: any) => store.ingredientsReducer.data
+  );
+
+  const areaTitle: string =
     type === "bun" ? "Булки" : type === "sauce" ? "Соусы" : "Начинка";
+
   return (
     <section
       ref={areaRef}
@@ -38,10 +54,4 @@ export const IngredientsArea = ({ areaRef, type }) => {
       </div>
     </section>
   );
-};
-
-IngredientsArea.propTypes = {
-  type: PropTypes.string.isRequired,
-  areaRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    .isRequired,
 };

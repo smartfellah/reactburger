@@ -1,5 +1,14 @@
+import { MutableRefObject } from "react";
+
 export type TIngredientsItemProps = {
   singleIngredientData: TSingleIngredient;
+};
+
+export type TIngredientsData = Array<TSingleIngredient>;
+
+export type TIngredientsAreaProps = {
+  areaRef: MutableRefObject<null>;
+  type: string;
 };
 
 export type TSingleIngredient = {
