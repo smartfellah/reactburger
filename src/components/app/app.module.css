@@ -1,9 +1,0 @@
-.App {
-  text-align: center;
-}
-.ColumnsWrapper {
-  display: flex;
-  gap: var(--l-1);
-  width: 1240px;
-  margin: auto;
-}

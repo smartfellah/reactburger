@@ -8,9 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { SHOW_INGREDIENT_DETAILS } from "../../../services/actions/single-ingredient-actions";
 import { useDrag } from "react-dnd/dist/hooks";
+import { useNavigate } from "react-router-dom";
 
 export const IngredientsItem = ({ singleIngredientData }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [amount, setAmount] = useState(0);
   const constructorIngredients = useSelector(
     (store) => store.constructorReducer.data
@@ -37,17 +40,24 @@ export const IngredientsItem = ({ singleIngredientData }) => {
       );
   }, [constructorIngredients, constructorBun]);
 
+  const detailsForModal = {
+    image: singleIngredientData.image_large,
+    name: singleIngredientData.name,
+    calories: singleIngredientData.calories,
+    proteins: singleIngredientData.proteins,
+    fat: singleIngredientData.fat,
+    carbohydrates: singleIngredientData.carbohydrates,
+  };
+
   const handleClick = (e) => {
     dispatch({
       type: SHOW_INGREDIENT_DETAILS,
       payload: {
-        image: singleIngredientData.image_large,
-        name: singleIngredientData.name,
-        calories: singleIngredientData.calories,
-        proteins: singleIngredientData.proteins,
-        fat: singleIngredientData.fat,
-        carbohydrates: singleIngredientData.carbohydrates,
+        ...detailsForModal,
       },
+    });
+    navigate(`/ingredients/${singleIngredientData._id}`, {
+      state: { ingredientDetails: { ...detailsForModal } },
     });
   };
 

@@ -5,7 +5,11 @@ import ingredientsStyles from "./burger-ingredients.module.css";
 import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import { useDispatch, useSelector } from "react-redux";
-import { HIDE_INGREDIENT_DETAILS } from "../../services/actions/single-ingredient-actions";
+import {
+  HIDE_INGREDIENT_DETAILS,
+  SHOW_INGREDIENT_DETAILS,
+} from "../../services/actions/single-ingredient-actions";
+import { useLocation, useNavigate } from "react-router-dom";
 export const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
@@ -13,8 +17,12 @@ export const BurgerIngredients = () => {
     (store) => store.singleIngredientReducer.isShown
   );
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const hideDetails = () => {
     dispatch({ type: HIDE_INGREDIENT_DETAILS });
+    navigate("/");
   };
 
   const [current, setCurrent] = useState("bun");
@@ -78,6 +86,15 @@ export const BurgerIngredients = () => {
     return () => {
       scrolledNode.removeEventListener("scroll", ingredientScrollHandler);
     };
+  }, []);
+
+  useEffect(function modalFromStateEffect() {
+    if (location?.state?.ingredientDetails) {
+      dispatch({
+        type: SHOW_INGREDIENT_DETAILS,
+        payload: { ...location.state.ingredientDetails },
+      });
+    }
   }, []);
 
   return (

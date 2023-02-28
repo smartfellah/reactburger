@@ -27,9 +27,14 @@ import {
   addIngredient,
   CLEAR_CONSTRUCTOR,
 } from "../../services/actions/constructor-actions";
+
+//Router
+import { useNavigate } from "react-router";
+
 import { Topping } from "./topping/topping";
 
 export const BurgerConstructor = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onDropHandler = (item) => {
@@ -54,21 +59,32 @@ export const BurgerConstructor = () => {
       : 0) + (constructorBun.price ? constructorBun.price * 2 : 0);
   const showOrder = useSelector((store) => store.orderReducer.isShown);
 
-  const onOrderClick = () => {
-    const dataToSend = constructorIngredients.map((elem) => {
-      return elem["_id"];
-    });
+  const isAuth = useSelector((store) =>
+    store.authReducer.user ? true : false
+  );
 
-    constructorBun._id && dataToSend.push(constructorBun._id);
-    if (!constructorBun._id) {
-      dispatch({ type: SEND_ORDER_ERROR });
-      alert("В бургер нужно добавить булку");
-    } else {
-      dispatch(sendOrder(dataToSend));
-      dispatch({
-        type: SHOW_ORDER_DETAILS,
-      });
-    }
+  const onOrderClick = () => {
+    if (isAuth) {
+      let dataToSend = [];
+
+      constructorBun._id && dataToSend.push(constructorBun._id);
+      dataToSend = dataToSend.concat(
+        constructorIngredients.map((elem) => {
+          return elem["_id"];
+        })
+      );
+      constructorBun._id && dataToSend.push(constructorBun._id);
+
+      if (!constructorBun._id) {
+        dispatch({ type: SEND_ORDER_ERROR });
+        alert("В бургер нужно добавить булку");
+      } else {
+        dispatch(sendOrder(dataToSend));
+        dispatch({
+          type: SHOW_ORDER_DETAILS,
+        });
+      }
+    } else navigate("/login", { replace: true });
   };
 
   const hideDetails = () => {
