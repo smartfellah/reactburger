@@ -1,20 +1,48 @@
+//UI
 import toppingStyles from "./topping.module.css";
+import {
+  ConstructorElement,
+  DragIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+
+//DND
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
-import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
+
+//React
+import { useRef, FC } from "react";
+
+//Redux
 import {
   DELETE_FROM_CONSTRUCTOR,
   SWAP_ELEMENTS,
 } from "../../../services/actions/constructor-actions";
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useRef } from "react";
-import { ingredientType } from "../../../utils/types";
+import { useDispatch } from "react-redux";
 
-export const Topping = ({ ingredient, position }) => {
+type TIngredient = {
+  _id: string;
+  name: string;
+  type: string;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+  Uid: string;
+};
+
+interface IToppingProps {
+  ingredient: TIngredient;
+  position: number;
+}
+
+export const Topping: FC<IToppingProps> = ({ ingredient, position }) => {
   const dispatch = useDispatch();
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const [{ isDrag }, innerDragRef] = useDrag({
     type: "constructorIngredient",
@@ -28,12 +56,12 @@ export const Topping = ({ ingredient, position }) => {
 
   const [, innerDropRef] = useDrop({
     accept: "constructorIngredient",
-    hover(item) {
+    hover(item: { position: number }) {
       if (!ref.current) {
         return;
       }
-      const dragFrom = item.position;
-      const dropTo = position;
+      const dragFrom: number = item.position;
+      const dropTo: number = position;
 
       if (dragFrom === dropTo) {
         return;
@@ -48,7 +76,7 @@ export const Topping = ({ ingredient, position }) => {
     },
   });
 
-  const onDeleteClick = (ingredientData) => {
+  const onDeleteClick = (ingredientData: TIngredient): void => {
     dispatch({
       type: DELETE_FROM_CONSTRUCTOR,
       payload: { ...ingredientData },
@@ -67,7 +95,7 @@ export const Topping = ({ ingredient, position }) => {
       className={`${toppingStyles.ListElement}`}
     >
       <div className={`${toppingStyles.DragIconWrapper}`}>
-        <DragIcon />
+        <DragIcon type="primary" />
       </div>
       <ConstructorElement
         isLocked={false}
@@ -78,8 +106,4 @@ export const Topping = ({ ingredient, position }) => {
       ></ConstructorElement>
     </div>
   );
-};
-Topping.propTypes = {
-  ingredient: ingredientType.isRequired,
-  position: PropTypes.number.isRequired,
 };
