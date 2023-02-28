@@ -1,3 +1,4 @@
+//React
 import { useMemo } from "react";
 
 //UI elements
@@ -10,6 +11,7 @@ import {
 //Components
 import { OrderDetails } from "../order-details/order-details";
 import { Modal } from "../modal/modal";
+import { Topping } from "./topping/topping";
 
 //Styles
 import burgerConstructorStyles from "./burger-constructor.module.css";
@@ -32,8 +34,6 @@ import { useDrop } from "react-dnd/dist/hooks";
 
 //Router
 import { useNavigate } from "react-router";
-
-import { Topping } from "./topping/topping";
 
 export const BurgerConstructor = () => {
   const navigate = useNavigate();
