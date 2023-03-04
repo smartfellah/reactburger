@@ -1,15 +1,15 @@
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ModalOverlay } from "../modal-overlay/modal-overlay";
-import PropTypes from "prop-types";
 import modalStyles from "./modal.module.css";
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
+import { ModalProps } from "./types";
 
-const modalRoot = document.getElementById("modal");
+const modalRoot: HTMLElement | null = document.getElementById("modal");
 
-export const Modal = ({ children, modalTitle, closePopup }) => {
+export const Modal: FC<ModalProps> = ({ children, modalTitle, closePopup }) => {
   useEffect(() => {
-    const onEsc = (e) => {
+    const onEsc = (e: KeyboardEvent): void => {
       e.key === "Escape" && closePopup();
     };
 
@@ -27,17 +27,11 @@ export const Modal = ({ children, modalTitle, closePopup }) => {
           className={`${modalStyles["Modal-Header"]} text text_type_main-large`}
         >
           <h2>{modalTitle}</h2>
-          <CloseIcon onClick={closePopup} />
+          <CloseIcon type="primary" onClick={closePopup} />
         </div>
         <div className={`${modalStyles["Modal-Body"]}`}>{children}</div>
       </div>
     </>,
-    modalRoot
+    modalRoot!
   );
-};
-Modal.propTypes = {
-  children: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    .isRequired,
-  modalTitle: PropTypes.string,
-  closePopup: PropTypes.func.isRequired,
 };
