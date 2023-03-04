@@ -1,8 +1,17 @@
-import orderDetailsStyles from "./order-details.module.css";
+//UI
 import doneIconPath from "../../images/done.svg";
+import orderDetailsStyles from "./order-details.module.css";
+
+//Redux
 import { useSelector } from "react-redux";
+
+//Types
+import { OrderNumber } from "./types";
+
 export const OrderDetails = () => {
-  const orderNumber = useSelector((store) => store.orderReducer.data.number);
+  const orderNumber: OrderNumber = useSelector(
+    (store: any) => store.orderReducer.data.number
+  );
   return (
     <article className={`${orderDetailsStyles.OrderDetails}`}>
       {orderNumber ? (
