@@ -1,5 +1,10 @@
+//UI
 import detailsStyles from "./ingredient-details.module.css";
+
+//Redux
 import { useSelector } from "react-redux";
+
+//Types
 import { IngredientDetailsObject } from "./types";
 
 export const IngredientDetails = () => {
