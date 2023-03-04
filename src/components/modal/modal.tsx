@@ -1,8 +1,15 @@
+//React
 import ReactDOM from "react-dom";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ModalOverlay } from "../modal-overlay/modal-overlay";
-import modalStyles from "./modal.module.css";
 import { useEffect, FC } from "react";
+
+//UI
+import modalStyles from "./modal.module.css";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+
+//Components
+import { ModalOverlay } from "../modal-overlay/modal-overlay";
+
+//Types
 import { ModalProps } from "./types";
 
 const modalRoot: HTMLElement | null = document.getElementById("modal");
