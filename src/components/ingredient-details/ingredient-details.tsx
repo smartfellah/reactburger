@@ -1,8 +1,11 @@
 import detailsStyles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
+import { IngredientDetailsObject } from "./types";
 
 export const IngredientDetails = () => {
-  const details = useSelector((store) => store.singleIngredientReducer.data);
+  const details: IngredientDetailsObject = useSelector(
+    (store: any) => store.singleIngredientReducer.data
+  );
 
   return (
     <article className={`${detailsStyles.DetailsList}`}>
