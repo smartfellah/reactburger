@@ -8,21 +8,26 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //React
-import React, { useEffect } from "react";
+import React, { SyntheticEvent, useEffect } from "react";
 import { useState } from "react";
 
 //Router
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+
+//Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
   sendLogoutRequest,
   sendPatchUserRequest,
 } from "../services/actions/auth-actions";
+import { Dispatch } from "redux";
+
+//Hooks
 import { useForm } from "../hooks/useForm";
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<any>>();
   const location = useLocation();
 
   const { formState, handleFormChange, setFormState } = useForm({
@@ -34,28 +39,28 @@ export const Profile = () => {
   const [renderButtons, setRenderButtons] = useState(false);
   const [inputIsDisabled, setInputIsDisabled] = useState(true);
 
-  function onFormChange(e) {
+  function onFormChange(e: SyntheticEvent): void {
     handleFormChange(e);
     setRenderButtons(true);
   }
 
   //Enable input and focus on it when "edit" icon is clicked
-  const inputRef = React.useRef(null);
-  const onIconClick = () => {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const onIconClick = (): void => {
     setInputIsDisabled(!inputIsDisabled);
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current!.focus(), 0);
   };
 
-  const onBlur = (e) => {
+  const onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
     setInputIsDisabled(!inputIsDisabled);
-    onFormBlur(e);
+    onFormBlur();
   };
 
-  function onLogoutClick(e) {
+  function onLogoutClick(): void {
     dispatch(sendLogoutRequest());
   }
 
-  const userData = useSelector(function profileUserSelector(store) {
+  const userData = useSelector(function profileUserSelector(store: any) {
     return store.authReducer.user;
   });
 
@@ -72,7 +77,7 @@ export const Profile = () => {
     [userData]
   );
 
-  function onSubmitClick(e) {
+  function onSubmitClick(): void {
     dispatch(
       sendPatchUserRequest(
         {
@@ -87,7 +92,7 @@ export const Profile = () => {
   }
 
   //Restore form state using data from backend
-  function onAbortClick(e) {
+  function onAbortClick(): void {
     setFormState({
       emailValue: userData.email,
       nameValue: userData.name,
@@ -97,7 +102,7 @@ export const Profile = () => {
   }
 
   //Hide "save" and "cancel" buttons on form blur if neither of inputs changed
-  function onFormBlur(e) {
+  function onFormBlur(): void {
     if (
       formState.emailValue === userData.email &&
       formState.nameValue === userData.name &&
