@@ -1,3 +1,4 @@
+//UI
 import styles from "./page-styles/page404.module.css";
 
 export const Page404 = () => {
