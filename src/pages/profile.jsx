@@ -18,37 +18,26 @@ import {
   sendLogoutRequest,
   sendPatchUserRequest,
 } from "../services/actions/auth-actions";
+import { useForm } from "../hooks/useForm";
 
 export const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
 
+  const { formState, handleFormChange, setFormState } = useForm({
+    nameValue: localStorage.getItem("name") || "Name",
+    emailValue: localStorage.getItem("email") || "name@email.com",
+    passwordValue: "",
+  });
+
   const [renderButtons, setRenderButtons] = useState(false);
   const [inputIsDisabled, setInputIsDisabled] = useState(true);
 
-  const [nameValue, setNameValue] = useState(
-    localStorage.getItem("name") ? localStorage.getItem("name") : "Name"
-  );
-  const [emailValue, setEmailValue] = useState(
-    localStorage.getItem("email")
-      ? localStorage.getItem("email")
-      : "name@email.com"
-  );
-  const [passwordValue, setPasswordValue] = useState("");
-
-  const onNameChange = (e) => {
-    setNameValue(e.target.value);
+  function onFormChange(e) {
+    handleFormChange(e);
     setRenderButtons(true);
-  };
-  const onEmailChange = (e) => {
-    setEmailValue(e.target.value);
-    setRenderButtons(true);
-  };
-  const onPasswordChange = (e) => {
-    setPasswordValue(e.target.value);
-    setRenderButtons(true);
-  };
+  }
 
   const inputRef = React.useRef(null);
   const onIconClick = () => {
@@ -70,9 +59,11 @@ export const Profile = () => {
 
   useEffect(
     function profileUpdatedEffect() {
-      setEmailValue(userData ? userData.email : emailValue);
-      setNameValue(userData ? userData.name : nameValue);
-      setPasswordValue(userData ? "" : passwordValue);
+      setFormState({
+        emailValue: userData?.email || formState.emailValue,
+        nameValue: userData?.name || formState.nameValue,
+        passwordValue: userData ? "" : formState.passwordValue,
+      });
       setRenderButtons(false);
     },
     [userData]
@@ -82,9 +73,9 @@ export const Profile = () => {
     dispatch(
       sendPatchUserRequest(
         {
-          name: nameValue,
-          email: emailValue,
-          password: passwordValue,
+          name: formState.nameValue,
+          email: formState.emailValue,
+          password: formState.passwordValue,
         },
         navigate
       )
@@ -93,17 +84,19 @@ export const Profile = () => {
   }
 
   function onAbortClick(e) {
-    setEmailValue(userData.email);
-    setNameValue(userData.name);
-    setPasswordValue("");
+    setFormState({
+      emailValue: userData.email,
+      nameValue: userData.name,
+      passwordValue: "",
+    });
     setRenderButtons(false);
   }
 
   function onFormBlur(e) {
     if (
-      emailValue === userData.email &&
-      nameValue === userData.name &&
-      passwordValue === ""
+      formState.emailValue === userData.email &&
+      formState.nameValue === userData.name &&
+      formState.passwordValue === ""
     ) {
       setRenderButtons(false);
     } else setRenderButtons(true);
@@ -160,31 +153,31 @@ export const Profile = () => {
             <div style={{ display: "flex", flexDirection: "column" }}>
               <Input
                 type="text"
-                onChange={onNameChange}
+                onChange={onFormChange}
                 icon={inputIsDisabled ? "EditIcon" : "CloseIcon"}
                 disabled={inputIsDisabled}
                 onIconClick={onIconClick}
                 onBlur={onBlur}
-                value={nameValue}
-                name={"name"}
+                value={formState.nameValue}
+                name={"nameValue"}
                 placeholder="Имя"
                 ref={inputRef}
               />
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <EmailInput
-                onChange={onEmailChange}
-                value={emailValue}
-                name={"email"}
+                onChange={onFormChange}
+                value={formState.emailValue}
+                name={"emailValue"}
                 isIcon={true}
                 onBlur={onFormBlur}
               />
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <PasswordInput
-                onChange={onPasswordChange}
-                value={passwordValue}
-                name={"password"}
+                onChange={onFormChange}
+                value={formState.passwordValue}
+                name={"passwordValue"}
                 icon={"EditIcon"}
                 onBlur={onFormBlur}
               />
