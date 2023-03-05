@@ -8,19 +8,24 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./page-styles/login.module.css";
+
+//Redux
 import { useDispatch } from "react-redux";
 import { sendLoginRequest } from "../services/actions/auth-actions";
+import { Dispatch } from "redux";
+
+//Hooks
 import { useForm } from "../hooks/useForm";
 
 export const LoginPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<any>>();
 
   const { formState, handleFormChange } = useForm({
     emailValue: "",
     passwordValue: "",
   });
 
-  function onLoginClick(e) {
+  function onLoginClick(): void {
     const requestBody = {
       email: formState.emailValue,
       password: formState.passwordValue,
