@@ -39,11 +39,13 @@ export const Profile = () => {
     setRenderButtons(true);
   }
 
+  //Enable input and focus on it when "edit" icon is clicked
   const inputRef = React.useRef(null);
   const onIconClick = () => {
     setInputIsDisabled(!inputIsDisabled);
     setTimeout(() => inputRef.current.focus(), 0);
   };
+
   const onBlur = (e) => {
     setInputIsDisabled(!inputIsDisabled);
     onFormBlur(e);
@@ -57,6 +59,7 @@ export const Profile = () => {
     return store.authReducer.user;
   });
 
+  //Update form state with pathced data from backend
   useEffect(
     function profileUpdatedEffect() {
       setFormState({
@@ -83,6 +86,7 @@ export const Profile = () => {
     setRenderButtons(false);
   }
 
+  //Restore form state using data from backend
   function onAbortClick(e) {
     setFormState({
       emailValue: userData.email,
@@ -92,6 +96,7 @@ export const Profile = () => {
     setRenderButtons(false);
   }
 
+  //Hide "save" and "cancel" buttons on form blur if neither of inputs changed
   function onFormBlur(e) {
     if (
       formState.emailValue === userData.email &&
