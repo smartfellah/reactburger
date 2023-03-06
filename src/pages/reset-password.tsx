@@ -6,18 +6,22 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+//React
+import { SyntheticEvent } from "react";
+
 //Router
 import { Link, Navigate, useNavigate, useLocation } from "react-router-dom";
 
 //Redux
 import { useDispatch } from "react-redux";
 import { sendResetPasswordRequest } from "../services/actions/auth-actions";
+import { Dispatch } from "redux";
 
 //Hooks
 import { useForm } from "../hooks/useForm";
 
 export const ResetPassword = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<any>>();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,7 +30,7 @@ export const ResetPassword = () => {
     codeValue: "",
   });
 
-  function onSaveClick(e) {
+  function onSaveClick(e: SyntheticEvent): void {
     e.preventDefault();
     dispatch(
       sendResetPasswordRequest(
