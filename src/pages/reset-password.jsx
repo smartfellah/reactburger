@@ -6,33 +6,35 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-//React
-import { useState } from "react";
-
 //Router
 import { Link, Navigate, useNavigate, useLocation } from "react-router-dom";
+
+//Redux
 import { useDispatch } from "react-redux";
 import { sendResetPasswordRequest } from "../services/actions/auth-actions";
+
+//Hooks
+import { useForm } from "../hooks/useForm";
 
 export const ResetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [passwordValue, setPasswordValue] = useState("");
-  const [codeValue, setCodeValue] = useState("");
-
-  const onPasswordChange = (e) => {
-    setPasswordValue(e.target.value);
-  };
-
-  const onCodeChange = (e) => {
-    setCodeValue(e.target.value);
-  };
+  const { formState, handleFormChange } = useForm({
+    passwordValue: "",
+    codeValue: "",
+  });
 
   function onSaveClick(e) {
     e.preventDefault();
-    dispatch(sendResetPasswordRequest(codeValue, passwordValue, navigate));
+    dispatch(
+      sendResetPasswordRequest(
+        formState.codeValue,
+        formState.passwordValue,
+        navigate
+      )
+    );
   }
 
   return location?.state?.fromForgot ? (
@@ -44,17 +46,17 @@ export const ResetPassword = () => {
           </h2>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <PasswordInput
-              onChange={onPasswordChange}
-              value={passwordValue}
-              name={"password"}
+              onChange={handleFormChange}
+              value={formState.passwordValue}
+              name={"passwordValue"}
               placeholder={"Введите новый пароль"}
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <Input
-              onChange={onCodeChange}
-              value={codeValue}
-              name={"code"}
+              onChange={handleFormChange}
+              value={formState.codeValue}
+              name={"codeValue"}
               placeholder={"Введите код из письма"}
             />
           </div>
