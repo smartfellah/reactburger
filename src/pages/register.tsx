@@ -9,10 +9,13 @@ import {
 
 //Redux
 import { useDispatch } from "react-redux";
-import * as authActions from "../services/actions/auth-actions";
+import { Dispatch } from "redux";
+import { sendRegisterRequest } from "../services/actions/auth-actions";
 
 //Router
 import { Link } from "react-router-dom";
+
+//Hooks
 import { useForm } from "../hooks/useForm";
 
 export const RegisterPage = () => {
@@ -22,16 +25,15 @@ export const RegisterPage = () => {
     passwordValue: "",
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<any>>();
 
-  const requestData = {
-    email: formState.emailValue,
-    password: formState.passwordValue,
-    name: formState.nameValue,
-  };
-
-  function onRegisterClickHandler(e) {
-    dispatch(authActions.sendRegisterRequest(requestData));
+  function onRegisterClickHandler(): void {
+    const requestData = {
+      email: formState.emailValue,
+      password: formState.passwordValue,
+      name: formState.nameValue,
+    };
+    dispatch(sendRegisterRequest(requestData));
   }
 
   return (
