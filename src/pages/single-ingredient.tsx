@@ -1,19 +1,31 @@
+//Redux
 import { useSelector } from "react-redux";
+
+//Router
 import { useLocation, useParams } from "react-router-dom";
+
+//Components
 import { HomePage } from "./home";
 
+//UI
 import styles from "./page-styles/single-ingredient.module.css";
+
+//Types
+import {
+  TIngredientsData,
+  TSingleIngredient,
+} from "../components/burger-ingredients/types";
 
 export function SingleIngredient() {
   const location = useLocation();
 
-  const ingredientsData = useSelector((store) => {
+  const ingredientsData: TIngredientsData = useSelector((store: any) => {
     return [...store.ingredientsReducer.data];
   });
 
   const { id } = useParams();
 
-  const details = ingredientsData.filter((element) => {
+  const details: TSingleIngredient = ingredientsData.filter((element) => {
     return element._id === id;
   })[0];
 
