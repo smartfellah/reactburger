@@ -254,7 +254,7 @@ export function sendGetUserRequest(navigate) {
 
       dispatch(getUserRequestAction("success", response.user));
     } catch (error) {
-      if (error === 403)
+      if (error === 403 || 401)
         refreshAccessAndContinue(dispatch, sendPatchUserRequest, navigate);
       dispatch(getUserRequestAction("error"));
     }
