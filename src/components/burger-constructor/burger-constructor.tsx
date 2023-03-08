@@ -1,4 +1,13 @@
-import { useMemo } from "react";
+//Types
+import {
+  TConstructorIngredient,
+  TConstructorData,
+  TRequestData,
+  TDroppedItem,
+} from "./types";
+
+//React
+import { useMemo, FC } from "react";
 
 //UI elements
 import {
@@ -10,6 +19,7 @@ import {
 //Components
 import { OrderDetails } from "../order-details/order-details";
 import { Modal } from "../modal/modal";
+import { Topping } from "./topping/topping";
 
 //Styles
 import burgerConstructorStyles from "./burger-constructor.module.css";
@@ -22,50 +32,55 @@ import {
   SEND_ORDER_ERROR,
   SHOW_ORDER_DETAILS,
 } from "../../services/actions/order-actions";
-import { useDrop } from "react-dnd/dist/hooks";
 import {
   addIngredient,
   CLEAR_CONSTRUCTOR,
 } from "../../services/actions/constructor-actions";
+import { Dispatch } from "redux";
+
+//DND
+import { useDrop } from "react-dnd/dist/hooks";
 
 //Router
 import { useNavigate } from "react-router";
 
-import { Topping } from "./topping/topping";
-
-export const BurgerConstructor = () => {
+export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<any>>();
 
-  const onDropHandler = (item) => {
+  const onDropHandler = (item: TDroppedItem) => {
     dispatch(addIngredient(item, crypto.randomUUID()));
   };
   const [, dropRef] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    drop(item: TDroppedItem) {
       onDropHandler(item);
     },
   });
 
-  const constructorIngredients = useSelector(
-    (store) => store.constructorReducer.data
+  const constructorIngredients: TConstructorData = useSelector(
+    (store: any) => store.constructorReducer.data
   );
-  const constructorBun = useSelector((store) => store.constructorReducer.bun);
-  const totalCost =
+  const constructorBun: TConstructorIngredient = useSelector(
+    (store: any) => store.constructorReducer.bun
+  );
+  const totalCost: number =
     (constructorIngredients[0]
       ? [...constructorIngredients].reduce((acc, elem) => {
           return acc + elem.price;
         }, 0)
       : 0) + (constructorBun.price ? constructorBun.price * 2 : 0);
-  const showOrder = useSelector((store) => store.orderReducer.isShown);
+  const showOrder: boolean = useSelector(
+    (store: any) => store.orderReducer.isShown
+  );
 
-  const isAuth = useSelector((store) =>
+  const isAuth: boolean = useSelector((store: any) =>
     store.authReducer.user ? true : false
   );
 
-  const onOrderClick = () => {
+  const onOrderClick = (): void => {
     if (isAuth) {
-      let dataToSend = [];
+      let dataToSend: TRequestData = [];
 
       constructorBun._id && dataToSend.push(constructorBun._id);
       dataToSend = dataToSend.concat(
@@ -87,7 +102,7 @@ export const BurgerConstructor = () => {
     } else navigate("/login", { replace: true });
   };
 
-  const hideDetails = () => {
+  const hideDetails = (): void => {
     dispatch({
       type: HIDE_ORDER_DETAILS,
     });
@@ -146,7 +161,7 @@ export const BurgerConstructor = () => {
         <section className={`${burgerConstructorStyles.OrderSection}`}>
           <div className={`${burgerConstructorStyles.TotalPrice}`}>
             <p className="text text_type_digits-medium">{totalCost}</p>
-            <CurrencyIcon />
+            <CurrencyIcon type="primary" />
           </div>
           <Button
             onClick={onOrderClick}

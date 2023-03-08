@@ -9,40 +9,31 @@ import {
 
 //Redux
 import { useDispatch } from "react-redux";
-import * as authActions from "../services/actions/auth-actions";
-
-//React
-import { useState } from "react";
+import { Dispatch } from "redux";
+import { sendRegisterRequest } from "../services/actions/auth-actions";
 
 //Router
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+//Hooks
+import { useForm } from "../hooks/useForm";
 
 export const RegisterPage = () => {
-  const navigate = useNavigate();
-  const [nameValue, setNameValue] = useState("");
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const { formState, handleFormChange } = useForm({
+    nameValue: "",
+    emailValue: "",
+    passwordValue: "",
+  });
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<any>>();
 
-  const requestData = {
-    email: emailValue,
-    password: passwordValue,
-    name: nameValue,
-  };
-
-  const onNameChange = (e) => {
-    setNameValue(e.target.value);
-  };
-  const onEmailChange = (e) => {
-    setEmailValue(e.target.value);
-  };
-  const onPasswordChange = (e) => {
-    setPasswordValue(e.target.value);
-  };
-
-  function onRegisterClickHandler(e) {
-    dispatch(authActions.sendRegisterRequest(requestData));
+  function onRegisterClickHandler(): void {
+    const requestData = {
+      email: formState.emailValue,
+      password: formState.passwordValue,
+      name: formState.nameValue,
+    };
+    dispatch(sendRegisterRequest(requestData));
   }
 
   return (
@@ -52,25 +43,25 @@ export const RegisterPage = () => {
           <h2 className={`text text_type_main-medium`}>Регистраця</h2>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <Input
-              onChange={onNameChange}
-              value={nameValue}
-              name={"name"}
+              onChange={handleFormChange}
+              value={formState.nameValue}
+              name={"nameValue"}
               placeholder="Имя"
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <EmailInput
-              onChange={onEmailChange}
-              value={emailValue}
-              name={"email"}
+              onChange={handleFormChange}
+              value={formState.emailValue}
+              name={"emailValue"}
               isIcon={false}
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <PasswordInput
-              onChange={onPasswordChange}
-              value={passwordValue}
-              name={"password"}
+              onChange={handleFormChange}
+              value={formState.passwordValue}
+              name={"passwordValue"}
             />
           </div>
           <Button

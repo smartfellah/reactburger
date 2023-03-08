@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 //UI
 import styles from "./page-styles/forgot-password.module.css";
 import {
@@ -12,22 +10,22 @@ import { Link, useNavigate } from "react-router-dom";
 
 //Redux
 import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
 
 //Actions
 import { sendForgotPasswordRequest } from "../services/actions/auth-actions";
 
+//Hooks
+import { useForm } from "../hooks/useForm";
+
 export const ForgotPassword = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<any>>();
   const navigate = useNavigate();
 
-  const [emailValue, setEmailValue] = useState("");
+  const { formState, handleFormChange } = useForm({ emailValue: "" });
 
-  const onEmailChange = (e) => {
-    setEmailValue(e.target.value);
-  };
-
-  const onRestoreClick = (e) => {
-    dispatch(sendForgotPasswordRequest(emailValue, navigate));
+  const onRestoreClick = (): void => {
+    dispatch(sendForgotPasswordRequest(formState.emailValue, navigate));
   };
 
   return (
@@ -39,9 +37,9 @@ export const ForgotPassword = () => {
           </h2>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <EmailInput
-              onChange={onEmailChange}
-              value={emailValue}
-              name={"email"}
+              onChange={handleFormChange}
+              value={formState.emailValue}
+              name={"emailValue"}
               placeholder={"Укажите e-mail"}
               isIcon={false}
             />

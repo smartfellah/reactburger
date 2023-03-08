@@ -1,6 +1,3 @@
-//React
-import { useState } from "react";
-
 //Router
 import { Link } from "react-router-dom";
 
@@ -11,26 +8,27 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./page-styles/login.module.css";
+
+//Redux
 import { useDispatch } from "react-redux";
 import { sendLoginRequest } from "../services/actions/auth-actions";
+import { Dispatch } from "redux";
+
+//Hooks
+import { useForm } from "../hooks/useForm";
 
 export const LoginPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<any>>();
 
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const { formState, handleFormChange } = useForm({
+    emailValue: "",
+    passwordValue: "",
+  });
 
-  const onEmailChange = (e) => {
-    setEmailValue(e.target.value);
-  };
-  const onPasswordChange = (e) => {
-    setPasswordValue(e.target.value);
-  };
-
-  function onLoginClick(e) {
+  function onLoginClick(): void {
     const requestBody = {
-      email: emailValue,
-      password: passwordValue,
+      email: formState.emailValue,
+      password: formState.passwordValue,
     };
     dispatch(sendLoginRequest(requestBody));
   }
@@ -42,17 +40,17 @@ export const LoginPage = () => {
           <h2 className={`text text_type_main-medium`}>Вход</h2>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <EmailInput
-              onChange={onEmailChange}
-              value={emailValue}
-              name={"email"}
+              onChange={handleFormChange}
+              value={formState.emailValue}
+              name={"emailValue"}
               isIcon={false}
             />
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <PasswordInput
-              onChange={onPasswordChange}
-              value={passwordValue}
-              name={"password"}
+              onChange={handleFormChange}
+              value={formState.passwordValue}
+              name={"passwordValue"}
             />
           </div>
           <Button

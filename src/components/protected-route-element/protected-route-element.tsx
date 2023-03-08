@@ -1,14 +1,26 @@
+//Redux
 import { useSelector } from "react-redux";
-import { Navigate, useLocation } from "react-router-dom";
-import { ProtectedRouteLoader } from "./protected-route-loader";
-import { PropTypes } from "prop-types";
 
-export function ProtectedRouteElement({ element, unAuthOnly = false }) {
+//Router
+import { Navigate, useLocation } from "react-router-dom";
+
+//Components
+import { ProtectedRouteLoader } from "./protected-route-loader";
+
+//Types
+import { ProtectedRouteProps } from "./types";
+
+export function ProtectedRouteElement({
+  element,
+  unAuthOnly = false,
+}: ProtectedRouteProps): JSX.Element {
   const location = useLocation();
-  const authChecked = useSelector((store) => {
+
+  const authChecked: boolean = useSelector((store: any) => {
     return store.authReducer.authChecked;
   });
-  const isUser = useSelector((store) => {
+
+  const isUser: boolean = useSelector((store: any) => {
     return store.authReducer.user ? true : false;
   });
 
@@ -31,8 +43,3 @@ export function ProtectedRouteElement({ element, unAuthOnly = false }) {
 
   return element;
 }
-
-ProtectedRouteElement.propTypes = {
-  element: PropTypes.element,
-  unAuthOnly: PropTypes.bool,
-};

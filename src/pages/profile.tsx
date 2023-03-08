@@ -8,83 +8,82 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //React
-import React, { useEffect } from "react";
+import React, { SyntheticEvent, useEffect } from "react";
 import { useState } from "react";
 
 //Router
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+
+//Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
   sendLogoutRequest,
   sendPatchUserRequest,
 } from "../services/actions/auth-actions";
+import { Dispatch } from "redux";
+
+//Hooks
+import { useForm } from "../hooks/useForm";
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<any>>();
   const location = useLocation();
+
+  const { formState, handleFormChange, setFormState } = useForm({
+    nameValue: localStorage.getItem("name") || "Name",
+    emailValue: localStorage.getItem("email") || "name@email.com",
+    passwordValue: "",
+  });
 
   const [renderButtons, setRenderButtons] = useState(false);
   const [inputIsDisabled, setInputIsDisabled] = useState(true);
 
-  const [nameValue, setNameValue] = useState(
-    localStorage.getItem("name") ? localStorage.getItem("name") : "Name"
-  );
-  const [emailValue, setEmailValue] = useState(
-    localStorage.getItem("email")
-      ? localStorage.getItem("email")
-      : "name@email.com"
-  );
-  const [passwordValue, setPasswordValue] = useState("");
+  function onFormChange(e: SyntheticEvent): void {
+    handleFormChange(e);
+    setRenderButtons(true);
+  }
 
-  const onNameChange = (e) => {
-    setNameValue(e.target.value);
-    setRenderButtons(true);
-  };
-  const onEmailChange = (e) => {
-    setEmailValue(e.target.value);
-    setRenderButtons(true);
-  };
-  const onPasswordChange = (e) => {
-    setPasswordValue(e.target.value);
-    setRenderButtons(true);
-  };
-
-  const inputRef = React.useRef(null);
-  const onIconClick = () => {
+  //Enable input and focus on it when "edit" icon is clicked
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const onIconClick = (): void => {
     setInputIsDisabled(!inputIsDisabled);
-    setTimeout(() => inputRef.current.focus(), 0);
-  };
-  const onBlur = (e) => {
-    setInputIsDisabled(!inputIsDisabled);
-    onFormBlur(e);
+    setTimeout(() => inputRef.current!.focus(), 0);
   };
 
-  function onLogoutClick(e) {
+  const onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
+    setInputIsDisabled(!inputIsDisabled);
+    onFormBlur();
+  };
+
+  function onLogoutClick(): void {
     dispatch(sendLogoutRequest());
   }
 
-  const userData = useSelector(function profileUserSelector(store) {
+  const userData = useSelector(function profileUserSelector(store: any) {
     return store.authReducer.user;
   });
 
+  //Update form state with pathced data from backend
   useEffect(
     function profileUpdatedEffect() {
-      setEmailValue(userData ? userData.email : emailValue);
-      setNameValue(userData ? userData.name : nameValue);
-      setPasswordValue(userData ? "" : passwordValue);
+      setFormState({
+        emailValue: userData?.email || formState.emailValue,
+        nameValue: userData?.name || formState.nameValue,
+        passwordValue: userData ? "" : formState.passwordValue,
+      });
       setRenderButtons(false);
     },
     [userData]
   );
 
-  function onSubmitClick(e) {
+  function onSubmitClick(): void {
     dispatch(
       sendPatchUserRequest(
         {
-          name: nameValue,
-          email: emailValue,
-          password: passwordValue,
+          name: formState.nameValue,
+          email: formState.emailValue,
+          password: formState.passwordValue,
         },
         navigate
       )
@@ -92,18 +91,22 @@ export const Profile = () => {
     setRenderButtons(false);
   }
 
-  function onAbortClick(e) {
-    setEmailValue(userData.email);
-    setNameValue(userData.name);
-    setPasswordValue("");
+  //Restore form state using data from backend
+  function onAbortClick(): void {
+    setFormState({
+      emailValue: userData.email,
+      nameValue: userData.name,
+      passwordValue: "",
+    });
     setRenderButtons(false);
   }
 
-  function onFormBlur(e) {
+  //Hide "save" and "cancel" buttons on form blur if neither of inputs changed
+  function onFormBlur(): void {
     if (
-      emailValue === userData.email &&
-      nameValue === userData.name &&
-      passwordValue === ""
+      formState.emailValue === userData.email &&
+      formState.nameValue === userData.name &&
+      formState.passwordValue === ""
     ) {
       setRenderButtons(false);
     } else setRenderButtons(true);
@@ -160,31 +163,31 @@ export const Profile = () => {
             <div style={{ display: "flex", flexDirection: "column" }}>
               <Input
                 type="text"
-                onChange={onNameChange}
+                onChange={onFormChange}
                 icon={inputIsDisabled ? "EditIcon" : "CloseIcon"}
                 disabled={inputIsDisabled}
                 onIconClick={onIconClick}
                 onBlur={onBlur}
-                value={nameValue}
-                name={"name"}
+                value={formState.nameValue}
+                name={"nameValue"}
                 placeholder="Имя"
                 ref={inputRef}
               />
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <EmailInput
-                onChange={onEmailChange}
-                value={emailValue}
-                name={"email"}
+                onChange={onFormChange}
+                value={formState.emailValue}
+                name={"emailValue"}
                 isIcon={true}
                 onBlur={onFormBlur}
               />
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <PasswordInput
-                onChange={onPasswordChange}
-                value={passwordValue}
-                name={"password"}
+                onChange={onFormChange}
+                value={formState.passwordValue}
+                name={"passwordValue"}
                 icon={"EditIcon"}
                 onBlur={onFormBlur}
               />

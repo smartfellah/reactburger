@@ -1,3 +1,4 @@
+//UI
 import headerStyles from "./app-header.module.css";
 import {
   BurgerIcon,
@@ -6,9 +7,12 @@ import {
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+//React
+import { FC } from "react";
+
 import { NavLink } from "react-router-dom";
 
-export const AppHeader = () => {
+export const AppHeader: FC = () => {
   return (
     <header className={`${headerStyles.Header}`}>
       <nav className={`${headerStyles.NavBar} `}>
@@ -51,7 +55,7 @@ export const AppHeader = () => {
           </NavLink>
         </menu>
         <div className={`${headerStyles.LogoBox}`}>
-          <Logo className={`${headerStyles["LogoBox-Item"]}`}></Logo>
+          <Logo />
         </div>
         <div className={`${headerStyles.ProfileBox}`}>
           <NavLink

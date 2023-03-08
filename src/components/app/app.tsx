@@ -1,12 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 //React-Router
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 //Pages
 import * as Pages from "../../pages";
@@ -18,16 +13,17 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 //Redux
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { getAllIngredients } from "../../services/actions/ingredients-actions";
+import { checkUserAuth } from "../../services/actions/auth-actions";
+import { Dispatch } from "redux";
 
 //Components
 import { AppHeader } from "../app-header/app-header";
 
 import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
-import { checkUserAuth } from "../../services/actions/auth-actions";
 
 function App() {
-  const dispatch = useDispatch();
-  const { hasError, isLoading } = useSelector((store) => {
+  const dispatch = useDispatch<Dispatch<any>>();
+  const { hasError, isLoading } = useSelector((store: any) => {
     return store.ingredientsReducer;
   });
 
