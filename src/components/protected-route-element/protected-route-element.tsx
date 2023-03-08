@@ -13,7 +13,7 @@ import { ProtectedRouteProps } from "./types";
 export function ProtectedRouteElement({
   element,
   unAuthOnly = false,
-}: ProtectedRouteProps) {
+}: ProtectedRouteProps): JSX.Element {
   const location = useLocation();
 
   const authChecked: boolean = useSelector((store: any) => {

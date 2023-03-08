@@ -1,4 +1,4 @@
 export type ProtectedRouteProps = {
-  element: HTMLElement;
-  unAuthOnly: boolean;
+  element: JSX.Element;
+  unAuthOnly?: boolean;
 };
