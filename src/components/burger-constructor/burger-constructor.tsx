@@ -48,12 +48,12 @@ export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<Dispatch<any>>();
 
-  const onDropHandler = (item: TDroppedItem) => {
+  const onDropHandler = (item: TConstructorIngredient) => {
     dispatch(addIngredient(item, crypto.randomUUID()));
   };
   const [, dropRef] = useDrop({
     accept: "ingredient",
-    drop(item: TDroppedItem) {
+    drop(item: TConstructorIngredient) {
       onDropHandler(item);
     },
   });
