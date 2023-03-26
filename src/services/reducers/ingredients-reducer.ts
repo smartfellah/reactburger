@@ -1,8 +1,17 @@
+//Actions
+import { TIngredientsData } from "../../components/burger-ingredients/types";
 import {
   GET_ALL_INGREDIENTS_REQUEST,
   GET_ALL_INGREDIENTS_ERROR,
   GET_ALL_INGREDIENTS_SUCCESS,
+  TGetAllIngredientsActions,
 } from "../actions/ingredients-actions";
+
+export type TIngredientsReducerInitialState = {
+  data: TIngredientsData | {};
+  hasError: boolean;
+  isLoading: boolean;
+};
 
 const initialState = {
   data: [],
@@ -10,7 +19,10 @@ const initialState = {
   isLoading: false,
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+  state = initialState,
+  action: TGetAllIngredientsActions
+) => {
   switch (action.type) {
     case GET_ALL_INGREDIENTS_REQUEST:
       return {
@@ -21,7 +33,7 @@ export const ingredientsReducer = (state = initialState, action) => {
     case GET_ALL_INGREDIENTS_SUCCESS:
       return {
         ...state,
-        data: [...action.payload.data],
+        data: [...action.payload],
         hasError: false,
         isLoading: false,
       };
