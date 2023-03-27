@@ -1,34 +1,57 @@
 import {
-  forgotPasswordRequestAction,
-  getUserRequestAction,
-  loginRequestAction,
-  logoutRequestAction,
-  patchUserRequestAction,
-  registerRequestAction,
-  resetPasswordRequestAction,
+  LOGIN_ERROR,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGOUT_ERROR,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  REGISTER_ERROR,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  PATCH_USER_ERROR,
+  PATCH_USER_REQUEST,
+  PATCH_USER_SUCCESS,
+  GET_USER_ERROR,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  FORGOT_PASSWORD_ERROR,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  RESET_PASSWORD_ERROR,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  TUserInfo,
+  TAuthActions,
 } from "../actions/auth-actions";
 
-const initialState = {
+type TAuthReducerInitialState = {
+  user: TUserInfo | null;
+  requestPending: boolean;
+  requestError: boolean;
+  authChecked: boolean;
+};
+
+const initialState: TAuthReducerInitialState = {
   user: null,
   requestPending: false,
   requestError: false,
   authChecked: false,
 };
 
-export function authReducer(state = initialState, action) {
+export function authReducer(state = initialState, action: TAuthActions) {
   switch (action.type) {
-    case registerRequestAction("request").type:
+    case REGISTER_REQUEST:
       return {
         ...state,
         requestPending: true,
       };
-    case registerRequestAction("error").type:
+    case REGISTER_ERROR:
       return {
         ...state,
         requestError: true,
         requestPending: false,
       };
-    case registerRequestAction("success").type:
+    case REGISTER_SUCCESS:
       return {
         ...state,
         user: action.payload,
@@ -36,18 +59,18 @@ export function authReducer(state = initialState, action) {
         requestPending: false,
       };
 
-    case loginRequestAction("request").type:
+    case LOGIN_REQUEST:
       return {
         ...state,
         requestPending: true,
       };
-    case loginRequestAction("error").type:
+    case LOGIN_ERROR:
       return {
         ...state,
         requestPending: false,
         requestError: true,
       };
-    case loginRequestAction("success").type:
+    case LOGIN_SUCCESS:
       return {
         ...state,
         requestPending: false,
@@ -55,18 +78,18 @@ export function authReducer(state = initialState, action) {
         user: action.payload,
       };
 
-    case logoutRequestAction("request").type:
+    case LOGOUT_REQUEST:
       return {
         ...state,
         requestPending: true,
       };
-    case logoutRequestAction("error").type:
+    case LOGOUT_ERROR:
       return {
         ...state,
         requestPending: false,
         requestError: true,
       };
-    case logoutRequestAction("success").type:
+    case LOGOUT_SUCCESS:
       return {
         ...state,
         user: null,
@@ -74,19 +97,19 @@ export function authReducer(state = initialState, action) {
         requestError: false,
       };
 
-    case getUserRequestAction("request").type:
+    case GET_USER_REQUEST:
       return {
         ...state,
         requestPending: true,
       };
-    case getUserRequestAction("error").type:
+    case GET_USER_ERROR:
       return {
         ...state,
         requestPending: false,
         requestError: true,
         authChecked: true,
       };
-    case getUserRequestAction("success").type:
+    case GET_USER_SUCCESS:
       return {
         ...state,
         user: { ...action.payload },
@@ -95,18 +118,18 @@ export function authReducer(state = initialState, action) {
         authChecked: true,
       };
 
-    case patchUserRequestAction("request").type:
+    case PATCH_USER_REQUEST:
       return {
         ...state,
         requestPending: true,
       };
-    case patchUserRequestAction("error").type:
+    case PATCH_USER_ERROR:
       return {
         ...state,
         requestPending: false,
         requestError: true,
       };
-    case patchUserRequestAction("success").type:
+    case PATCH_USER_SUCCESS:
       return {
         ...state,
         requestPending: false,
@@ -114,36 +137,36 @@ export function authReducer(state = initialState, action) {
         user: { ...action.payload },
       };
 
-    case forgotPasswordRequestAction("request").type:
+    case FORGOT_PASSWORD_REQUEST:
       return {
         ...state,
         requestPending: true,
       };
-    case forgotPasswordRequestAction("error").type:
+    case FORGOT_PASSWORD_ERROR:
       return {
         ...state,
         requestPending: false,
         requestError: true,
       };
-    case forgotPasswordRequestAction("success").type:
+    case FORGOT_PASSWORD_SUCCESS:
       return {
         ...state,
         requestPending: false,
         requestError: false,
       };
 
-    case resetPasswordRequestAction("request").type:
+    case RESET_PASSWORD_REQUEST:
       return {
         ...state,
         requestPending: true,
       };
-    case resetPasswordRequestAction("error").type:
+    case RESET_PASSWORD_ERROR:
       return {
         ...state,
         requestPending: false,
         requestError: true,
       };
-    case resetPasswordRequestAction("success").type:
+    case RESET_PASSWORD_SUCCESS:
       return {
         ...state,
         requestPending: false,
