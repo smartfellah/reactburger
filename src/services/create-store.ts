@@ -2,8 +2,6 @@ import { compose, createStore, applyMiddleware } from "redux";
 import { rootReducer } from "./reducers/root-reducer";
 import thunk from "redux-thunk";
 
-type TRootReducer = typeof rootReducer;
-
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
