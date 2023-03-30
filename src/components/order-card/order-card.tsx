@@ -40,6 +40,7 @@ export const OrderCard: FC<TOrderCardProps> = ({
                 <div
                   className={styles.imageContainer}
                   style={{ zIndex: posCounter - index }}
+                  key={index}
                 >
                   <img
                     className={`${
