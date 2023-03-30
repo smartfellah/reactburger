@@ -8,12 +8,12 @@ import {
 } from "../actions/ingredients-actions";
 
 export type TIngredientsReducerInitialState = {
-  data: TIngredientsData | {};
+  data: TIngredientsData | [];
   hasError: boolean;
   isLoading: boolean;
 };
 
-const initialState = {
+const initialState: TIngredientsReducerInitialState = {
   data: [],
   hasError: false,
   isLoading: false,
