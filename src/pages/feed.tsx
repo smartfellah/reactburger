@@ -5,7 +5,7 @@ export const Feed = () => {
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.leftColumn}>
-        <h1 className={styles.ordersList_Header}>Лента заказов</h1>
+        <h1 className="text text_type_main-medium">Лента заказов</h1>
         <div className={styles.ordersList_Container}></div>
       </div>
       <div className={styles.rightColumn}>

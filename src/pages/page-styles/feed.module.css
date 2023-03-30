@@ -1,0 +1,6 @@
+.pageWrapper {
+  display: flex;
+  gap: var(--l-1);
+  width: 1240px;
+  margin: auto;
+}
