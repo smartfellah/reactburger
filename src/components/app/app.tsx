@@ -92,6 +92,7 @@ function App() {
                 }
               />
               <Route path="*" element={<Pages.Page404 />} />
+              <Route path="/feed" element={<Pages.Feed />} />
             </Routes>
           </DndProvider>
         </Router>

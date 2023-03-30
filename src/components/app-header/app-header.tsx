@@ -35,7 +35,7 @@ export const AppHeader: FC = () => {
               );
             }}
           </NavLink>
-          <NavLink to="404" className={`${headerStyles["MenuBox-Item"]}`}>
+          <NavLink to="feed" className={`${headerStyles["MenuBox-Item"]}`}>
             {function ordersLinkContent({ isActive }) {
               return (
                 <>
