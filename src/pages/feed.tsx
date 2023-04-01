@@ -8,6 +8,15 @@ import { useSelector } from "../services/create-store";
 
 export const Feed = () => {
   const orders = useSelector((store) => store.feedReducer.orders);
+  const total = useSelector((store) => store.feedReducer.total);
+  const totalToday = useSelector((store) => store.feedReducer.totalToday);
+
+  const readyOrders = orders.filter((order) => {
+    return order.status === "done";
+  });
+  const processedOrders = orders.filter((order) => {
+    return order.status !== "done";
+  });
 
   return (
     <div className={styles.pageWrapper}>
@@ -35,21 +44,25 @@ export const Feed = () => {
             <div className={styles.ready}>
               <h3 className="text text_type_main-medium">Готовы:</h3>
               <div className={styles.numberContainer}>
-                <p className="text text_type_digits-default">123</p>
-                <p className="text text_type_digits-default">123</p>
-                <p className="text text_type_digits-default">123</p>
-                <p className="text text_type_digits-default">123</p>
-                <p className="text text_type_digits-default">123</p>
+                {readyOrders.map((order, index, ordres) => {
+                  return (
+                    <p className="text text_type_digits-default">
+                      {order.number}
+                    </p>
+                  );
+                })}
               </div>
             </div>
             <div className={styles.inProgress}>
               <h3 className="text text_type_main-medium">В работе:</h3>
               <div className={styles.numberContainer}>
-                <p className="text text_type_digits-default">123</p>
-                <p className="text text_type_digits-default">123</p>
-                <p className="text text_type_digits-default">123</p>
-                <p className="text text_type_digits-default">123</p>
-                <p className="text text_type_digits-default">123</p>
+                {processedOrders.map((order, index, ordres) => {
+                  return (
+                    <p className="text text_type_digits-default">
+                      {order.number}
+                    </p>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -57,13 +70,13 @@ export const Feed = () => {
             <h3 className="text text_type_main-medium">
               Выполнено за все время:
             </h3>
-            <p className="text text_type_digits-large">228</p>
+            <p className="text text_type_digits-large">{total}</p>
           </div>
           <div className={styles.todayTotal}>
             <h3 className="text text_type_main-medium">
               Выполнено за сегодня:
             </h3>
-            <p className="text text_type_digits-large">228</p>
+            <p className="text text_type_digits-large">{totalToday}</p>
           </div>
         </div>
       </div>

@@ -67,8 +67,24 @@
 
 .numberContainer {
   display: flex;
+  max-height: 180px;
   flex-direction: column;
+  flex-flow: wrap;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) var(--bg-secondary);
   gap: 8px;
+}
+.numberContainer::-webkit-scrollbar {
+  width: var(--s-2);
+  height: var(--s-1);
+  background-color: var(--bg-secondary);
+}
+.numberContainer::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+}
+.numberContainer::-webkit-scrollbar-corner {
+  background-color: var(--bg-secondary);
 }
 
 .ready .numberContainer {
