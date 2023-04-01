@@ -1,7 +1,7 @@
 import { createAction } from "@reduxjs/toolkit";
 import { TOrderType } from "./types";
 
-export const connect = createAction("FEED_CONNECT");
+export const connect = createAction<string>("FEED_CONNECT");
 export const disconnect = createAction("FEED_DISCONNECT");
 
 export const wsConnecting = createAction("FEED_WS_CONNECTING");
@@ -13,10 +13,10 @@ export const wsMessage = createAction<Array<TOrderType>, "FEED_WS_MESSAGE">(
 export const wsError = createAction<string, "FEED_WS_ERROR">("FEED_WS_ERROR");
 
 export type TwsActions =
-  | typeof connect
-  | typeof disconnect
-  | typeof wsConnecting
-  | typeof wsOpen
-  | typeof wsClose
-  | typeof wsMessage
-  | typeof wsError;
+  | ReturnType<typeof connect>
+  | ReturnType<typeof disconnect>
+  | ReturnType<typeof wsConnecting>
+  | ReturnType<typeof wsOpen>
+  | ReturnType<typeof wsClose>
+  | ReturnType<typeof wsMessage>
+  | ReturnType<typeof wsError>;

@@ -6,7 +6,7 @@ import { Middleware } from "redux";
 import { TRootState } from "../create-store";
 
 export type TWsActionTypes = {
-  wsConnect: ActionCreatorWithoutPayload;
+  wsConnect: ActionCreatorWithPayload<string>;
   wsDisconnect: ActionCreatorWithoutPayload;
 
   wsSendMessage?: ActionCreatorWithPayload<any>;

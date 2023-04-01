@@ -11,19 +11,24 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 //Redux
-import { useDispatch, useSelector } from "react-redux/es/exports";
 import { getAllIngredients } from "../../services/actions/ingredients-actions";
 import { checkUserAuth } from "../../services/actions/auth-actions";
-import { Dispatch } from "redux";
+import { store, useDispatch, useSelector } from "../../services/create-store";
 
 //Components
 import { AppHeader } from "../app-header/app-header";
 
 import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
+import { WebsocketStatus } from "../../services/feed/types";
+import {
+  connect as feedConnect,
+  disconnect as feedDisconnect,
+} from "../../services/feed/actions";
+import { feedURL } from "../../utils/endpoint";
 
 function App() {
-  const dispatch = useDispatch<Dispatch<any>>();
-  const { hasError, isLoading } = useSelector((store: any) => {
+  const dispatch = useDispatch();
+  const { hasError, isLoading } = useSelector((store) => {
     return store.ingredientsReducer;
   });
 
@@ -32,6 +37,19 @@ function App() {
     dispatch(getAllIngredients());
   }, [dispatch]);
 
+  const { data, status } = useSelector((store) => {
+    return store.feedReducer;
+  });
+  const isDisconnected = status !== WebsocketStatus.ONLINE;
+
+  const connect = () => {
+    dispatch(feedConnect(feedURL));
+  };
+  const disconnect = () => dispatch(feedDisconnect());
+
+  useEffect(() => {
+    connect();
+  }, []);
   return (
     <>
       {!hasError && !isLoading ? (
