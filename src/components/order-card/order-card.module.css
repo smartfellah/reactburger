@@ -6,8 +6,8 @@
   padding: 24px;
   gap: 24px;
 
-  width: 584px;
-  height: 214px;
+  min-width: 584px;
+  min-height: 214px;
 
   background: var(--bg-secondary);
 
