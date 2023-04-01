@@ -1,21 +1,47 @@
-import { compose, createStore, applyMiddleware } from "redux";
 import { rootReducer } from "./reducers/root-reducer";
-import thunk from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
+import {
+  wsConnecting,
+  wsClose,
+  wsError,
+  wsMessage,
+  wsOpen,
+  connect,
+  disconnect,
+} from "./feed/actions";
+import {
+  TypedUseSelectorHook,
+  useDispatch as dispatchHook,
+  useSelector as selectorHook,
+} from "react-redux";
 
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
+import {
+  TWsActionTypes,
+  createSocketMiddleware,
+} from "./feed/socket-middleware";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// const composeEnhancers =
-//   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-//     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-//     : compose;
+const wsActions: TWsActionTypes = {
+  wsConnect: connect,
+  wsDisconnect: disconnect,
+  wsConnecting: wsConnecting,
+  onOpen: wsOpen,
+  onClose: wsClose,
+  onError: wsError,
+  onMessage: wsMessage,
+};
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+export type TRootState = ReturnType<typeof rootReducer>;
 
-export const store = createStore(rootReducer, enhancer);
+const feedMiddleware = createSocketMiddleware(wsActions);
 
-export type TRootState = ReturnType<typeof store.getState>;
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(feedMiddleware);
+  },
+});
+
+export const useSelector: TypedUseSelectorHook<TRootState> = selectorHook;
+
+type TAppDispatch = typeof store.dispatch;
+export const useDispatch = () => dispatchHook<TAppDispatch>();
