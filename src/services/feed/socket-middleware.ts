@@ -4,6 +4,7 @@ import {
 } from "@reduxjs/toolkit";
 import { Middleware } from "redux";
 import { TRootState } from "../create-store";
+import { TOrderType } from "./types";
 
 export type TWsActionTypes = {
   wsConnect: ActionCreatorWithPayload<string>;
@@ -14,7 +15,14 @@ export type TWsActionTypes = {
   onOpen: ActionCreatorWithoutPayload;
   onClose: ActionCreatorWithoutPayload;
   onError: ActionCreatorWithPayload<string>;
-  onMessage: ActionCreatorWithPayload<any>;
+  onMessage: ActionCreatorWithPayload<TWSResponse>;
+};
+
+export type TWSResponse = {
+  success: boolean;
+  orders: Array<TOrderType>;
+  total: number;
+  totalToday: number;
 };
 
 export const createSocketMiddleware = (
@@ -52,7 +60,7 @@ export const createSocketMiddleware = (
 
         socket.onmessage = (event) => {
           const { data } = event;
-          const parsedData = JSON.parse(data);
+          const parsedData: TWSResponse = JSON.parse(data);
           dispatch(onMessage(parsedData));
         };
 

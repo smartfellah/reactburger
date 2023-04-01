@@ -1,5 +1,12 @@
 import { FC } from "react";
-import { TIngredientsData } from "../burger-ingredients/types";
+import {
+  TIngredientsData,
+  TSingleIngredient,
+} from "../burger-ingredients/types";
+
+//Redux
+import { useSelector } from "../../services/create-store";
+
 import {
   CurrencyIcon,
   FormattedDate,
@@ -7,9 +14,9 @@ import {
 import styles from "./order-card.module.css";
 
 type TOrderCardProps = {
-  id: string;
+  id: number;
   title: string;
-  ingredientsList: TIngredientsData;
+  ingredientsList: Array<string>;
   totalPrice: number;
   date: string;
 };
@@ -21,6 +28,20 @@ export const OrderCard: FC<TOrderCardProps> = ({
   totalPrice,
   date,
 }) => {
+  const ingredientsCatalog = useSelector((store) => {
+    return store.ingredientsReducer.data;
+  });
+  const ingredientsDataList = ingredientsCatalog.filter((ingredient) => {
+    return ingredientsList.includes(ingredient._id);
+  });
+  const cost = ingredientsDataList.reduce(
+    (acc: number, curr: TSingleIngredient, index) => {
+      if (!index) return acc + curr.price * 2;
+      return acc + curr.price;
+    },
+    0
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.firstRow}>
@@ -33,7 +54,7 @@ export const OrderCard: FC<TOrderCardProps> = ({
       <h3 className="text text_type_main-medium">{title}</h3>
       <div className={styles.thirdRow}>
         <div className={styles.imagesList}>
-          {ingredientsList.map((ingredient, index, array) => {
+          {ingredientsDataList.map((ingredient, index, array) => {
             let posCounter = array.length;
             if (index <= 5)
               return (
@@ -64,7 +85,7 @@ export const OrderCard: FC<TOrderCardProps> = ({
           })}
         </div>
         <div className={styles.totalPrice}>
-          <p className="text text_type_digits-default">{totalPrice}</p>
+          <p className="text text_type_digits-default">{cost}</p>
           <CurrencyIcon type="primary" />
         </div>
       </div>

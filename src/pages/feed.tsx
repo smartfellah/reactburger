@@ -1,13 +1,14 @@
 //UI
 import styles from "./page-styles/feed.module.css";
 import { OrderCard } from "../components/order-card/order-card";
-import { useSelector } from "react-redux";
 import { TRootState } from "../services/create-store";
 
+//Redux
+import { useSelector } from "../services/create-store";
+
 export const Feed = () => {
-  const TESTingredients = useSelector((store: TRootState) =>
-    [...store.ingredientsReducer.data].slice(0, 9)
-  );
+  const orders = useSelector((store) => store.feedReducer.orders);
+  debugger;
 
   return (
     <div className={styles.pageWrapper}>
@@ -17,41 +18,18 @@ export const Feed = () => {
       <div className={styles.columnsWrapper}>
         <div className={styles.leftColumn}>
           <div className={styles.ordersList_container}>
-            <OrderCard
-              id="034535"
-              title="SomeBurger"
-              ingredientsList={TESTingredients}
-              totalPrice={1337}
-              date="2022-10-10T17:33:32.877Z"
-            ></OrderCard>
-            <OrderCard
-              id="034535"
-              title="SomeBurger"
-              ingredientsList={TESTingredients}
-              totalPrice={1337}
-              date="2022-10-10T17:33:32.877Z"
-            ></OrderCard>
-            <OrderCard
-              id="034535"
-              title="SomeBurger"
-              ingredientsList={TESTingredients}
-              totalPrice={1337}
-              date="2022-10-10T17:33:32.877Z"
-            ></OrderCard>
-            <OrderCard
-              id="034535"
-              title="SomeBurger"
-              ingredientsList={TESTingredients}
-              totalPrice={1337}
-              date="2022-10-10T17:33:32.877Z"
-            ></OrderCard>
-            <OrderCard
-              id="034535"
-              title="SomeBurger"
-              ingredientsList={TESTingredients}
-              totalPrice={1337}
-              date="2022-10-10T17:33:32.877Z"
-            ></OrderCard>
+            {orders.map((order) => {
+              return (
+                <OrderCard
+                  key={order._id}
+                  id={order.number}
+                  title={"SomeBurger"}
+                  ingredientsList={order.ingredients}
+                  date={order.createdAt}
+                  totalPrice={1337}
+                />
+              );
+            })}
           </div>
         </div>
         <div className={styles.rightColumn}>

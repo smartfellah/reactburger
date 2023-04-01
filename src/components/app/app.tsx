@@ -37,7 +37,7 @@ function App() {
     dispatch(getAllIngredients());
   }, [dispatch]);
 
-  const { data, status } = useSelector((store) => {
+  const { status } = useSelector((store) => {
     return store.feedReducer;
   });
   const isDisconnected = status !== WebsocketStatus.ONLINE;

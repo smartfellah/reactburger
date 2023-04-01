@@ -5,13 +5,17 @@ import { wsClose, wsConnecting, wsError, wsMessage, wsOpen } from "./actions";
 type TFeedStore = {
   status: WebsocketStatus;
   error: string;
-  data: Array<TOrderType>;
+  total: number;
+  totalToday: number;
+  orders: Array<TOrderType>;
 };
 
 const initialState: TFeedStore = {
   status: WebsocketStatus.OFFLINE,
   error: "",
-  data: [],
+  total: 0,
+  totalToday: 0,
+  orders: [],
 };
 
 export const feedReducer = createReducer(initialState, (builder) => {
@@ -30,6 +34,9 @@ export const feedReducer = createReducer(initialState, (builder) => {
       state.error = action.payload;
     })
     .addCase(wsMessage, (state, action) => {
-      state.data = action.payload;
+      state.error = "";
+      state.orders = action.payload.orders;
+      state.total = action.payload.total;
+      state.totalToday = action.payload.totalToday;
     });
 });
