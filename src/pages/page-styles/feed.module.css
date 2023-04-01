@@ -17,6 +17,7 @@
 .leftColumn {
   width: 100%;
   max-height: 664px;
+  padding-right: var(--s-4);
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: var(--text-secondary) var(--bg-secondary);
