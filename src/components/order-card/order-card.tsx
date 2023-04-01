@@ -17,7 +17,6 @@ type TOrderCardProps = {
   id: number;
   title: string;
   ingredientsList: Array<string>;
-  totalPrice: number;
   date: string;
 };
 
@@ -25,7 +24,6 @@ export const OrderCard: FC<TOrderCardProps> = ({
   id,
   title,
   ingredientsList,
-  totalPrice,
   date,
 }) => {
   const ingredientsCatalog = useSelector((store) => {

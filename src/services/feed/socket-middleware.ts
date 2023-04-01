@@ -23,6 +23,7 @@ export type TWSResponse = {
   orders: Array<TOrderType>;
   total: number;
   totalToday: number;
+  name: string;
 };
 
 export const createSocketMiddleware = (

@@ -8,7 +8,6 @@ import { useSelector } from "../services/create-store";
 
 export const Feed = () => {
   const orders = useSelector((store) => store.feedReducer.orders);
-  debugger;
 
   return (
     <div className={styles.pageWrapper}>
@@ -23,10 +22,9 @@ export const Feed = () => {
                 <OrderCard
                   key={order._id}
                   id={order.number}
-                  title={"SomeBurger"}
+                  title={order.name}
                   ingredientsList={order.ingredients}
                   date={order.createdAt}
-                  totalPrice={1337}
                 />
               );
             })}

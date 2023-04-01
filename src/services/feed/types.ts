@@ -11,4 +11,5 @@ export type TOrderType = {
   number: number;
   createdAt: string;
   updatedAt: string;
+  name: string;
 };
