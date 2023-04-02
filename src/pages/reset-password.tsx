@@ -13,15 +13,14 @@ import { SyntheticEvent } from "react";
 import { Link, Navigate, useNavigate, useLocation } from "react-router-dom";
 
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../services/create-store";
 import { sendResetPasswordRequest } from "../services/actions/auth-actions";
-import { Dispatch } from "redux";
 
 //Hooks
 import { useForm } from "../hooks/useForm";
 
 export const ResetPassword = () => {
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 

@@ -9,8 +9,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 
 //Redux
-import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
+import { useDispatch } from "../services/create-store";
 
 //Actions
 import { sendForgotPasswordRequest } from "../services/actions/auth-actions";
@@ -19,7 +18,7 @@ import { sendForgotPasswordRequest } from "../services/actions/auth-actions";
 import { useForm } from "../hooks/useForm";
 
 export const ForgotPassword = () => {
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { formState, handleFormChange } = useForm({ emailValue: "" });

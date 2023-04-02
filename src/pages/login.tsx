@@ -10,15 +10,14 @@ import {
 import styles from "./page-styles/login.module.css";
 
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../services/create-store";
 import { sendLoginRequest } from "../services/actions/auth-actions";
-import { Dispatch } from "redux";
 
 //Hooks
 import { useForm } from "../hooks/useForm";
 
 export const LoginPage = () => {
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch();
 
   const { formState, handleFormChange } = useForm({
     emailValue: "",

@@ -8,8 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //Redux
-import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
+import { useDispatch } from "../services/create-store";
 import { sendRegisterRequest } from "../services/actions/auth-actions";
 
 //Router
@@ -25,7 +24,7 @@ export const RegisterPage = () => {
     passwordValue: "",
   });
 
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch();
 
   function onRegisterClickHandler(): void {
     const requestData = {

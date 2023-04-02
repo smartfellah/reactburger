@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //React
-import React, { SyntheticEvent, useEffect } from "react";
+import React, { ChangeEvent, useEffect } from "react";
 import { useState } from "react";
 
 //Router
@@ -38,7 +38,7 @@ export const Profile = () => {
   const [renderButtons, setRenderButtons] = useState(false);
   const [inputIsDisabled, setInputIsDisabled] = useState(true);
 
-  function onFormChange(e: SyntheticEvent): void {
+  function onFormChange(e: ChangeEvent<HTMLInputElement>): void {
     handleFormChange(e);
     setRenderButtons(true);
   }
@@ -76,7 +76,7 @@ export const Profile = () => {
     [userData] // eslint-disable-line
   );
 
-  function onSubmitClick(): void {
+  function onclick(): void {
     dispatch(
       sendPatchUserRequest(
         {
@@ -204,7 +204,7 @@ export const Profile = () => {
                   Отмена
                 </Button>
                 <Button
-                  onClick={onSubmitClick}
+                  onClick={onclick}
                   htmlType="submit"
                   type="primary"
                   size="medium"
