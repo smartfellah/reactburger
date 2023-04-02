@@ -68,9 +68,9 @@ export const Feed = () => {
                 <Link
                   to={`${order.number}`}
                   state={{ backgroundLocation: location }}
+                  key={order._id}
                 >
                   <OrderCard
-                    key={order._id}
                     id={order.number}
                     title={order.name}
                     ingredientsList={order.ingredients}
@@ -89,7 +89,7 @@ export const Feed = () => {
               <div className={styles.numberContainer}>
                 {readyOrders?.map((order, index, ordres) => {
                   return (
-                    <p className="text text_type_digits-default">
+                    <p key={index} className="text text_type_digits-default">
                       {order.number}
                     </p>
                   );
@@ -101,7 +101,7 @@ export const Feed = () => {
               <div className={styles.numberContainer}>
                 {processedOrders?.map((order, index, ordres) => {
                   return (
-                    <p className="text text_type_digits-default">
+                    <p key={index} className="text text_type_digits-default">
                       {order.number}
                     </p>
                   );

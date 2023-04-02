@@ -58,9 +58,12 @@ export const Orders = () => {
     <div className={styles.ordersList}>
       {orders.map((order) => {
         return (
-          <Link to={`${order.number}`} state={{ backgroundLocation: location }}>
+          <Link
+            to={`${order.number}`}
+            state={{ backgroundLocation: location }}
+            key={order._id}
+          >
             <OrderCard
-              key={order._id}
               title={order.name}
               id={order.number}
               ingredientsList={order.ingredients}
