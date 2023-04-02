@@ -9,7 +9,10 @@ import { useSelector } from "../../services/create-store";
 import { OrderNumber } from "./types";
 
 export const OrderDetails = () => {
-  const orderNumber = useSelector((store) => store.orderReducer.data!.result);
+  const orderNumber = useSelector((store) => {
+    if (store.orderReducer.data) return store.orderReducer.data.number;
+    else return null;
+  });
   return (
     <article className={`${orderDetailsStyles.OrderDetails}`}>
       {orderNumber ? (

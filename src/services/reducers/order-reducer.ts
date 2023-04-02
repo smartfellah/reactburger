@@ -10,7 +10,7 @@ import {
 type TOrderReducerInitialState = {
   data: {
     name: string;
-    result: number;
+    number: number;
   } | null;
   isShown: boolean;
   isLoading: boolean;
@@ -24,7 +24,10 @@ const initialState: TOrderReducerInitialState = {
   hasError: false,
 };
 
-export const orderReducer = (state = initialState, action: TOrderActions) => {
+export const orderReducer = (
+  state = initialState,
+  action: TOrderActions
+): TOrderReducerInitialState => {
   switch (action.type) {
     case SEND_ORDER_REQUEST:
       return {

@@ -58,14 +58,14 @@ export const BurgerConstructor: FC = () => {
   const constructorBun = useSelector((store) => store.constructorReducer.bun);
 
   const totalCost: number =
-    (constructorIngredients![0]
-      ? [...constructorIngredients!].reduce((acc, elem) => {
+    (constructorIngredients[0]
+      ? [...constructorIngredients].reduce((acc, elem) => {
           return acc + elem.price;
         }, 0)
-      : 0) + (constructorBun!.price ? constructorBun!.price * 2 : 0);
-  const showOrder: boolean = useSelector((store) => store.orderReducer.isShown);
+      : 0) + (constructorBun ? constructorBun.price * 2 : 0);
+  const showOrder = useSelector((store) => store.orderReducer.isShown);
 
-  const isAuth: boolean = useSelector((store) =>
+  const isAuth: boolean = useSelector((store: any) =>
     store.authReducer.user ? true : false
   );
 
@@ -73,15 +73,16 @@ export const BurgerConstructor: FC = () => {
     if (isAuth) {
       let dataToSend: TRequestData = [];
 
-      constructorBun!._id && dataToSend.push(constructorBun!._id);
+      if (constructorBun) dataToSend.push(constructorBun._id);
       dataToSend = dataToSend.concat(
-        constructorIngredients!.map((elem) => {
+        constructorIngredients.map((elem) => {
           return elem["_id"];
         })
       );
-      constructorBun!._id && dataToSend.push(constructorBun!._id);
+      if (constructorBun)
+        constructorBun._id && dataToSend.push(constructorBun._id);
 
-      if (!constructorBun!._id) {
+      if (!constructorBun) {
         dispatch({ type: SEND_ORDER_ERROR });
         alert("В бургер нужно добавить булку");
       } else {
@@ -109,22 +110,24 @@ export const BurgerConstructor: FC = () => {
         ref={dropRef}
       >
         {/*-Top Bun Section-----------------------------------------------*/}
-        <section className={`${burgerConstructorStyles.Bun}`}>
-          {constructorBun!.name && (
-            <ConstructorElement
-              type={"top"}
-              text={constructorBun!.name + " (верх)"}
-              thumbnail={constructorBun!.image}
-              price={constructorBun!.price}
-              isLocked={true}
-            />
-          )}
-        </section>
+        {constructorBun ? (
+          <section className={`${burgerConstructorStyles.Bun}`}>
+            {constructorBun.name && (
+              <ConstructorElement
+                type={"top"}
+                text={constructorBun.name + " (верх)"}
+                thumbnail={constructorBun.image}
+                price={constructorBun.price}
+                isLocked={true}
+              />
+            )}
+          </section>
+        ) : null}
         {/*-Ingredients Section-------------------------------------------*/}
         <section className={`${burgerConstructorStyles.ConstructorList}`}>
           {useMemo(
             () =>
-              constructorIngredients!.map((ingredient, index) => {
+              constructorIngredients.map((ingredient, index) => {
                 return (
                   <Topping
                     position={index}
@@ -137,17 +140,19 @@ export const BurgerConstructor: FC = () => {
           )}
         </section>
         {/*-Bottom Bun Section--------------------------------------------*/}
-        <section className={`${burgerConstructorStyles.Bun}`}>
-          {constructorBun!.name && (
-            <ConstructorElement
-              text={constructorBun!.name + " (низ)"}
-              price={constructorBun!.price}
-              thumbnail={constructorBun!.image}
-              type={"bottom"}
-              isLocked={true}
-            />
-          )}
-        </section>
+        {constructorBun ? (
+          <section className={`${burgerConstructorStyles.Bun}`}>
+            {constructorBun.name && (
+              <ConstructorElement
+                text={constructorBun.name + " (низ)"}
+                price={constructorBun.price}
+                thumbnail={constructorBun.image}
+                type={"bottom"}
+                isLocked={true}
+              />
+            )}
+          </section>
+        ) : null}
         {/*-Order Section-----------------------------------------------*/}
         <section className={`${burgerConstructorStyles.OrderSection}`}>
           <div className={`${burgerConstructorStyles.TotalPrice}`}>

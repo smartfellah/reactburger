@@ -30,7 +30,7 @@ export type TSendOrderSuccessAction = {
   readonly type: typeof SEND_ORDER_SUCCESS;
   readonly payload: {
     name: string;
-    result: number;
+    number: number;
   };
 };
 

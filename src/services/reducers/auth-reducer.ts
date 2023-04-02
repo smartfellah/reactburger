@@ -22,7 +22,6 @@ import {
   resetPasswordRequest,
   resetPasswordSuccess,
   TUserInfo,
-  TAuthActions,
 } from "../actions/auth-actions";
 
 type TAuthReducerInitialState = {
