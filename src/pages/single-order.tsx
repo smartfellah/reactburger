@@ -24,6 +24,8 @@ type TSingleOrderResponse = {
 export const SingleOrder = () => {
   const [state, setState] = useState<TSingleOrder | null>(null);
 
+  const { number } = useParams();
+
   useEffect(() => {
     let response;
     (async () => {
@@ -37,7 +39,7 @@ export const SingleOrder = () => {
         console.log(error);
       }
     })();
-  }, []);
+  }, [number]);
 
   const ingredientsCatalog = useSelector((store) => {
     return store.ingredientsReducer.data;
@@ -55,7 +57,6 @@ export const SingleOrder = () => {
   );
 
   // const location = useLocation();
-  const { number } = useParams();
   return state ? (
     <div className={styles.pageWrapper}>
       <p className="text text_type_main-medium">#{state?.number}</p>
