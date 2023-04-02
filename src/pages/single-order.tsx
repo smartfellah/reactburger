@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { TOrderType } from "../services/feed/types";
 import { apiRequest, checkSuccess } from "../utils/api-request";
-import { TWSResponse } from "../services/feed/socket-middleware";
 import { dataURL } from "../utils/endpoint";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./page-styles/single-order.module.css";
 import { useSelector } from "../services/create-store";
 import { TSingleIngredient } from "../components/burger-ingredients/types";
