@@ -82,7 +82,9 @@ export const SingleOrder = () => {
         </h2>
         <div className={styles.ingredientsList}>
           {ingredientsDataList.map((ingredient, index) => {
-            let counter = 1;
+            const counter = state.ingredients.filter(
+              (id) => id === ingredient._id
+            ).length;
             return (
               <div className={styles.ingredientContainer} key={index}>
                 <div className={styles.imageContainer}>
@@ -95,7 +97,7 @@ export const SingleOrder = () => {
                 <p className="text text_type_main-default">{ingredient.name}</p>
                 <div className={styles.cost}>
                   <p className="text text_type_digits-default">
-                    {counter} x {cost}
+                    {counter} x {ingredient.price}
                   </p>
                   <CurrencyIcon type="primary" />
                 </div>
