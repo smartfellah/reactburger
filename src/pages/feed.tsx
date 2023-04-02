@@ -5,6 +5,8 @@ import { TRootState } from "../services/create-store";
 
 //Redux
 import { useSelector } from "../services/create-store";
+import { Link } from "react-router-dom";
+import { TOrderType } from "../services/feed/types";
 
 export const Feed = () => {
   const orders = useSelector((store) => store.feedReducer.orders);
@@ -28,14 +30,16 @@ export const Feed = () => {
           <div className={styles.ordersList_container}>
             {orders.map((order) => {
               return (
-                <OrderCard
-                  key={order._id}
-                  id={order.number}
-                  title={order.name}
-                  ingredientsList={order.ingredients}
-                  date={order.createdAt}
-                  status={order.status}
-                />
+                <Link to={`${order.number}`}>
+                  <OrderCard
+                    key={order._id}
+                    id={order.number}
+                    title={order.name}
+                    ingredientsList={order.ingredients}
+                    date={order.createdAt}
+                    status={order.status}
+                  />
+                </Link>
               );
             })}
           </div>

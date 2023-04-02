@@ -109,6 +109,7 @@ function App() {
               />
               <Route path="*" element={<Pages.Page404 />} />
               <Route path="/feed" element={<Pages.Feed />} />
+              <Route path="/feed/:number" element={<Pages.SingleOrder />} />
             </Routes>
           </DndProvider>
         </Router>

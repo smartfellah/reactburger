@@ -8,3 +8,4 @@ export { Profile } from "./profile";
 export { SingleIngredient } from "./single-ingredient";
 export { Feed } from "./feed";
 export { Orders } from "./orders";
+export { SingleOrder } from "./single-order";

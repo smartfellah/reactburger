@@ -2,6 +2,7 @@ import styles from "./page-styles/orders.module.css";
 
 import { useSelector } from "../services/create-store";
 import { OrderCard } from "../components/order-card/order-card";
+import { Link } from "react-router-dom";
 
 export const Orders = () => {
   const orders = useSelector((store) => {
@@ -11,14 +12,16 @@ export const Orders = () => {
     <div className={styles.ordersList}>
       {orders.map((order) => {
         return (
-          <OrderCard
-            key={order._id}
-            title={order.name}
-            id={order.number}
-            ingredientsList={order.ingredients}
-            date={order.createdAt}
-            status={order.status}
-          />
+          <Link to={order._id}>
+            <OrderCard
+              key={order._id}
+              title={order.name}
+              id={order.number}
+              ingredientsList={order.ingredients}
+              date={order.createdAt}
+              status={order.status}
+            />
+          </Link>
         );
       })}
     </div>
