@@ -1,9 +1,5 @@
 //Types
-import {
-  TConstructorIngredient,
-  TConstructorData,
-  TRequestData,
-} from "./types";
+import { TConstructorIngredient, TRequestData } from "./types";
 
 //React
 import { useMemo, FC } from "react";
