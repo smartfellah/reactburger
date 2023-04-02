@@ -1,5 +1,5 @@
 //Redux
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/create-store";
 
 //Router
 import { Navigate, useLocation } from "react-router-dom";
@@ -16,11 +16,11 @@ export function ProtectedRouteElement({
 }: ProtectedRouteProps): JSX.Element {
   const location = useLocation();
 
-  const authChecked: boolean = useSelector((store: any) => {
+  const authChecked: boolean = useSelector((store) => {
     return store.authReducer.authChecked;
   });
 
-  const isUser: boolean = useSelector((store: any) => {
+  const isUser: boolean = useSelector((store) => {
     return store.authReducer.user ? true : false;
   });
 

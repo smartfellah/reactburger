@@ -11,11 +11,10 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-type TSingleOrder = {
+export type TSingleOrder = {
   owner: string;
   __v: number;
 } & TOrderType;
-
 type TSingleOrderResponse = {
   orders: Array<TSingleOrder>;
   success: boolean;

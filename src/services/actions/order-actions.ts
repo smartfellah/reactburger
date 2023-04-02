@@ -7,6 +7,7 @@ import { apiRequest } from "../../utils/api-request";
 import { dataURL } from "../../utils/endpoint";
 import { getCookie } from "../../utils/cookie";
 import { AppThunk } from "./types";
+import { TSingleOrder } from "../../pages/single-order";
 
 export const SEND_ORDER_REQUEST: "SEND_ORDER_REQUEST" = "SEND_ORDER_REQUEST";
 export const SEND_ORDER_SUCCESS: "SEND_ORDER_SUCCESS" = "SEND_ORDER_SUCCESS";
@@ -45,13 +46,18 @@ export type TSendOrderActions =
 
 export type TOrderActions = TSendOrderActions | TOrderDetails;
 
+type TOrderResponse = {
+  name: string;
+  order: TSingleOrder;
+  success: boolean;
+};
 export const sendOrder: AppThunk =
   (ingredients: TRequestData) => async (dispatch: Dispatch) => {
     dispatch({
       type: SEND_ORDER_REQUEST,
     });
     try {
-      const response: any = await apiRequest(`${dataURL}/orders`, {
+      const response = await apiRequest<TOrderResponse>(`${dataURL}/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

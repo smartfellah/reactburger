@@ -15,19 +15,18 @@ import { useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 //Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../services/create-store";
 import {
   sendLogoutRequest,
   sendPatchUserRequest,
 } from "../services/actions/auth-actions";
-import { Dispatch } from "redux";
 
 //Hooks
 import { useForm } from "../hooks/useForm";
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch();
   const location = useLocation();
 
   const { formState, handleFormChange, setFormState } = useForm({
@@ -60,7 +59,7 @@ export const Profile = () => {
     dispatch(sendLogoutRequest());
   }
 
-  const userData = useSelector(function profileUserSelector(store: any) {
+  const userData = useSelector(function profileUserSelector(store) {
     return store.authReducer.user;
   });
 
@@ -74,7 +73,7 @@ export const Profile = () => {
       });
       setRenderButtons(false);
     },
-    [userData]
+    [userData] // eslint-disable-line
   );
 
   function onSubmitClick(): void {
@@ -93,23 +92,25 @@ export const Profile = () => {
 
   //Restore form state using data from backend
   function onAbortClick(): void {
-    setFormState({
-      emailValue: userData.email,
-      nameValue: userData.name,
-      passwordValue: "",
-    });
+    if (userData)
+      setFormState({
+        emailValue: userData.email,
+        nameValue: userData.name,
+        passwordValue: "",
+      });
     setRenderButtons(false);
   }
 
   //Hide "save" and "cancel" buttons on form blur if neither of inputs changed
   function onFormBlur(): void {
-    if (
-      formState.emailValue === userData.email &&
-      formState.nameValue === userData.name &&
-      formState.passwordValue === ""
-    ) {
-      setRenderButtons(false);
-    } else setRenderButtons(true);
+    if (userData)
+      if (
+        formState.emailValue === userData.email &&
+        formState.nameValue === userData.name &&
+        formState.passwordValue === ""
+      ) {
+        setRenderButtons(false);
+      } else setRenderButtons(true);
   }
 
   return (

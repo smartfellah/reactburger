@@ -1,5 +1,5 @@
 //API
-import { apiRequest } from "../../utils/api-request";
+import { apiRequest, checkSuccess } from "../../utils/api-request";
 import { dataURL } from "../../utils/endpoint";
 
 //Types
@@ -30,12 +30,19 @@ export type TGetAllIngredientsActions =
   | TGetAllIngredientsError
   | TGetAllIngredientsSuccess;
 
+export type TGetAllIngredientsResponse = {
+  data: TIngredientsData;
+  success: boolean;
+};
 export const getAllIngredients: AppThunk = () => async (dispatch: Dispatch) => {
   dispatch({
     type: GET_ALL_INGREDIENTS_REQUEST,
   });
   try {
-    const response: any = await apiRequest(`${dataURL}/ingredients`);
+    const response = await apiRequest<TGetAllIngredientsResponse>(
+      `${dataURL}/ingredients`
+    );
+    checkSuccess(response);
     dispatch({
       type: GET_ALL_INGREDIENTS_SUCCESS,
       payload: response.data,
