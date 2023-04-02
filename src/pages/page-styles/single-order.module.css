@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: var(--l-4) auto;
+  margin: var(--l-4) auto 0 auto;
   width: 640px;
   gap: 40px;
 }

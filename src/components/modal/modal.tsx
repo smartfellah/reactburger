@@ -29,7 +29,7 @@ export const Modal: FC<ModalProps> = ({ children, modalTitle, closePopup }) => {
   return ReactDOM.createPortal(
     <>
       <ModalOverlay onClick={closePopup} />
-      <div className={`${modalStyles.Modal}`}>
+      <div className={`${modalStyles.Modal}`} style={{ zIndex: 1000 }}>
         <div
           className={`${modalStyles["Modal-Header"]} text text_type_main-large`}
         >

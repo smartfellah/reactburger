@@ -4,9 +4,11 @@ import { OrderCard } from "../components/order-card/order-card";
 
 //Redux
 import { useSelector } from "../services/create-store";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const Feed = () => {
+  const location = useLocation();
+
   const orders = useSelector((store) => store.feedReducer.orders);
   const total = useSelector((store) => store.feedReducer.total);
   const totalToday = useSelector((store) => store.feedReducer.totalToday);
@@ -28,7 +30,10 @@ export const Feed = () => {
           <div className={styles.ordersList_container}>
             {orders.map((order) => {
               return (
-                <Link to={`${order.number}`}>
+                <Link
+                  to={`${order.number}`}
+                  state={{ backgroundLocation: location }}
+                >
                   <OrderCard
                     key={order._id}
                     id={order.number}
