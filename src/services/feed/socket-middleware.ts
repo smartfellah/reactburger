@@ -33,8 +33,8 @@ export const createSocketMiddleware = (
     let socket: WebSocket | null = null;
 
     return (next) => (action) => {
-      const { dispatch, getState } = store;
-      const { type, payload } = action;
+      const { dispatch } = store;
+      const { payload } = action;
       const {
         wsConnect,
         wsDisconnect,

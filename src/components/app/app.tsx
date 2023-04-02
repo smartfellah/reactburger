@@ -1,13 +1,7 @@
 import { useEffect } from "react";
 
 //React-Router
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
 //Pages
 import * as Pages from "../../pages";
@@ -19,14 +13,13 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 //Redux
 import { getAllIngredients } from "../../services/actions/ingredients-actions";
 import { checkUserAuth } from "../../services/actions/auth-actions";
-import { store, useDispatch, useSelector } from "../../services/create-store";
+import { useDispatch, useSelector } from "../../services/create-store";
 
 //Components
 import { AppHeader } from "../app-header/app-header";
 
 import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
 import { Modal } from "../modal/modal";
-import { IngredientDetails } from "../ingredient-details/ingredient-details";
 
 function App() {
   const dispatch = useDispatch();

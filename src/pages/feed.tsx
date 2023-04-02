@@ -3,14 +3,13 @@ import styles from "./page-styles/feed.module.css";
 import { OrderCard } from "../components/order-card/order-card";
 
 //React
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
 //Redux
 import { useDispatch, useSelector } from "../services/create-store";
 import { Link, useLocation } from "react-router-dom";
 
 //WS
-import { WebsocketStatus } from "../services/feed/types";
 import {
   connect as feedConnect,
   disconnect as feedDisconnect,
@@ -20,23 +19,18 @@ import { feedURL } from "../utils/endpoint";
 export const Feed = () => {
   //WebSocket-----------------------------------------------
   const dispatch = useDispatch();
-  const { status } = useSelector((store) => {
-    return store.feedReducer;
-  });
 
-  const isDisconnected = status !== WebsocketStatus.ONLINE;
-
-  const connect = () => {
+  const connect = useCallback(() => {
     dispatch(feedConnect(`${feedURL}/all`));
-  };
-  const disconnect = () => dispatch(feedDisconnect());
+  }, [dispatch]);
+  const disconnect = useCallback(() => dispatch(feedDisconnect()), [dispatch]);
 
   useEffect(() => {
     connect();
     return () => {
       disconnect();
     };
-  }, []);
+  }, [connect, disconnect]);
   //-------------------------------------------------------
 
   const location = useLocation();
