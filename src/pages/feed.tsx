@@ -2,25 +2,60 @@
 import styles from "./page-styles/feed.module.css";
 import { OrderCard } from "../components/order-card/order-card";
 
+//React
+import { useEffect } from "react";
+
 //Redux
-import { useSelector } from "../services/create-store";
+import { useDispatch, useSelector } from "../services/create-store";
 import { Link, useLocation } from "react-router-dom";
 
+//WS
+import { WebsocketStatus } from "../services/feed/types";
+import {
+  connect as feedConnect,
+  disconnect as feedDisconnect,
+} from "../services/feed/actions";
+import { feedURL } from "../utils/endpoint";
+
 export const Feed = () => {
+  //WebSocket-----------------------------------------------
+  const dispatch = useDispatch();
+  const { status } = useSelector((store) => {
+    return store.feedReducer;
+  });
+
+  const isDisconnected = status !== WebsocketStatus.ONLINE;
+
+  const connect = () => {
+    dispatch(feedConnect(`${feedURL}/all`));
+  };
+  const disconnect = () => dispatch(feedDisconnect());
+
+  useEffect(() => {
+    connect();
+    return () => {
+      disconnect();
+    };
+  }, []);
+  //-------------------------------------------------------
+
   const location = useLocation();
 
   const orders = useSelector((store) => store.feedReducer.orders);
   const total = useSelector((store) => store.feedReducer.total);
   const totalToday = useSelector((store) => store.feedReducer.totalToday);
 
-  const readyOrders = orders.filter((order) => {
-    return order.status === "done";
-  });
-  const processedOrders = orders.filter((order) => {
-    return order.status !== "done";
-  });
-
-  return (
+  let readyOrders;
+  let processedOrders;
+  if (orders) {
+    readyOrders = orders.filter((order) => {
+      return order.status === "done";
+    });
+    processedOrders = orders.filter((order) => {
+      return order.status !== "done";
+    });
+  }
+  return orders ? (
     <div className={styles.pageWrapper}>
       <h1 className={`${styles.header} text text_type_main-large`}>
         Лента заказов
@@ -52,7 +87,7 @@ export const Feed = () => {
             <div className={styles.ready}>
               <h3 className="text text_type_main-medium">Готовы:</h3>
               <div className={styles.numberContainer}>
-                {readyOrders.map((order, index, ordres) => {
+                {readyOrders?.map((order, index, ordres) => {
                   return (
                     <p className="text text_type_digits-default">
                       {order.number}
@@ -64,7 +99,7 @@ export const Feed = () => {
             <div className={styles.inProgress}>
               <h3 className="text text_type_main-medium">В работе:</h3>
               <div className={styles.numberContainer}>
-                {processedOrders.map((order, index, ordres) => {
+                {processedOrders?.map((order, index, ordres) => {
                   return (
                     <p className="text text_type_digits-default">
                       {order.number}
@@ -89,5 +124,5 @@ export const Feed = () => {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 };

@@ -25,12 +25,6 @@ import { store, useDispatch, useSelector } from "../../services/create-store";
 import { AppHeader } from "../app-header/app-header";
 
 import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
-import { WebsocketStatus } from "../../services/feed/types";
-import {
-  connect as feedConnect,
-  disconnect as feedDisconnect,
-} from "../../services/feed/actions";
-import { feedURL } from "../../utils/endpoint";
 import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 
@@ -44,20 +38,6 @@ function App() {
     dispatch(checkUserAuth());
     dispatch(getAllIngredients());
   }, [dispatch]);
-
-  const { status } = useSelector((store) => {
-    return store.feedReducer;
-  });
-  const isDisconnected = status !== WebsocketStatus.ONLINE;
-
-  const connect = () => {
-    dispatch(feedConnect(feedURL));
-  };
-  const disconnect = () => dispatch(feedDisconnect());
-
-  useEffect(() => {
-    connect();
-  }, []);
 
   let location = useLocation();
   // The `backgroundLocation` state is the location that we were at when one of
