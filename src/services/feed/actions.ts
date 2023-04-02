@@ -1,5 +1,4 @@
 import { createAction } from "@reduxjs/toolkit";
-import { TOrderType } from "./types";
 import { TWSResponse } from "./socket-middleware";
 
 export const connect = createAction<string>("FEED_CONNECT");

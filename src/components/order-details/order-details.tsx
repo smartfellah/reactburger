@@ -5,9 +5,6 @@ import orderDetailsStyles from "./order-details.module.css";
 //Redux
 import { useSelector } from "../../services/create-store";
 
-//Types
-import { OrderNumber } from "./types";
-
 export const OrderDetails = () => {
   const orderNumber = useSelector((store) => {
     if (store.orderReducer.data) return store.orderReducer.data.number;
