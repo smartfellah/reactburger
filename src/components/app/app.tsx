@@ -86,9 +86,7 @@ function App() {
               >
                 <Route
                   path="orders"
-                  element={
-                    <ProtectedRouteElement element={<Pages.Profile />} />
-                  }
+                  element={<ProtectedRouteElement element={<Pages.Orders />} />}
                 />
               </Route>
               <Route

@@ -4,6 +4,8 @@ import {
   TSingleIngredient,
 } from "../burger-ingredients/types";
 
+import { useLocation } from "react-router-dom";
+
 //Redux
 import { useSelector } from "../../services/create-store";
 
@@ -18,6 +20,7 @@ type TOrderCardProps = {
   title: string;
   ingredientsList: Array<string>;
   date: string;
+  status: string;
 };
 
 export const OrderCard: FC<TOrderCardProps> = ({
@@ -25,6 +28,7 @@ export const OrderCard: FC<TOrderCardProps> = ({
   title,
   ingredientsList,
   date,
+  status,
 }) => {
   const ingredientsCatalog = useSelector((store) => {
     return store.ingredientsReducer.data;
@@ -40,6 +44,8 @@ export const OrderCard: FC<TOrderCardProps> = ({
     0
   );
 
+  const location = useLocation();
+
   return (
     <div className={styles.container}>
       <div className={styles.firstRow}>
@@ -50,6 +56,19 @@ export const OrderCard: FC<TOrderCardProps> = ({
         ></FormattedDate>
       </div>
       <h3 className="text text_type_main-medium">{title}</h3>
+      {location.pathname === "/profile/orders" ? (
+        <p
+          className={`${
+            status === "done" ? styles.status_done : ""
+          } text text_type_main-default`}
+        >
+          {(() => {
+            if (status === "done") return "Выполнен";
+            else if (status === "pending") return "Готовится";
+            else return "Создан";
+          })()}
+        </p>
+      ) : null}
       <div className={styles.thirdRow}>
         <div className={styles.imagesList}>
           {ingredientsDataList.map((ingredient, index, array) => {

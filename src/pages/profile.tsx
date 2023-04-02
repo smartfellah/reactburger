@@ -12,7 +12,7 @@ import React, { SyntheticEvent, useEffect } from "react";
 import { useState } from "react";
 
 //Router
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -214,6 +214,7 @@ export const Profile = () => {
             ) : null}
           </div>
         ) : null}
+        <Outlet></Outlet>
       </div>
     </div>
   );

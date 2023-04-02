@@ -34,6 +34,7 @@ export const Feed = () => {
                   title={order.name}
                   ingredientsList={order.ingredients}
                   date={order.createdAt}
+                  status={order.status}
                 />
               );
             })}
