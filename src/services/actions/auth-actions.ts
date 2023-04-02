@@ -16,15 +16,6 @@ export type TUserInfo = {
   name: string;
 };
 
-// export type TAuthActions =
-//   | TRegisterActions
-//   | TLoginActions
-//   | TLogoutActions
-//   | TGetUserActions
-//   | TPatchUserActions
-//   | TResetPasswordActions
-//   | TForgotPasswordActions;
-
 //Register actions
 export const registerRequest = createAction("(register)AUTH_REQUEST");
 export const registerSuccess = createAction<TUserInfo>(
@@ -217,30 +208,6 @@ export const sendLogoutRequest: AppThunk = () => {
     }
   };
 };
-
-/*
-export const sendGetUserRequest: AppThunk = (navigate) => {
-  return async function getUserRequestThunk(dispatch: Dispatch) {
-    dispatch(getUserRequestAction());
-
-    try {
-      const response: any = await apiRequest(`${dataURL}/auth/user`, {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${getCookie("accessToken")}`,
-        },
-      });
-      debugger;
-
-      dispatch(getUserRequestAction("success", response.user));
-    } catch (error) {
-      if (error === 403 || 401)
-        refreshAccessAndContinue(dispatch, sendPatchUserRequest, navigate);
-      dispatch(getUserRequestAction("error"));
-    }
-  };
-};
-*/
 
 type TUserResponse = {
   user: {
