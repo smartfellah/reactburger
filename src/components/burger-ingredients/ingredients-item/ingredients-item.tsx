@@ -7,10 +7,7 @@ import ingredientItemStyles from "./ingredients-item.module.css";
 
 //Types
 import { TIngredientsItemProps } from "../types";
-import {
-  TConstructorData,
-  TConstructorIngredient,
-} from "../../burger-constructor/types";
+import { TConstructorData } from "../../burger-constructor/types";
 
 //Redux
 import { useDispatch, useSelector } from "../../../services/create-store";
