@@ -12,7 +12,7 @@ export const Orders = () => {
     <div className={styles.ordersList}>
       {orders.map((order) => {
         return (
-          <Link to={order._id}>
+          <Link to={`${order.number}`}>
             <OrderCard
               key={order._id}
               title={order.name}

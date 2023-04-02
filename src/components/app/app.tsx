@@ -90,6 +90,12 @@ function App() {
                 />
               </Route>
               <Route
+                path="/profile/orders/:number"
+                element={
+                  <ProtectedRouteElement element={<Pages.SingleOrder />} />
+                }
+              />
+              <Route
                 path="/forgot-password"
                 element={
                   <ProtectedRouteElement
