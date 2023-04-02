@@ -11,6 +11,7 @@
   padding-bottom: var(--l-2);
   display: flex;
   flex-flow: column;
+  z-index: 1000;
 }
 .Modal-Header {
   min-height: 64px;
