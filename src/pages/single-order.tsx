@@ -7,6 +7,10 @@ import { useLocation, useParams } from "react-router-dom";
 import styles from "./page-styles/single-order.module.css";
 import { useSelector } from "../services/create-store";
 import { TSingleIngredient } from "../components/burger-ingredients/types";
+import {
+  CurrencyIcon,
+  FormattedDate,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 
 type TSingleOrder = {
   owner: string;
@@ -54,30 +58,62 @@ export const SingleOrder = () => {
   // const location = useLocation();
   const { number } = useParams();
   return state ? (
-    <div>
+    <div className={styles.pageWrapper}>
       <p className="text text_type_main-medium">#{state?.number}</p>
-      <h1 className="text text_type_main-large">{state?.name}</h1>
-      <p className="text text_type_main-default">
-        {(() => {
-          let { status } = state!;
-          if (status === "done") return "Выполнен";
-          else if (status === "pending") return "Готовится";
-          else return "Создан";
-        })()}
-      </p>
-      <h2 className="text text_type_main-large">Состав:</h2>
+
       <div>
-        {ingredientsDataList.map((ingredient, index) => {
-          return (
-            <div key={index}>
-              <img
-                className={`${styles.image}`}
-                src={ingredient.image_mobile}
-                alt="ingredient_image"
-              />
-            </div>
-          );
-        })}
+        <h1 className="text text_type_main-large mb-3">{state?.name}</h1>
+        <p
+          className={`${
+            state.status === "done" ? styles.status_done : ""
+          } text text_type_main-default`}
+        >
+          {(() => {
+            let { status } = state!;
+            if (status === "done") return "Выполнен";
+            else if (status === "pending") return "Готовится";
+            else return "Создан";
+          })()}
+        </p>
+        <h2
+          className={`${styles.ingredientsList_header} text text_type_main-large`}
+        >
+          Состав:
+        </h2>
+        <div className={styles.ingredientsList}>
+          {ingredientsDataList.map((ingredient, index) => {
+            let counter = 1;
+            return (
+              <div className={styles.ingredientContainer} key={index}>
+                <div className={styles.imageContainer}>
+                  <img
+                    className={`${styles.image}`}
+                    src={ingredient.image_mobile}
+                    alt="ingredient_image"
+                  />
+                </div>
+                <p className="text text_type_main-default">{ingredient.name}</p>
+                <div className={styles.cost}>
+                  <p className="text text_type_digits-default">
+                    {counter} x {cost}
+                  </p>
+                  <CurrencyIcon type="primary" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className={styles.orderFooter}>
+        <FormattedDate
+          className="text text_type_main-default text_color_inactive"
+          date={new Date(state.createdAt)}
+        />
+        <div className={styles.cost}>
+          <p className="text text_type_digits-default">{cost}</p>
+          <CurrencyIcon type="primary" />
+        </div>
       </div>
     </div>
   ) : null;

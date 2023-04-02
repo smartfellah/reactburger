@@ -1,12 +1,10 @@
 //UI
 import styles from "./page-styles/feed.module.css";
 import { OrderCard } from "../components/order-card/order-card";
-import { TRootState } from "../services/create-store";
 
 //Redux
 import { useSelector } from "../services/create-store";
 import { Link } from "react-router-dom";
-import { TOrderType } from "../services/feed/types";
 
 export const Feed = () => {
   const orders = useSelector((store) => store.feedReducer.orders);
