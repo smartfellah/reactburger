@@ -27,7 +27,7 @@ export const Orders = () => {
   const token = getCookie("accessToken");
   const connect = useCallback(() => {
     dispatch(feedConnect(`${feedURL}?token=${token}`));
-  }, []);
+  }, [dispatch, token]);
   const disconnect = useCallback(() => dispatch(feedDisconnect()), [dispatch]);
 
   useEffect(() => {
