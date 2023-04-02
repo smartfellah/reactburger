@@ -9,312 +9,73 @@ import {
 } from "../../utils/cookie";
 import { Dispatch } from "redux";
 import { AppThunk } from "./types";
+import { createAction } from "@reduxjs/toolkit";
 
-type TActionTypeString = "request" | "error" | "success";
 export type TUserInfo = {
   email: string;
   name: string;
 };
-export type TAuthActions =
-  | TRegisterActions
-  | TLoginActions
-  | TLogoutActions
-  | TGetUserActions
-  | TPatchUserActions
-  | TResetPasswordActions
-  | TForgotPasswordActions;
 
-//Register type constants
-export const REGISTER_REQUEST: "(register)AUTH_REQUEST" =
-  "(register)AUTH_REQUEST";
-export const REGISTER_SUCCESS: "(register)AUTH_SUCCESS" =
-  "(register)AUTH_SUCCESS";
-export const REGISTER_ERROR: "(register)AUTH_ERROR" = "(register)AUTH_ERROR";
-//Register Actions-----------------------------------------------------------------------------------------
-type TRegisterActions =
-  | {
-      readonly type: "(register)AUTH_REQUEST";
-    }
-  | {
-      readonly type: "(register)AUTH_ERROR";
-    }
-  | {
-      readonly type: "(register)AUTH_SUCCESS";
-      readonly payload?: TUserInfo;
-    };
-export function registerRequestAction(
-  actionTypeString?: TActionTypeString,
-  userInfo?: TUserInfo
-): TRegisterActions {
-  switch (actionTypeString) {
-    case "request":
-      return {
-        type: "(register)AUTH_REQUEST",
-      };
-    case "error":
-      return {
-        type: "(register)AUTH_ERROR",
-      };
-    case "success":
-      return {
-        type: "(register)AUTH_SUCCESS",
-        payload: userInfo,
-      };
-    default:
-      return {
-        type: "(register)AUTH_REQUEST",
-      };
-  }
-}
+// export type TAuthActions =
+//   | TRegisterActions
+//   | TLoginActions
+//   | TLogoutActions
+//   | TGetUserActions
+//   | TPatchUserActions
+//   | TResetPasswordActions
+//   | TForgotPasswordActions;
 
-//Login type constants
-export const LOGIN_REQUEST: "(login)AUTH_REQUEST" = "(login)AUTH_REQUEST";
-export const LOGIN_SUCCESS: "(login)AUTH_SUCCESS" = "(login)AUTH_SUCCESS";
-export const LOGIN_ERROR: "(login)AUTH_ERROR" = "(login)AUTH_ERROR";
-//Login Actions-----------------------------------------------------------------------------------------
-type TLoginActions =
-  | {
-      readonly type: "(login)AUTH_REQUEST";
-    }
-  | {
-      readonly type: "(login)AUTH_ERROR";
-    }
-  | {
-      readonly type: "(login)AUTH_SUCCESS";
-      readonly payload?: TUserInfo;
-    };
-export function loginRequestAction(
-  actionTypeString?: TActionTypeString,
-  userInfo?: TUserInfo
-): TLoginActions {
-  switch (actionTypeString) {
-    case "request":
-      return {
-        type: "(login)AUTH_REQUEST",
-      };
-    case "error":
-      return {
-        type: "(login)AUTH_ERROR",
-      };
-    case "success":
-      return {
-        type: "(login)AUTH_SUCCESS",
-        payload: userInfo,
-      };
-    default:
-      return {
-        type: "(login)AUTH_REQUEST",
-      };
-  }
-}
+//Register actions
+export const registerRequest = createAction("(register)AUTH_REQUEST");
+export const registerSuccess = createAction<TUserInfo>(
+  "(register)AUTH_SUCCESS"
+);
+export const registerError = createAction("(register)AUTH_ERROR");
+
+//Login actions
+export const loginRequest = createAction("(login)AUTH_REQUEST");
+export const loginSuccess = createAction<TUserInfo>("(login)AUTH_SUCCESS");
+export const loginError = createAction("(login)AUTH_ERROR");
+
 //Logout type constants
-export const LOGOUT_REQUEST: "(logout)LOGOUT_REQUEST" =
-  "(logout)LOGOUT_REQUEST";
-export const LOGOUT_SUCCESS: "(logout)LOGOUT_SUCCESS" =
-  "(logout)LOGOUT_SUCCESS";
-export const LOGOUT_ERROR: "(logout)LOGOUT_ERROR" = "(logout)LOGOUT_ERROR";
-//Logout Actions-----------------------------------------------------------------------------------------
-type TLogoutActions =
-  | {
-      readonly type: "(logout)LOGOUT_REQUEST";
-    }
-  | {
-      readonly type: "(logout)LOGOUT_ERROR";
-    }
-  | {
-      readonly type: "(logout)LOGOUT_SUCCESS";
-    };
-export function logoutRequestAction(
-  actionTypeString?: TActionTypeString
-): TLogoutActions {
-  switch (actionTypeString) {
-    case "request":
-      return {
-        type: "(logout)LOGOUT_REQUEST",
-      };
-    case "error":
-      return {
-        type: "(logout)LOGOUT_ERROR",
-      };
-    case "success":
-      return {
-        type: "(logout)LOGOUT_SUCCESS",
-      };
-    default:
-      return {
-        type: "(logout)LOGOUT_REQUEST",
-      };
-  }
-}
+export const logoutRequest = createAction("(logout)LOGOUT_REQUEST");
+export const logoutSuccess = createAction("(logout)LOGOUT_SUCCESS");
+export const logoutError = createAction("(logout)LOGOUT_ERROR");
 
 //GetUser type constants
-export const GET_USER_REQUEST: "(getUser)GET_USER_REQUEST" =
-  "(getUser)GET_USER_REQUEST";
-export const GET_USER_SUCCESS: "(getUser)GET_USER_SUCCESS" =
-  "(getUser)GET_USER_SUCCESS";
-export const GET_USER_ERROR: "(getUser)GET_USER_ERROR" =
-  "(getUser)GET_USER_ERROR";
-//GetUser Actions-----------------------------------------------------------------------------------------
-type TGetUserActions =
-  | {
-      readonly type: "(getUser)GET_USER_REQUEST";
-    }
-  | {
-      readonly type: "(getUser)GET_USER_ERROR";
-    }
-  | {
-      readonly type: "(getUser)GET_USER_SUCCESS";
-      readonly payload?: TUserInfo;
-    };
-export function getUserRequestAction(
-  actionTypeString?: TActionTypeString,
-  userData?: TUserInfo
-): TGetUserActions {
-  switch (actionTypeString) {
-    case "request":
-      return {
-        type: "(getUser)GET_USER_REQUEST",
-      };
-    case "error":
-      return {
-        type: "(getUser)GET_USER_ERROR",
-      };
-    case "success":
-      return {
-        type: "(getUser)GET_USER_SUCCESS",
-        payload: userData,
-      };
-    default:
-      return {
-        type: "(getUser)GET_USER_REQUEST",
-      };
-  }
-}
+export const getUserRequest = createAction("(getUser)GET_USER_REQUEST");
+export const getUserSuccess = createAction<TUserInfo>(
+  "(getUser)GET_USER_SUCCESS"
+);
+export const getUserError = createAction("(getUser)GET_USER_ERROR");
 
 //PatchUser type constants
-export const PATCH_USER_REQUEST: "(patchUser)PATCH_USER_REQUEST" =
-  "(patchUser)PATCH_USER_REQUEST";
-export const PATCH_USER_SUCCESS: "(patchUser)PATCH_USER_SUCCESS" =
-  "(patchUser)PATCH_USER_SUCCESS";
-export const PATCH_USER_ERROR: "(patchUser)PATCH_USER_ERROR" =
-  "(patchUser)PATCH_USER_ERROR";
-//PatchUser Actions-----------------------------------------------------------------------------------------
-type TPatchUserActions =
-  | {
-      readonly type: "(patchUser)PATCH_USER_REQUEST";
-    }
-  | {
-      readonly type: "(patchUser)PATCH_USER_ERROR";
-    }
-  | {
-      readonly type: "(patchUser)PATCH_USER_SUCCESS";
-      readonly payload?: TUserInfo;
-    };
-export function patchUserRequestAction(
-  actionTypeString?: TActionTypeString,
-  userData?: TUserInfo
-): TPatchUserActions {
-  switch (actionTypeString) {
-    case "request":
-      return {
-        type: "(patchUser)PATCH_USER_REQUEST",
-      };
-    case "error":
-      return {
-        type: "(patchUser)PATCH_USER_ERROR",
-      };
-    case "success":
-      return {
-        type: "(patchUser)PATCH_USER_SUCCESS",
-        payload: userData,
-      };
-    default:
-      return {
-        type: "(patchUser)PATCH_USER_REQUEST",
-      };
-  }
-}
+export const patchUserRequest = createAction("(patchUser)PATCH_USER_REQUEST");
+export const patchUserSuccess = createAction<TUserInfo>(
+  "(patchUser)PATCH_USER_SUCCESS"
+);
+export const patchUserError = createAction("(patchUser)PATCH_USER_ERROR");
 
 //ResetPassword type constants
-export const RESET_PASSWORD_REQUEST: "(resetPassword)RESET_PASSWORD_REQUEST" =
-  "(resetPassword)RESET_PASSWORD_REQUEST";
-export const RESET_PASSWORD_SUCCESS: "(resetPassword)RESET_PASSWORD_SUCCESS" =
-  "(resetPassword)RESET_PASSWORD_SUCCESS";
-export const RESET_PASSWORD_ERROR: "(resetPassword)RESET_PASSWORD_ERROR" =
-  "(resetPassword)RESET_PASSWORD_ERROR";
-//ResetPassword Actions-----------------------------------------------------------------------------------------
-type TResetPasswordActions =
-  | {
-      readonly type: "(resetPassword)RESET_PASSWORD_REQUEST";
-    }
-  | {
-      readonly type: "(resetPassword)RESET_PASSWORD_ERROR";
-    }
-  | {
-      readonly type: "(resetPassword)RESET_PASSWORD_SUCCESS";
-    };
-export function resetPasswordRequestAction(
-  actionTypeString?: TActionTypeString
-): TResetPasswordActions {
-  switch (actionTypeString) {
-    case "request":
-      return {
-        type: "(resetPassword)RESET_PASSWORD_REQUEST",
-      };
-    case "error":
-      return {
-        type: "(resetPassword)RESET_PASSWORD_ERROR",
-      };
-    case "success":
-      return {
-        type: "(resetPassword)RESET_PASSWORD_SUCCESS",
-      };
-    default:
-      return {
-        type: "(resetPassword)RESET_PASSWORD_REQUEST",
-      };
-  }
-}
+export const resetPasswordRequest = createAction(
+  "(resetPassword)RESET_PASSWORD_REQUEST"
+);
+export const resetPasswordSuccess = createAction(
+  "(resetPassword)RESET_PASSWORD_SUCCESS"
+);
+export const resetPasswordError = createAction(
+  "(resetPassword)RESET_PASSWORD_ERROR"
+);
 
-export const FORGOT_PASSWORD_REQUEST: "(forgotPassword)FORGOT_PASSWORD_REQUEST" =
-  "(forgotPassword)FORGOT_PASSWORD_REQUEST";
-export const FORGOT_PASSWORD_SUCCESS: "(forgotPassword)FORGOT_PASSWORD_SUCCESS" =
-  "(forgotPassword)FORGOT_PASSWORD_SUCCESS";
-export const FORGOT_PASSWORD_ERROR: "(forgotPassword)FORGOT_PASSWORD_ERROR" =
-  "(forgotPassword)FORGOT_PASSWORD_ERROR";
-//ForgotPassword Actions-----------------------------------------------------------------------------------------
-type TForgotPasswordActions =
-  | {
-      readonly type: "(forgotPassword)FORGOT_PASSWORD_REQUEST";
-    }
-  | {
-      readonly type: "(forgotPassword)FORGOT_PASSWORD_ERROR";
-    }
-  | {
-      readonly type: "(forgotPassword)FORGOT_PASSWORD_SUCCESS";
-    };
-export function forgotPasswordRequestAction(
-  actionTypeString?: TActionTypeString
-): TForgotPasswordActions {
-  switch (actionTypeString) {
-    case "request":
-      return {
-        type: "(forgotPassword)FORGOT_PASSWORD_REQUEST",
-      };
-    case "error":
-      return {
-        type: "(forgotPassword)FORGOT_PASSWORD_ERROR",
-      };
-    case "success":
-      return {
-        type: "(forgotPassword)FORGOT_PASSWORD_SUCCESS",
-      };
-    default:
-      return {
-        type: "(forgotPassword)FORGOT_PASSWORD_REQUEST",
-      };
-  }
-}
+export const forgotPasswordRequest = createAction(
+  "(forgotPassword)FORGOT_PASSWORD_REQUEST"
+);
+export const forgotPasswordSuccess = createAction(
+  "(forgotPassword)FORGOT_PASSWORD_SUCCESS"
+);
+export const forgotPasswordError = createAction(
+  "(forgotPassword)FORGOT_PASSWORD_ERROR"
+);
 
 type TRegisterRequestBody = {
   email: string;
@@ -331,11 +92,34 @@ type TLoginResponse = {
   };
 };
 
+export type TAuthActions =
+  | ReturnType<typeof registerError>
+  | ReturnType<typeof registerRequest>
+  | ReturnType<typeof registerSuccess>
+  | ReturnType<typeof loginError>
+  | ReturnType<typeof loginRequest>
+  | ReturnType<typeof loginSuccess>
+  | ReturnType<typeof logoutError>
+  | ReturnType<typeof logoutRequest>
+  | ReturnType<typeof loginSuccess>
+  | ReturnType<typeof getUserError>
+  | ReturnType<typeof getUserRequest>
+  | ReturnType<typeof getUserSuccess>
+  | ReturnType<typeof patchUserError>
+  | ReturnType<typeof patchUserRequest>
+  | ReturnType<typeof patchUserSuccess>
+  | ReturnType<typeof resetPasswordError>
+  | ReturnType<typeof resetPasswordRequest>
+  | ReturnType<typeof resetPasswordSuccess>
+  | ReturnType<typeof forgotPasswordError>
+  | ReturnType<typeof forgotPasswordRequest>
+  | ReturnType<typeof forgotPasswordSuccess>;
+
 export const sendRegisterRequest: AppThunk = (
   requestBody: TRegisterRequestBody
 ) => {
   return async function registerRequestThunk(dispatch: Dispatch) {
-    dispatch(registerRequestAction());
+    dispatch(registerRequest());
 
     let response: TLoginResponse;
 
@@ -356,9 +140,9 @@ export const sendRegisterRequest: AppThunk = (
       localStorage.setItem("name", userInfo.name);
       localStorage.setItem("email", userInfo.email);
 
-      dispatch(registerRequestAction("success", userInfo));
+      dispatch(registerSuccess(userInfo));
     } catch (error) {
-      dispatch(registerRequestAction("error"));
+      dispatch(registerError());
       console.log(error);
     }
   };
@@ -371,7 +155,7 @@ type TLoginRequestBody = {
 };
 export const sendLoginRequest: AppThunk = (requestBody: TLoginRequestBody) => {
   return async function loginRequestThunk(dispatch: Dispatch) {
-    dispatch(loginRequestAction());
+    dispatch(loginRequest());
 
     try {
       const response = await apiRequest<TLoginResponse>(
@@ -393,9 +177,9 @@ export const sendLoginRequest: AppThunk = (requestBody: TLoginRequestBody) => {
       localStorage.setItem("name", userInfo.name);
       localStorage.setItem("email", userInfo.email);
 
-      dispatch(loginRequestAction("success", userInfo));
+      dispatch(loginSuccess(userInfo));
     } catch (error) {
-      dispatch(loginRequestAction("error"));
+      dispatch(loginError());
       console.log(error);
     }
   };
@@ -407,7 +191,7 @@ type TLogoutResponse = {
 };
 export const sendLogoutRequest: AppThunk = () => {
   return async function logoutRequestThunk(dispatch: Dispatch) {
-    dispatch(logoutRequestAction());
+    dispatch(logoutRequest());
 
     try {
       const response = await apiRequest<TLogoutResponse>(
@@ -425,11 +209,11 @@ export const sendLogoutRequest: AppThunk = () => {
       localStorage.removeItem("name");
       localStorage.removeItem("email");
 
-      dispatch(logoutRequestAction("success"));
+      dispatch(logoutSuccess());
       clearTokenCookies();
     } catch (error) {
       console.log(error);
-      dispatch(logoutRequestAction("error"));
+      dispatch(logoutError());
     }
   };
 };
@@ -474,7 +258,7 @@ export const sendPatchUserRequest: AppThunk = (
   navigate: any
 ) => {
   return async function patchUserRequestThunk(dispatch: Dispatch) {
-    dispatch(patchUserRequestAction());
+    dispatch(patchUserRequest());
 
     let response: TUserResponse;
     try {
@@ -487,7 +271,7 @@ export const sendPatchUserRequest: AppThunk = (
         body: JSON.stringify(infoToPatch),
       });
       checkSuccess(response);
-      dispatch(patchUserRequestAction("success", response.user));
+      dispatch(patchUserSuccess(response.user));
     } catch (error) {
       if (error === 403 || 401)
         refreshAccessAndContinue(
@@ -496,7 +280,7 @@ export const sendPatchUserRequest: AppThunk = (
           navigate,
           infoToPatch
         );
-      dispatch(patchUserRequestAction("error"));
+      dispatch(patchUserError());
     }
   };
 };
@@ -509,7 +293,7 @@ type TAuthTokenResponse = {
 export const checkUserAuth: AppThunk = () => {
   return async function checkUserAuthThunk(dispatch: Dispatch) {
     let response: TUserResponse;
-    dispatch(getUserRequestAction());
+    dispatch(getUserRequest());
     try {
       response = await apiRequest<TUserResponse>(`${dataURL}/auth/user`, {
         method: "GET",
@@ -518,7 +302,7 @@ export const checkUserAuth: AppThunk = () => {
         },
       });
       checkSuccess(response);
-      dispatch(getUserRequestAction("success", response.user));
+      dispatch(getUserSuccess(response.user));
     } catch (error) {
       try {
         const innerResponse = await apiRequest<TAuthTokenResponse>(
@@ -535,7 +319,7 @@ export const checkUserAuth: AppThunk = () => {
         setTokenCookies(innerResponse);
       } catch (error) {
         if (error === 401) console.log("401 Unauthorized");
-        dispatch(getUserRequestAction("error"));
+        dispatch(getUserError());
       }
     }
   };
@@ -551,7 +335,7 @@ export const sendResetPasswordRequest: AppThunk = (
   navigate: any
 ) => {
   return async function resetPasswordRequestThunk(dispatch: Dispatch) {
-    dispatch(resetPasswordRequestAction());
+    dispatch(resetPasswordRequest());
 
     try {
       const response = await apiRequest<TRestorePasswordResponse>(
@@ -565,11 +349,11 @@ export const sendResetPasswordRequest: AppThunk = (
         }
       );
       checkSuccess(response);
-      dispatch(resetPasswordRequestAction("success"));
+      dispatch(resetPasswordSuccess());
       navigate("/login", { replace: true });
     } catch (error) {
       console.log(error);
-      dispatch(resetPasswordRequestAction("error"));
+      dispatch(resetPasswordError());
     }
   };
 };
@@ -579,7 +363,7 @@ export const sendForgotPasswordRequest: AppThunk = (
   navigate: any
 ) => {
   return async function (dispatch: Dispatch) {
-    dispatch(forgotPasswordRequestAction());
+    dispatch(forgotPasswordRequest());
 
     try {
       const response = await apiRequest<TRestorePasswordResponse>(
@@ -594,11 +378,11 @@ export const sendForgotPasswordRequest: AppThunk = (
       );
       checkSuccess(response);
 
-      dispatch(forgotPasswordRequestAction("success"));
+      dispatch(forgotPasswordSuccess());
       navigate("/reset-password", { state: { fromForgot: true } });
     } catch (error) {
       console.log(error);
-      dispatch(forgotPasswordRequestAction("error"));
+      dispatch(forgotPasswordError());
     }
   };
 };

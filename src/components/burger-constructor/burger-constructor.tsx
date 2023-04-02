@@ -63,11 +63,9 @@ export const BurgerConstructor: FC = () => {
           return acc + elem.price;
         }, 0)
       : 0) + (constructorBun!.price ? constructorBun!.price * 2 : 0);
-  const showOrder: boolean = useSelector(
-    (store: any) => store.orderReducer.isShown
-  );
+  const showOrder: boolean = useSelector((store) => store.orderReducer.isShown);
 
-  const isAuth: boolean = useSelector((store: any) =>
+  const isAuth: boolean = useSelector((store) =>
     store.authReducer.user ? true : false
   );
 
