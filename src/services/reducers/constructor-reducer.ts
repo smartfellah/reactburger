@@ -15,12 +15,12 @@ import {
 } from "../actions/constructor-actions";
 
 type TConstructorReducerInitialState = {
-  bun: TConstructorIngredient | {};
+  bun: TConstructorIngredient | null;
   data: TConstructorData | [];
 };
 
 const initialState: TConstructorReducerInitialState = {
-  bun: {},
+  bun: null,
   data: [],
 };
 
@@ -32,7 +32,7 @@ export const constructorReducer = (
     case ADD_INGREDIENT_TO_CONSTRUCTOR:
       return {
         ...state,
-        data: [...state.data, { ...action.payload }],
+        data: [...state!.data, { ...action.payload }],
       };
     case ADD_BUN_TO_CONSTRUCTOR:
       return {

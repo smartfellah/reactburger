@@ -8,7 +8,7 @@ import { IngredientsItem } from "../ingredients-item/ingredients-item";
 import ingredientsAreaStyles from "./ingredients-area.module.css";
 
 //Redux
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "../../../services/create-store";
 
 //Types
 import { TIngredientsAreaProps, TIngredientsData } from "../types";
@@ -17,9 +17,7 @@ export const IngredientsArea: FC<TIngredientsAreaProps> = ({
   areaRef,
   type,
 }) => {
-  const ingredientsData: TIngredientsData = useSelector(
-    (store: any) => store.ingredientsReducer.data
-  );
+  const ingredientsData = useSelector((store) => store.ingredientsReducer.data);
 
   const areaTitle: string =
     type === "bun" ? "Булки" : type === "sauce" ? "Соусы" : "Начинка";

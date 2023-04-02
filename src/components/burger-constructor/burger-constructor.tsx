@@ -3,7 +3,6 @@ import {
   TConstructorIngredient,
   TConstructorData,
   TRequestData,
-  TDroppedItem,
 } from "./types";
 
 //React
@@ -25,7 +24,7 @@ import { Topping } from "./topping/topping";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 
 //Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/create-store";
 import {
   HIDE_ORDER_DETAILS,
   sendOrder,
@@ -36,7 +35,6 @@ import {
   addIngredient,
   CLEAR_CONSTRUCTOR,
 } from "../../services/actions/constructor-actions";
-import { Dispatch } from "redux";
 
 //DND
 import { useDrop } from "react-dnd/dist/hooks";
@@ -46,7 +44,7 @@ import { useNavigate } from "react-router";
 
 export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch();
 
   const onDropHandler = (item: TConstructorIngredient) => {
     dispatch(addIngredient(item, crypto.randomUUID()));
@@ -58,18 +56,17 @@ export const BurgerConstructor: FC = () => {
     },
   });
 
-  const constructorIngredients: TConstructorData = useSelector(
-    (store: any) => store.constructorReducer.data
+  const constructorIngredients = useSelector(
+    (store) => store.constructorReducer.data
   );
-  const constructorBun: TConstructorIngredient = useSelector(
-    (store: any) => store.constructorReducer.bun
-  );
+  const constructorBun = useSelector((store) => store.constructorReducer.bun);
+
   const totalCost: number =
-    (constructorIngredients[0]
-      ? [...constructorIngredients].reduce((acc, elem) => {
+    (constructorIngredients![0]
+      ? [...constructorIngredients!].reduce((acc, elem) => {
           return acc + elem.price;
         }, 0)
-      : 0) + (constructorBun.price ? constructorBun.price * 2 : 0);
+      : 0) + (constructorBun!.price ? constructorBun!.price * 2 : 0);
   const showOrder: boolean = useSelector(
     (store: any) => store.orderReducer.isShown
   );
@@ -82,15 +79,15 @@ export const BurgerConstructor: FC = () => {
     if (isAuth) {
       let dataToSend: TRequestData = [];
 
-      constructorBun._id && dataToSend.push(constructorBun._id);
+      constructorBun!._id && dataToSend.push(constructorBun!._id);
       dataToSend = dataToSend.concat(
-        constructorIngredients.map((elem) => {
+        constructorIngredients!.map((elem) => {
           return elem["_id"];
         })
       );
-      constructorBun._id && dataToSend.push(constructorBun._id);
+      constructorBun!._id && dataToSend.push(constructorBun!._id);
 
-      if (!constructorBun._id) {
+      if (!constructorBun!._id) {
         dispatch({ type: SEND_ORDER_ERROR });
         alert("В бургер нужно добавить булку");
       } else {
@@ -119,12 +116,12 @@ export const BurgerConstructor: FC = () => {
       >
         {/*-Top Bun Section-----------------------------------------------*/}
         <section className={`${burgerConstructorStyles.Bun}`}>
-          {constructorBun.name && (
+          {constructorBun!.name && (
             <ConstructorElement
               type={"top"}
-              text={constructorBun.name + " (верх)"}
-              thumbnail={constructorBun.image}
-              price={constructorBun.price}
+              text={constructorBun!.name + " (верх)"}
+              thumbnail={constructorBun!.image}
+              price={constructorBun!.price}
               isLocked={true}
             />
           )}
@@ -133,7 +130,7 @@ export const BurgerConstructor: FC = () => {
         <section className={`${burgerConstructorStyles.ConstructorList}`}>
           {useMemo(
             () =>
-              constructorIngredients.map((ingredient, index) => {
+              constructorIngredients!.map((ingredient, index) => {
                 return (
                   <Topping
                     position={index}
@@ -147,11 +144,11 @@ export const BurgerConstructor: FC = () => {
         </section>
         {/*-Bottom Bun Section--------------------------------------------*/}
         <section className={`${burgerConstructorStyles.Bun}`}>
-          {constructorBun.name && (
+          {constructorBun!.name && (
             <ConstructorElement
-              text={constructorBun.name + " (низ)"}
-              price={constructorBun.price}
-              thumbnail={constructorBun.image}
+              text={constructorBun!.name + " (низ)"}
+              price={constructorBun!.price}
+              thumbnail={constructorBun!.image}
               type={"bottom"}
               isLocked={true}
             />
