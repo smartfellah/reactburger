@@ -8,19 +8,17 @@ import {
 } from "../actions/order-actions";
 
 type TOrderReducerInitialState = {
-  data:
-    | {
-        name: string;
-        result: number;
-      }
-    | {};
+  data: {
+    name: string;
+    result: number;
+  } | null;
   isShown: boolean;
   isLoading: boolean;
   hasError: boolean;
 };
 
 const initialState: TOrderReducerInitialState = {
-  data: {},
+  data: null,
   isShown: false,
   isLoading: false,
   hasError: false,

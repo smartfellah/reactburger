@@ -1,8 +1,5 @@
 import { FC } from "react";
-import {
-  TIngredientsData,
-  TSingleIngredient,
-} from "../burger-ingredients/types";
+import { TSingleIngredient } from "../burger-ingredients/types";
 
 import { useLocation } from "react-router-dom";
 
