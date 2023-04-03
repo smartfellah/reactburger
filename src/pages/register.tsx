@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 
 //Hooks
 import { useForm } from "../hooks/useForm";
+import { FormEvent } from "react";
 
 export const RegisterPage = () => {
   const { formState, handleFormChange } = useForm({
@@ -26,7 +27,8 @@ export const RegisterPage = () => {
 
   const dispatch = useDispatch();
 
-  function onRegisterClickHandler(): void {
+  function onFormSubmit(e: FormEvent<HTMLFormElement>): void {
+    e.preventDefault();
     const requestData = {
       email: formState.emailValue,
       password: formState.passwordValue,
@@ -38,40 +40,32 @@ export const RegisterPage = () => {
   return (
     <div className={`${styles["register-wrapper"]}`}>
       <div className={`${styles["register-container"]}`}>
-        <div className={`${styles["form__container"]}`}>
+        <form
+          onSubmit={onFormSubmit}
+          className={`${styles["form__container"]}`}
+        >
           <h2 className={`text text_type_main-medium`}>Регистраця</h2>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <Input
-              onChange={handleFormChange}
-              value={formState.nameValue}
-              name={"nameValue"}
-              placeholder="Имя"
-            />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <EmailInput
-              onChange={handleFormChange}
-              value={formState.emailValue}
-              name={"emailValue"}
-              isIcon={false}
-            />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <PasswordInput
-              onChange={handleFormChange}
-              value={formState.passwordValue}
-              name={"passwordValue"}
-            />
-          </div>
-          <Button
-            onClick={onRegisterClickHandler}
-            htmlType="button"
-            type="primary"
-            size="medium"
-          >
+          <Input
+            onChange={handleFormChange}
+            value={formState.nameValue}
+            name={"nameValue"}
+            placeholder="Имя"
+          />
+          <EmailInput
+            onChange={handleFormChange}
+            value={formState.emailValue}
+            name={"emailValue"}
+            isIcon={false}
+          />
+          <PasswordInput
+            onChange={handleFormChange}
+            value={formState.passwordValue}
+            name={"passwordValue"}
+          />
+          <Button htmlType="submit" type="primary" size="medium">
             Зарегистрироваться
           </Button>
-        </div>
+        </form>
         <div className={`${styles["options-menu__container"]}`}>
           <div className={`${styles["option__container"]}`}>
             <p className="text text_type_main-default text_color_inactive pl-10">
