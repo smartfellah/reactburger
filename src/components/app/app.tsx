@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 //React-Router
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 //Pages
 import * as Pages from "../../pages";
@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "../../services/create-store";
 import { AppHeader } from "../app-header/app-header";
 
 import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
-import { Modal } from "../modal/modal";
+import { SingleOrderModalWrapper } from "../single-order-modal/single-order-modal-wrapper";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,12 +34,6 @@ function App() {
 
   let location = useLocation();
   let state = location.state as { backgroundLocation?: Location };
-
-  let navigate = useNavigate();
-
-  const closePopup = (): void => {
-    navigate(-1);
-  };
 
   return (
     <>
@@ -112,27 +106,13 @@ function App() {
             <Routes>
               <Route
                 path="/feed/:number"
-                element={
-                  <Modal
-                    modalTitle={"Детали ингредиента"}
-                    closePopup={closePopup}
-                  >
-                    <Pages.SingleOrder />
-                  </Modal>
-                }
+                element={<SingleOrderModalWrapper />}
               />
               <Route
                 path="/profile/orders/:number"
                 element={
                   <ProtectedRouteElement
-                    element={
-                      <Modal
-                        modalTitle={"Детали ингредиента"}
-                        closePopup={closePopup}
-                      >
-                        <Pages.SingleOrder />
-                      </Modal>
-                    }
+                    element={<SingleOrderModalWrapper />}
                   />
                 }
               />
