@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //React
-import React, { ChangeEvent, useEffect } from "react";
+import React, { ChangeEvent, FormEvent, useEffect } from "react";
 import { useState } from "react";
 
 //Router
@@ -76,7 +76,8 @@ export const Profile = () => {
     [userData] // eslint-disable-line
   );
 
-  function onclick(): void {
+  function onFormSubmit(e: FormEvent<HTMLFormElement>): void {
+    e.preventDefault();
     dispatch(
       sendPatchUserRequest(
         {
@@ -160,39 +161,36 @@ export const Profile = () => {
           </div>
         </div>
         {location?.pathname === "/profile" ? (
-          <div className={`${styles["profile-page__form"]}`}>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <Input
-                type="text"
-                onChange={onFormChange}
-                icon={inputIsDisabled ? "EditIcon" : "CloseIcon"}
-                disabled={inputIsDisabled}
-                onIconClick={onIconClick}
-                onBlur={onBlur}
-                value={formState.nameValue}
-                name={"nameValue"}
-                placeholder="Имя"
-                ref={inputRef}
-              />
-            </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <EmailInput
-                onChange={onFormChange}
-                value={formState.emailValue}
-                name={"emailValue"}
-                isIcon={true}
-                onBlur={onFormBlur}
-              />
-            </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <PasswordInput
-                onChange={onFormChange}
-                value={formState.passwordValue}
-                name={"passwordValue"}
-                icon={"EditIcon"}
-                onBlur={onFormBlur}
-              />
-            </div>
+          <form
+            onSubmit={onFormSubmit}
+            className={`${styles["profile-page__form"]}`}
+          >
+            <Input
+              type="text"
+              onChange={onFormChange}
+              icon={inputIsDisabled ? "EditIcon" : "CloseIcon"}
+              disabled={inputIsDisabled}
+              onIconClick={onIconClick}
+              onBlur={onBlur}
+              value={formState.nameValue}
+              name={"nameValue"}
+              placeholder="Имя"
+              ref={inputRef}
+            />
+            <EmailInput
+              onChange={onFormChange}
+              value={formState.emailValue}
+              name={"emailValue"}
+              isIcon={true}
+              onBlur={onFormBlur}
+            />
+            <PasswordInput
+              onChange={onFormChange}
+              value={formState.passwordValue}
+              name={"passwordValue"}
+              icon={"EditIcon"}
+              onBlur={onFormBlur}
+            />
             {renderButtons ? (
               <div className={`${styles["profile-page-form_buttons"]}`}>
                 <Button
@@ -203,17 +201,12 @@ export const Profile = () => {
                 >
                   Отмена
                 </Button>
-                <Button
-                  onClick={onclick}
-                  htmlType="submit"
-                  type="primary"
-                  size="medium"
-                >
+                <Button htmlType="submit" type="primary" size="medium">
                   Сохранить
                 </Button>
               </div>
             ) : null}
-          </div>
+          </form>
         ) : null}
         <Outlet></Outlet>
       </div>
