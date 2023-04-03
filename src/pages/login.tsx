@@ -15,6 +15,7 @@ import { sendLoginRequest } from "../services/actions/auth-actions";
 
 //Hooks
 import { useForm } from "../hooks/useForm";
+import { FormEvent } from "react";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,8 @@ export const LoginPage = () => {
     passwordValue: "",
   });
 
-  function onLoginClick(): void {
+  function onFormSubmit(e: FormEvent<HTMLFormElement>): void {
+    e.preventDefault();
     const requestBody = {
       email: formState.emailValue,
       password: formState.passwordValue,
@@ -35,32 +37,24 @@ export const LoginPage = () => {
   return (
     <div className={`${styles.LoginWrapper}`}>
       <div className={`${styles.LoginContainer}`}>
-        <div className={`${styles.FormContainer}`}>
+        <form onSubmit={onFormSubmit} className={`${styles.FormContainer}`}>
           <h2 className={`text text_type_main-medium`}>Вход</h2>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <EmailInput
-              onChange={handleFormChange}
-              value={formState.emailValue}
-              name={"emailValue"}
-              isIcon={false}
-            />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <PasswordInput
-              onChange={handleFormChange}
-              value={formState.passwordValue}
-              name={"passwordValue"}
-            />
-          </div>
-          <Button
-            onClick={onLoginClick}
-            htmlType="button"
-            type="primary"
-            size="medium"
-          >
+
+          <EmailInput
+            onChange={handleFormChange}
+            value={formState.emailValue}
+            name={"emailValue"}
+            isIcon={false}
+          />
+          <PasswordInput
+            onChange={handleFormChange}
+            value={formState.passwordValue}
+            name={"passwordValue"}
+          />
+          <Button htmlType="submit" type="primary" size="medium">
             Войти
           </Button>
-        </div>
+        </form>
         <div className={`${styles.OptionMenuContainer}`}>
           <div className={`${styles.OptionContainer}`}>
             <p className="text text_type_main-default text_color_inactive pl-10">
