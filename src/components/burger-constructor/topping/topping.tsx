@@ -16,7 +16,7 @@ import {
   DELETE_FROM_CONSTRUCTOR,
   SWAP_ELEMENTS,
 } from "../../../services/actions/constructor-actions";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../../services/create-store";
 
 //Types
 import { TConstructorIngredient, TToppingProps } from "../types";
