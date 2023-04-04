@@ -4,16 +4,30 @@ import {
   SEND_ORDER_SUCCESS,
   SHOW_ORDER_DETAILS,
   HIDE_ORDER_DETAILS,
+  TOrderActions,
 } from "../actions/order-actions";
 
-const initialState = {
-  data: {},
+type TOrderReducerInitialState = {
+  data: {
+    name: string;
+    number: number;
+  } | null;
+  isShown: boolean;
+  isLoading: boolean;
+  hasError: boolean;
+};
+
+const initialState: TOrderReducerInitialState = {
+  data: null,
   isShown: false,
   isLoading: false,
   hasError: false,
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (
+  state = initialState,
+  action: TOrderActions
+): TOrderReducerInitialState => {
   switch (action.type) {
     case SEND_ORDER_REQUEST:
       return {

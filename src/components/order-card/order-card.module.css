@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding: 24px;
+  gap: 24px;
+
+  /* min-width: 584px;  */
+  /* min-height: 214px; */
+
+  background: var(--bg-secondary);
+
+  border-radius: 40px;
+}
+
+.imagesList {
+  display: flex;
+  margin-left: 16px;
+}
+.imageContainer {
+  border: solid 2px #7623c1;
+  background: var(--bg-secondary);
+  position: relative;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  margin-left: -16px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image {
+  object-fit: cover;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+}
+.image_blurred {
+  opacity: 0.3;
+}
+
+.counter {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.thirdRow {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.totalPrice {
+  display: flex;
+  gap: var(--s-2);
+}
+
+.firstRow {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status_done {
+  color: #00cccc;
+}

@@ -11,21 +11,20 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientsStyles from "./burger-ingredients.module.css";
 
 //Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/create-store";
 import {
   HIDE_INGREDIENT_DETAILS,
   SHOW_INGREDIENT_DETAILS,
 } from "../../services/actions/single-ingredient-actions";
-import { Dispatch } from "redux";
 
 //Router
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const BurgerIngredients = () => {
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch();
 
-  const showDetails: boolean = useSelector(
-    (store: any) => store.singleIngredientReducer.isShown
+  const showDetails = useSelector(
+    (store) => store.singleIngredientReducer.isShown
   );
 
   const location = useLocation();

@@ -1,14 +1,27 @@
+//Types
+import { TSingleIngredient } from "../../components/burger-ingredients/types";
+
+//Actions
 import {
   SHOW_INGREDIENT_DETAILS,
   HIDE_INGREDIENT_DETAILS,
+  singleIngredientActions,
 } from "../actions/single-ingredient-actions";
 
+export type singleIngredientReducerInitialState = {
+  data: TSingleIngredient | null;
+  isShown: boolean;
+};
+
 const initialState = {
-  data: {},
+  data: null,
   isShown: false,
 };
 
-export const singleIngredientReducer = (state = initialState, action) => {
+export const singleIngredientReducer = (
+  state: singleIngredientReducerInitialState = initialState,
+  action: singleIngredientActions
+) => {
   switch (action.type) {
     case SHOW_INGREDIENT_DETAILS:
       return {
@@ -19,7 +32,7 @@ export const singleIngredientReducer = (state = initialState, action) => {
     case HIDE_INGREDIENT_DETAILS:
       return {
         ...state,
-        data: initialState.data,
+        data: null,
         isShown: false,
       };
     default:

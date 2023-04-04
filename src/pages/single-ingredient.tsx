@@ -1,5 +1,5 @@
 //Redux
-import { useSelector } from "react-redux";
+import { useSelector } from "../services/create-store";
 
 //Router
 import { useLocation, useParams } from "react-router-dom";
@@ -11,15 +11,12 @@ import { HomePage } from "./home";
 import styles from "./page-styles/single-ingredient.module.css";
 
 //Types
-import {
-  TIngredientsData,
-  TSingleIngredient,
-} from "../components/burger-ingredients/types";
+import { TSingleIngredient } from "../components/burger-ingredients/types";
 
 export function SingleIngredient() {
   const location = useLocation();
 
-  const ingredientsData: TIngredientsData = useSelector((store: any) => {
+  const ingredientsData = useSelector((store) => {
     return [...store.ingredientsReducer.data];
   });
 

@@ -1,0 +1,22 @@
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  padding-right: var(--s-4);
+  max-height: calc(100vh - 128px - 120px);
+  gap: var(--s-6);
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) var(--bg-secondary);
+}
+
+.ordersList::-webkit-scrollbar {
+  width: var(--s-2);
+  height: var(--s-1);
+  background-color: var(--bg-secondary);
+}
+.ordersList::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+}
+.ordersList::-webkit-scrollbar-corner {
+  background-color: var(--bg-secondary);
+}

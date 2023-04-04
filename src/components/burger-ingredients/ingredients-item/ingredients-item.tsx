@@ -7,15 +7,11 @@ import ingredientItemStyles from "./ingredients-item.module.css";
 
 //Types
 import { TIngredientsItemProps } from "../types";
-import {
-  TConstructorData,
-  TConstructorIngredient,
-} from "../../burger-constructor/types";
+import { TConstructorData } from "../../burger-constructor/types";
 
 //Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../../services/create-store";
 import { SHOW_INGREDIENT_DETAILS } from "../../../services/actions/single-ingredient-actions";
-import { Dispatch } from "redux";
 
 //React
 import { FC, SyntheticEvent, useEffect, useState } from "react";
@@ -29,17 +25,15 @@ import { useDrag } from "react-dnd/dist/hooks";
 export const IngredientsItem: FC<TIngredientsItemProps> = ({
   singleIngredientData,
 }) => {
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [amount, setAmount] = useState<number>(0);
 
   const constructorIngredients: TConstructorData = useSelector(
-    (store: any) => store.constructorReducer.data
+    (store) => store.constructorReducer.data
   );
-  const constructorBun: TConstructorIngredient = useSelector(
-    (store: any) => store.constructorReducer.bun
-  );
+  const constructorBun = useSelector((store) => store.constructorReducer.bun);
 
   const [, dragRef] = useDrag({
     type: "ingredient",
@@ -50,9 +44,12 @@ export const IngredientsItem: FC<TIngredientsItemProps> = ({
 
   useEffect(() => {
     if (singleIngredientData.type === "bun") {
-      constructorBun._id === singleIngredientData._id
-        ? setAmount(2)
-        : setAmount(0);
+      if (!constructorBun) setAmount(0);
+      else {
+        constructorBun._id === singleIngredientData._id
+          ? setAmount(2)
+          : setAmount(0);
+      }
     } else
       setAmount(
         constructorIngredients.filter(

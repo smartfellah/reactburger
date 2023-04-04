@@ -54,7 +54,7 @@ export async function refreshAccessAndContinue(
   dispatch: any,
   callback: any,
   navigate: any,
-  payload: any
+  payload?: any
 ) {
   try {
     const innerResponse = await apiRequest<TAccessTokenResponse>(

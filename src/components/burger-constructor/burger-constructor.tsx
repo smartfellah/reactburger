@@ -1,10 +1,5 @@
 //Types
-import {
-  TConstructorIngredient,
-  TConstructorData,
-  TRequestData,
-  TDroppedItem,
-} from "./types";
+import { TConstructorIngredient, TRequestData } from "./types";
 
 //React
 import { useMemo, FC } from "react";
@@ -25,7 +20,7 @@ import { Topping } from "./topping/topping";
 import burgerConstructorStyles from "./burger-constructor.module.css";
 
 //Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/create-store";
 import {
   HIDE_ORDER_DETAILS,
   sendOrder,
@@ -36,7 +31,6 @@ import {
   addIngredient,
   CLEAR_CONSTRUCTOR,
 } from "../../services/actions/constructor-actions";
-import { Dispatch } from "redux";
 
 //DND
 import { useDrop } from "react-dnd/dist/hooks";
@@ -46,35 +40,32 @@ import { useNavigate } from "react-router";
 
 export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch();
 
-  const onDropHandler = (item: TDroppedItem) => {
+  const onDropHandler = (item: TConstructorIngredient) => {
     dispatch(addIngredient(item, crypto.randomUUID()));
   };
   const [, dropRef] = useDrop({
     accept: "ingredient",
-    drop(item: TDroppedItem) {
+    drop(item: TConstructorIngredient) {
       onDropHandler(item);
     },
   });
 
-  const constructorIngredients: TConstructorData = useSelector(
-    (store: any) => store.constructorReducer.data
+  const constructorIngredients = useSelector(
+    (store) => store.constructorReducer.data
   );
-  const constructorBun: TConstructorIngredient = useSelector(
-    (store: any) => store.constructorReducer.bun
-  );
+  const constructorBun = useSelector((store) => store.constructorReducer.bun);
+
   const totalCost: number =
     (constructorIngredients[0]
       ? [...constructorIngredients].reduce((acc, elem) => {
           return acc + elem.price;
         }, 0)
-      : 0) + (constructorBun.price ? constructorBun.price * 2 : 0);
-  const showOrder: boolean = useSelector(
-    (store: any) => store.orderReducer.isShown
-  );
+      : 0) + (constructorBun ? constructorBun.price * 2 : 0);
+  const showOrder = useSelector((store) => store.orderReducer.isShown);
 
-  const isAuth: boolean = useSelector((store: any) =>
+  const isAuth: boolean = useSelector((store) =>
     store.authReducer.user ? true : false
   );
 
@@ -82,15 +73,16 @@ export const BurgerConstructor: FC = () => {
     if (isAuth) {
       let dataToSend: TRequestData = [];
 
-      constructorBun._id && dataToSend.push(constructorBun._id);
+      if (constructorBun) dataToSend.push(constructorBun._id);
       dataToSend = dataToSend.concat(
         constructorIngredients.map((elem) => {
           return elem["_id"];
         })
       );
-      constructorBun._id && dataToSend.push(constructorBun._id);
+      if (constructorBun)
+        constructorBun._id && dataToSend.push(constructorBun._id);
 
-      if (!constructorBun._id) {
+      if (!constructorBun) {
         dispatch({ type: SEND_ORDER_ERROR });
         alert("В бургер нужно добавить булку");
       } else {
@@ -118,17 +110,19 @@ export const BurgerConstructor: FC = () => {
         ref={dropRef}
       >
         {/*-Top Bun Section-----------------------------------------------*/}
-        <section className={`${burgerConstructorStyles.Bun}`}>
-          {constructorBun.name && (
-            <ConstructorElement
-              type={"top"}
-              text={constructorBun.name + " (верх)"}
-              thumbnail={constructorBun.image}
-              price={constructorBun.price}
-              isLocked={true}
-            />
-          )}
-        </section>
+        {constructorBun ? (
+          <section className={`${burgerConstructorStyles.Bun}`}>
+            {constructorBun.name && (
+              <ConstructorElement
+                type={"top"}
+                text={constructorBun.name + " (верх)"}
+                thumbnail={constructorBun.image}
+                price={constructorBun.price}
+                isLocked={true}
+              />
+            )}
+          </section>
+        ) : null}
         {/*-Ingredients Section-------------------------------------------*/}
         <section className={`${burgerConstructorStyles.ConstructorList}`}>
           {useMemo(
@@ -146,17 +140,19 @@ export const BurgerConstructor: FC = () => {
           )}
         </section>
         {/*-Bottom Bun Section--------------------------------------------*/}
-        <section className={`${burgerConstructorStyles.Bun}`}>
-          {constructorBun.name && (
-            <ConstructorElement
-              text={constructorBun.name + " (низ)"}
-              price={constructorBun.price}
-              thumbnail={constructorBun.image}
-              type={"bottom"}
-              isLocked={true}
-            />
-          )}
-        </section>
+        {constructorBun ? (
+          <section className={`${burgerConstructorStyles.Bun}`}>
+            {constructorBun.name && (
+              <ConstructorElement
+                text={constructorBun.name + " (низ)"}
+                price={constructorBun.price}
+                thumbnail={constructorBun.image}
+                type={"bottom"}
+                isLocked={true}
+              />
+            )}
+          </section>
+        ) : null}
         {/*-Order Section-----------------------------------------------*/}
         <section className={`${burgerConstructorStyles.OrderSection}`}>
           <div className={`${burgerConstructorStyles.TotalPrice}`}>

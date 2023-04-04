@@ -3,15 +3,13 @@ import doneIconPath from "../../images/done.svg";
 import orderDetailsStyles from "./order-details.module.css";
 
 //Redux
-import { useSelector } from "react-redux";
-
-//Types
-import { OrderNumber } from "./types";
+import { useSelector } from "../../services/create-store";
 
 export const OrderDetails = () => {
-  const orderNumber: OrderNumber = useSelector(
-    (store: any) => store.orderReducer.data.number
-  );
+  const orderNumber = useSelector((store) => {
+    if (store.orderReducer.data) return store.orderReducer.data.number;
+    else return null;
+  });
   return (
     <article className={`${orderDetailsStyles.OrderDetails}`}>
       {orderNumber ? (

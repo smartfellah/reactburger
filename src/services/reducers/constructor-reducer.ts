@@ -1,22 +1,38 @@
+//Types
+import {
+  TConstructorData,
+  TConstructorIngredient,
+} from "../../components/burger-constructor/types";
+
+//Actions
 import {
   ADD_INGREDIENT_TO_CONSTRUCTOR,
   ADD_BUN_TO_CONSTRUCTOR,
   DELETE_FROM_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR,
   SWAP_ELEMENTS,
+  TConstructorActions,
 } from "../actions/constructor-actions";
 
-const initialState = {
-  bun: {},
+type TConstructorReducerInitialState = {
+  bun: TConstructorIngredient | null;
+  data: TConstructorData | [];
+};
+
+const initialState: TConstructorReducerInitialState = {
+  bun: null,
   data: [],
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (
+  state = initialState,
+  action: TConstructorActions
+) => {
   switch (action.type) {
     case ADD_INGREDIENT_TO_CONSTRUCTOR:
       return {
         ...state,
-        data: [...state.data, { ...action.payload }],
+        data: [...state!.data, { ...action.payload }],
       };
     case ADD_BUN_TO_CONSTRUCTOR:
       return {

@@ -6,3 +6,6 @@ export { ForgotPassword } from "./forgot-password";
 export { ResetPassword } from "./reset-password";
 export { Profile } from "./profile";
 export { SingleIngredient } from "./single-ingredient";
+export { Feed } from "./feed";
+export { Orders } from "./orders";
+export { SingleOrder } from "./single-order";

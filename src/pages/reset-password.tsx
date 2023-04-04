@@ -7,21 +7,20 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 //React
-import { SyntheticEvent } from "react";
+import { FormEvent, SyntheticEvent } from "react";
 
 //Router
 import { Link, Navigate, useNavigate, useLocation } from "react-router-dom";
 
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../services/create-store";
 import { sendResetPasswordRequest } from "../services/actions/auth-actions";
-import { Dispatch } from "redux";
 
 //Hooks
 import { useForm } from "../hooks/useForm";
 
 export const ResetPassword = () => {
-  const dispatch = useDispatch<Dispatch<any>>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -30,7 +29,7 @@ export const ResetPassword = () => {
     codeValue: "",
   });
 
-  function onSaveClick(e: SyntheticEvent): void {
+  function onFormSubmit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     dispatch(
       sendResetPasswordRequest(
@@ -44,37 +43,29 @@ export const ResetPassword = () => {
   return location?.state?.fromForgot ? (
     <div className={`${styles["reset-password__wrapper"]}`}>
       <div className={`${styles["reset-password__container"]}`}>
-        <div className={`${styles["form__container"]}`}>
+        <form
+          onSubmit={onFormSubmit}
+          className={`${styles["form__container"]}`}
+        >
           <h2 className={`text text_type_main-medium`}>
             Восстановление пароля
           </h2>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <PasswordInput
-              onChange={handleFormChange}
-              value={formState.passwordValue}
-              name={"passwordValue"}
-              placeholder={"Введите новый пароль"}
-            />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <Input
-              onChange={handleFormChange}
-              value={formState.codeValue}
-              name={"codeValue"}
-              placeholder={"Введите код из письма"}
-            />
-          </div>
-          <Link to="/reset-password">
-            <Button
-              onClick={onSaveClick}
-              htmlType="button"
-              type="primary"
-              size="medium"
-            >
-              Сохранить
-            </Button>
-          </Link>
-        </div>
+          <PasswordInput
+            onChange={handleFormChange}
+            value={formState.passwordValue}
+            name={"passwordValue"}
+            placeholder={"Введите новый пароль"}
+          />
+          <Input
+            onChange={handleFormChange}
+            value={formState.codeValue}
+            name={"codeValue"}
+            placeholder={"Введите код из письма"}
+          />
+          <Button htmlType="submit" type="primary" size="medium">
+            Сохранить
+          </Button>
+        </form>
         <div className={`${styles["options-menu__container"]}`}>
           <div className={`${styles["option__container"]}`}>
             <p className="text text_type_main-default text_color_inactive pl-10">
